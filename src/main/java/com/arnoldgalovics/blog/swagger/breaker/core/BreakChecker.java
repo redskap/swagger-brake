@@ -1,6 +1,6 @@
 package com.arnoldgalovics.blog.swagger.breaker.core;
 
-import com.arnoldgalovics.blog.swagger.breaker.model.Specification;
+import com.arnoldgalovics.blog.swagger.breaker.core.model.Specification;
 
 import java.util.Collection;
 

@@ -1,17 +1,13 @@
 package com.arnoldgalovics.blog.swagger.breaker.integration;
 
-import com.arnoldgalovics.blog.swagger.breaker.SwaggerBreakerExecutor;
-import org.junit.Before;
+import com.arnoldgalovics.blog.swagger.breaker.core.SwaggerBreakerCoreConfiguration;
+import com.arnoldgalovics.blog.swagger.breaker.runner.SwaggerBreakerRunner;
+import com.arnoldgalovics.blog.swagger.breaker.runner.SwaggerBreakerRunnerConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
 
+@ContextConfiguration(classes = {SwaggerBreakerCoreConfiguration.class, SwaggerBreakerRunnerConfiguration.class})
 public abstract class AbstractSwaggerBreakerTest {
-    protected SwaggerBreakerExecutor underTest;
-
-    @Before
-    public void setUp() {
-        underTest = new SwaggerBreakerExecutor(getOldApiPath(), getNewApiPath());
-    }
-
-    protected abstract String getOldApiPath();
-
-    protected abstract String getNewApiPath();
+    @Autowired
+    protected SwaggerBreakerRunner underTest;
 }

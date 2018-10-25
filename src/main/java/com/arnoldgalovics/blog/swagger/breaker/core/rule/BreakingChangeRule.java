@@ -1,7 +1,7 @@
 package com.arnoldgalovics.blog.swagger.breaker.core.rule;
 
 import com.arnoldgalovics.blog.swagger.breaker.core.BreakingChange;
-import com.arnoldgalovics.blog.swagger.breaker.model.Specification;
+import com.arnoldgalovics.blog.swagger.breaker.core.model.Specification;
 
 import java.util.Collection;
 
