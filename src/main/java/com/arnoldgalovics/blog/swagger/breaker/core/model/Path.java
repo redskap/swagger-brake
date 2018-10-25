@@ -7,5 +7,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class Path {
     private String path;
-    private String method;
+    private HttpMethod method;
 }

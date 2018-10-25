@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Collection;
 
 import com.arnoldgalovics.blog.swagger.breaker.core.BreakingChange;
+import com.arnoldgalovics.blog.swagger.breaker.core.model.HttpMethod;
 import com.arnoldgalovics.blog.swagger.breaker.core.rule.path.PathDeletedBreakingChange;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +16,7 @@ public class PathDeletionIntTest extends AbstractSwaggerBreakerTest {
     @Test
     public void testPathDeletionWorksCorrectly() {
         // given
-        PathDeletedBreakingChange expected = new PathDeletedBreakingChange("/pet/findByStatus", "GET");
+        PathDeletedBreakingChange expected = new PathDeletedBreakingChange("/pet/findByStatus", HttpMethod.GET);
         // when
         Collection<BreakingChange> result = underTest.execute("pathdeletion/petstore.yaml", "pathdeletion/petstore_v2.yaml");
         // then
