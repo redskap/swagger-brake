@@ -4,6 +4,7 @@ import com.arnoldgalovics.blog.swagger.breaker.core.model.Specification;
 import com.arnoldgalovics.blog.swagger.breaker.core.rule.BreakingChangeRule;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -26,6 +27,12 @@ public class DefaultBreakChecker implements BreakChecker {
 
     @Override
     public Collection<BreakingChange> check(Specification oldApi, Specification newApi) {
+        if (oldApi == null) {
+            throw new IllegalArgumentException("oldApi must be provided");
+        }
+        if (newApi == null) {
+            throw new IllegalArgumentException("newApi must be provided");
+        }
         return rules.stream().map(rule -> rule.checkRule(oldApi, newApi)).flatMap(Collection::stream).collect(toList());
     }
 }

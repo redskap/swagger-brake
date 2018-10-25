@@ -12,6 +12,14 @@ import java.util.stream.Collectors;
 
 @Component
 public class PathTransformer implements Transformer<Paths, Collection<Path>> {
+    @Override
+    public Collection<Path> transform(Paths from) {
+        if (from == null) {
+            throw new IllegalArgumentException("input must not be null");
+        }
+        return from.entrySet().stream().map(e -> transform(e.getKey(), e.getValue())).flatMap(Collection::stream).collect(Collectors.toList());
+    }
+
     private Collection<Path> transform(String path, PathItem pathItem) {
         return getAvailableMethods(pathItem).stream().map(method -> new Path(path, method)).collect(Collectors.toList());
     }
@@ -25,8 +33,5 @@ public class PathTransformer implements Transformer<Paths, Collection<Path>> {
         return result;
     }
 
-    @Override
-    public Collection<Path> transform(Paths from) {
-        return from.entrySet().stream().map(e -> transform(e.getKey(), e.getValue())).flatMap(Collection::stream).collect(Collectors.toList());
-    }
+
 }

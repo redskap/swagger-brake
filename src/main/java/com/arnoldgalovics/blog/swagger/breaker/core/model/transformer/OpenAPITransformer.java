@@ -12,6 +12,9 @@ public class OpenAPITransformer implements Transformer<OpenAPI, Specification> {
 
     @Override
     public Specification transform(OpenAPI from) {
+        if (from == null) {
+            throw new IllegalArgumentException("input must not be null");
+        }
         return new Specification(pathTransformer.transform(from.getPaths()));
     }
 }
