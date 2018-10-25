@@ -1,6 +1,6 @@
-package com.arnoldgalovics.blog.swagger.breaker.parser.transformer;
+package com.arnoldgalovics.blog.swagger.breaker.model.transformer;
 
-import com.arnoldgalovics.blog.swagger.breaker.parser.Specification;
+import com.arnoldgalovics.blog.swagger.breaker.model.Specification;
 import io.swagger.v3.oas.models.OpenAPI;
 
 public class OpenAPITransformer implements Transformer<OpenAPI, Specification> {

@@ -2,8 +2,8 @@ package com.arnoldgalovics.blog.swagger.breaker.core.rule.path;
 
 import com.arnoldgalovics.blog.swagger.breaker.core.BreakingChange;
 import com.arnoldgalovics.blog.swagger.breaker.core.rule.BreakingChangeRule;
-import com.arnoldgalovics.blog.swagger.breaker.parser.Path;
-import com.arnoldgalovics.blog.swagger.breaker.parser.Specification;
+import com.arnoldgalovics.blog.swagger.breaker.model.Path;
+import com.arnoldgalovics.blog.swagger.breaker.model.Specification;
 
 import java.util.ArrayList;
 import java.util.Collection;

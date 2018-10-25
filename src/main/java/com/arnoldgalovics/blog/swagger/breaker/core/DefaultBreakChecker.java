@@ -2,7 +2,7 @@ package com.arnoldgalovics.blog.swagger.breaker.core;
 
 import com.arnoldgalovics.blog.swagger.breaker.core.rule.BreakingChangeRule;
 import com.arnoldgalovics.blog.swagger.breaker.core.rule.path.PathDeletedRule;
-import com.arnoldgalovics.blog.swagger.breaker.parser.Specification;
+import com.arnoldgalovics.blog.swagger.breaker.model.Specification;
 
 import java.util.Arrays;
 import java.util.Collection;

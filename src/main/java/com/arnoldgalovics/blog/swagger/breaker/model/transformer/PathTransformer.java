@@ -1,6 +1,6 @@
-package com.arnoldgalovics.blog.swagger.breaker.parser.transformer;
+package com.arnoldgalovics.blog.swagger.breaker.model.transformer;
 
-import com.arnoldgalovics.blog.swagger.breaker.parser.Path;
+import com.arnoldgalovics.blog.swagger.breaker.model.Path;
 import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.Paths;
 

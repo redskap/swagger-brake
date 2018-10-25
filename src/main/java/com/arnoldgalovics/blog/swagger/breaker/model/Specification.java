@@ -1,4 +1,4 @@
-package com.arnoldgalovics.blog.swagger.breaker.parser;
+package com.arnoldgalovics.blog.swagger.breaker.model;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
