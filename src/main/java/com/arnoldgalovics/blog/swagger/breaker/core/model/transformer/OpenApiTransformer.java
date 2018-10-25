@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class OpenAPITransformer implements Transformer<OpenAPI, Specification> {
+public class OpenApiTransformer implements Transformer<OpenAPI, Specification> {
     private final PathTransformer pathTransformer;
 
     @Override

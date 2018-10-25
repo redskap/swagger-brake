@@ -13,7 +13,9 @@ public class SwaggerBreaker {
     public static void main(String[] args) {
         ApplicationContext context = new AnnotationConfigApplicationContext(SwaggerBreakerCoreConfiguration.class, SwaggerBreakerRunnerConfiguration.class);
         SwaggerBreakerRunner executor = context.getBean(SwaggerBreakerRunner.class);
-        executor.execute("F:\\work\\git\\swagger-breaker\\src\\test\\resources\\pathdeletion\\petstore.yaml", "F:\\work\\git\\swagger-breaker\\src\\test\\resources\\pathdeletion\\petstore_v2.yaml")
+        String oldApiPath = "F:\\work\\git\\swagger-breaker\\src\\test\\resources\\pathdeletion\\petstore.yaml";
+        String newApiPath = "F:\\work\\git\\swagger-breaker\\src\\test\\resources\\pathdeletion\\petstore_v2.yaml";
+        executor.execute(oldApiPath, newApiPath)
                 .stream().map(BreakingChange::getMessage).forEach(log::info);
     }
 }

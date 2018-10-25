@@ -1,14 +1,14 @@
 package com.arnoldgalovics.blog.swagger.breaker.integration;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Collection;
+
 import com.arnoldgalovics.blog.swagger.breaker.core.BreakingChange;
 import com.arnoldgalovics.blog.swagger.breaker.core.rule.path.PathDeletedBreakingChange;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.Collection;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 public class PathDeletionIntTest extends AbstractSwaggerBreakerTest {

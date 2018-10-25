@@ -1,14 +1,14 @@
 package com.arnoldgalovics.blog.swagger.breaker.core.rule.path;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import com.arnoldgalovics.blog.swagger.breaker.core.BreakingChange;
 import com.arnoldgalovics.blog.swagger.breaker.core.model.Path;
 import com.arnoldgalovics.blog.swagger.breaker.core.model.Specification;
 import com.arnoldgalovics.blog.swagger.breaker.core.rule.BreakingChangeRule;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.Collection;
 
 @Component
 @Slf4j

@@ -1,5 +1,7 @@
 package com.arnoldgalovics.blog.swagger.breaker.runner;
 
+import java.util.Collection;
+
 import com.arnoldgalovics.blog.swagger.breaker.core.BreakChecker;
 import com.arnoldgalovics.blog.swagger.breaker.core.BreakingChange;
 import com.arnoldgalovics.blog.swagger.breaker.core.model.Specification;
@@ -10,8 +12,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
-
-import java.util.Collection;
 
 @RequiredArgsConstructor
 @Component

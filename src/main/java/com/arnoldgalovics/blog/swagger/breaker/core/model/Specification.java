@@ -1,9 +1,9 @@
 package com.arnoldgalovics.blog.swagger.breaker.core.model;
 
+import java.util.Collection;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-
-import java.util.Collection;
 
 @Getter
 @RequiredArgsConstructor
