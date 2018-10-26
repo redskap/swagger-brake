@@ -31,7 +31,7 @@ public class SwaggerBreakerRunner {
         log.debug("Loading new API from {}", newApiPath);
         OpenAPI oldApi = loadApi(oldApiPath);
         OpenAPI newApi = loadApi(newApiPath);
-
+        log.debug("Successfully loaded APIs");
         return breakChecker.check(transformer.transform(oldApi), transformer.transform(newApi));
     }
 
