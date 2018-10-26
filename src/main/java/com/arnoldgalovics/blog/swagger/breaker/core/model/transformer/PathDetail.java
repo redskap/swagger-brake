@@ -1,8 +1,9 @@
-package com.arnoldgalovics.blog.swagger.breaker.core.model;
+package com.arnoldgalovics.blog.swagger.breaker.core.model.transformer;
 
 import java.util.Collection;
-import java.util.Optional;
 
+import com.arnoldgalovics.blog.swagger.breaker.core.model.HttpMethod;
+import com.arnoldgalovics.blog.swagger.breaker.core.model.Response;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -12,12 +13,7 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class Path {
-    private final String path;
+class PathDetail {
     private final HttpMethod method;
     private final Collection<Response> responses;
-
-    public Optional<Response> getResponseByCode(String code) {
-        return responses.stream().filter(r -> code.equals(r.getCode())).findAny();
-    }
 }

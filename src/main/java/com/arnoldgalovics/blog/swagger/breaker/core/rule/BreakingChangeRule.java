@@ -6,5 +6,5 @@ import com.arnoldgalovics.blog.swagger.breaker.core.BreakingChange;
 import com.arnoldgalovics.blog.swagger.breaker.core.model.Specification;
 
 public interface BreakingChangeRule {
-    Collection<BreakingChange> checkRule(Specification oldApi, Specification newApi);
+    Collection<? extends BreakingChange> checkRule(Specification oldApi, Specification newApi);
 }

@@ -12,12 +12,11 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class Path {
-    private final String path;
-    private final HttpMethod method;
-    private final Collection<Response> responses;
+public class Response {
+    private final String code;
+    private final Collection<SchemaRef> schemaRefs;
 
-    public Optional<Response> getResponseByCode(String code) {
-        return responses.stream().filter(r -> code.equals(r.getCode())).findAny();
+    public Optional<SchemaRef> getSchemaRefByMediaType(String mediaType) {
+        return schemaRefs.stream().filter(r -> mediaType.equals(r.getMediaType())).findAny();
     }
 }

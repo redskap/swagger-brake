@@ -14,11 +14,11 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class PathDeletedRule implements BreakingChangeRule {
     @Override
-    public Collection<BreakingChange> checkRule(Specification oldApi, Specification newApi) {
+    public Collection<? extends BreakingChange> checkRule(Specification oldApi, Specification newApi) {
         log.debug("Checking for path deletions..");
         Collection<BreakingChange> breakingChanges = new ArrayList<>();
         for (Path p : oldApi.getPaths()) {
-            if (!newApi.getPaths().contains(p)) {
+            if (!newApi.getPath(p).isPresent()) {
                 log.debug("Path {} is not included in the new API", p);
                 breakingChanges.add(new PathDeletedBreakingChange(p.getPath(), p.getMethod()));
             } else {
