@@ -15,9 +15,11 @@ public class ResponseTypeChangeIntTest extends AbstractSwaggerBreakerTest {
     @Test
     public void testResponseTypeChangeIsBreakingChangeWhenExistingAttributeRemoved() {
         // given
+        String oldApiPath = "responetypechange/attributeremoved/petstore.yaml";
+        String newApiPath = "responetypechange/attributeremoved/petstore_v2.yaml";
         ResponseTypeAttributeRemovedBreakingChange expected = new ResponseTypeAttributeRemovedBreakingChange("Pet", "category");
         // when
-        Collection<BreakingChange> result = underTest.execute("responetypechange/attributeremoved/petstore.yaml", "responetypechange/attributeremoved/petstore_v2.yaml");
+        Collection<BreakingChange> result = underTest.execute(oldApiPath, newApiPath);
         // then
         assertThat(result).hasSize(1);
         assertThat(result.iterator().next()).isEqualTo(expected);
@@ -26,8 +28,10 @@ public class ResponseTypeChangeIntTest extends AbstractSwaggerBreakerTest {
     @Test
     public void testResponseTypeChangeIsNotBreakingChangeWhenDifferentTypeIsUsedButSameAttributes() {
         // given
+        String oldApiPath = "responetypechange/differenttypesameattributes/petstore.yaml";
+        String newApiPath = "responetypechange/differenttypesameattributes/petstore_v2.yaml";
         // when
-        Collection<BreakingChange> result = underTest.execute("responetypechange/differenttypesameattributes/petstore.yaml", "responetypechange/differenttypesameattributes/petstore_v2.yaml");
+        Collection<BreakingChange> result = underTest.execute(oldApiPath, newApiPath);
         // then
         assertThat(result).hasSize(0);
     }
@@ -35,9 +39,11 @@ public class ResponseTypeChangeIntTest extends AbstractSwaggerBreakerTest {
     @Test
     public void testResponseTypeChangeIsBreakingChangeWhenDifferentTypeIsUsedWithDifferentAttributes() {
         // given
+        String oldApiPath = "responetypechange/differenttypesdifferentattributes/petstore.yaml";
+        String newApiPath = "responetypechange/differenttypesdifferentattributes/petstore_v2.yaml";
         ResponseTypeAttributeRemovedBreakingChange expected = new ResponseTypeAttributeRemovedBreakingChange("Pet", "category");
         // when
-        Collection<BreakingChange> result = underTest.execute("responetypechange/differenttypesdifferentattributes/petstore.yaml", "responetypechange/differenttypesdifferentattributes/petstore_v2.yaml");
+        Collection<BreakingChange> result = underTest.execute(oldApiPath, newApiPath);
         // then
         assertThat(result).hasSize(1);
         assertThat(result.iterator().next()).isEqualTo(expected);

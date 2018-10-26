@@ -2,7 +2,10 @@ package com.arnoldgalovics.blog.swagger.breaker.core.rule.response;
 
 import static java.util.Collections.emptyList;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 import com.arnoldgalovics.blog.swagger.breaker.core.BreakingChange;
 import com.arnoldgalovics.blog.swagger.breaker.core.model.*;

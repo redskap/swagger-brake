@@ -16,9 +16,11 @@ public class PathDeletionIntTest extends AbstractSwaggerBreakerTest {
     @Test
     public void testPathDeletionWorksCorrectly() {
         // given
+        String oldApiPath = "pathdeletion/petstore.yaml";
+        String newApiPath = "pathdeletion/petstore_v2.yaml";
         PathDeletedBreakingChange expected = new PathDeletedBreakingChange("/pet/findByStatus", HttpMethod.GET);
         // when
-        Collection<BreakingChange> result = underTest.execute("pathdeletion/petstore.yaml", "pathdeletion/petstore_v2.yaml");
+        Collection<BreakingChange> result = underTest.execute(oldApiPath, newApiPath);
         // then
         assertThat(result).hasSize(1);
         assertThat(result.iterator().next()).isEqualTo(expected);

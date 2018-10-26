@@ -3,8 +3,8 @@ package com.arnoldgalovics.blog.swagger.breaker.core.model.transformer;
 import java.util.Collection;
 
 import com.arnoldgalovics.blog.swagger.breaker.core.model.Path;
-import com.arnoldgalovics.blog.swagger.breaker.core.model.service.SchemaStore;
 import com.arnoldgalovics.blog.swagger.breaker.core.model.Specification;
+import com.arnoldgalovics.blog.swagger.breaker.core.model.service.SchemaStore;
 import io.swagger.v3.oas.models.OpenAPI;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
