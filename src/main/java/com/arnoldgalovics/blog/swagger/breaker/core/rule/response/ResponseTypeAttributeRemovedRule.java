@@ -7,15 +7,14 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import com.arnoldgalovics.blog.swagger.breaker.core.BreakingChange;
 import com.arnoldgalovics.blog.swagger.breaker.core.model.*;
 import com.arnoldgalovics.blog.swagger.breaker.core.rule.BreakingChangeRule;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ResponseTypeAttributeRemovedRule implements BreakingChangeRule {
+public class ResponseTypeAttributeRemovedRule implements BreakingChangeRule<ResponseTypeAttributeRemovedBreakingChange> {
     @Override
-    public Collection<? extends BreakingChange> checkRule(Specification oldApi, Specification newApi) {
+    public Collection<ResponseTypeAttributeRemovedBreakingChange> checkRule(Specification oldApi, Specification newApi) {
         Set<ResponseTypeAttributeRemovedBreakingChange> breakingChanges = new HashSet<>();
         for (Path path : oldApi.getPaths()) {
             Optional<Path> newApiPath = newApi.getPath(path);

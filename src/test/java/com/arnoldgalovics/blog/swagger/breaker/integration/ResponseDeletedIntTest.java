@@ -6,19 +6,19 @@ import java.util.Collection;
 
 import com.arnoldgalovics.blog.swagger.breaker.core.BreakingChange;
 import com.arnoldgalovics.blog.swagger.breaker.core.model.HttpMethod;
-import com.arnoldgalovics.blog.swagger.breaker.core.rule.path.PathDeletedBreakingChange;
+import com.arnoldgalovics.blog.swagger.breaker.core.rule.response.ResponseDeletedBreakingChange;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-public class PathDeletionIntTest extends AbstractSwaggerBreakerTest {
+public class ResponseDeletedIntTest extends AbstractSwaggerBreakerTest {
     @Test
-    public void testPathDeletionWorksCorrectly() {
+    public void testResponseTypeChangeIsBreakingChangeWhenExistingAttributeRemoved() {
         // given
-        String oldApiPath = "path/deleted/petstore.yaml";
-        String newApiPath = "path/deleted/petstore_v2.yaml";
-        PathDeletedBreakingChange expected = new PathDeletedBreakingChange("/pet/findByStatus", HttpMethod.GET);
+        String oldApiPath = "response/deleted/petstore.yaml";
+        String newApiPath = "response/deleted/petstore_v2.yaml";
+        ResponseDeletedBreakingChange expected = new ResponseDeletedBreakingChange("/pet", HttpMethod.PUT, "404");
         // when
         Collection<BreakingChange> result = underTest.execute(oldApiPath, newApiPath);
         // then

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Slf4j
 public class DefaultBreakChecker implements BreakChecker {
-    private final Collection<BreakingChangeRule> rules;
+    private final Collection<BreakingChangeRule<? extends BreakingChange>> rules;
 
     @PostConstruct
     public void postConstruct() {

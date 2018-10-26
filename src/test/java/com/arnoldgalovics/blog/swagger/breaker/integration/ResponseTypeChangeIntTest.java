@@ -15,8 +15,8 @@ public class ResponseTypeChangeIntTest extends AbstractSwaggerBreakerTest {
     @Test
     public void testResponseTypeChangeIsBreakingChangeWhenExistingAttributeRemoved() {
         // given
-        String oldApiPath = "responetypechange/attributeremoved/petstore.yaml";
-        String newApiPath = "responetypechange/attributeremoved/petstore_v2.yaml";
+        String oldApiPath = "response/attributeremoved/petstore.yaml";
+        String newApiPath = "response/attributeremoved/petstore_v2.yaml";
         ResponseTypeAttributeRemovedBreakingChange expected = new ResponseTypeAttributeRemovedBreakingChange("Pet", "category");
         // when
         Collection<BreakingChange> result = underTest.execute(oldApiPath, newApiPath);
@@ -28,8 +28,8 @@ public class ResponseTypeChangeIntTest extends AbstractSwaggerBreakerTest {
     @Test
     public void testResponseTypeChangeIsNotBreakingChangeWhenDifferentTypeIsUsedButSameAttributes() {
         // given
-        String oldApiPath = "responetypechange/differenttypesameattributes/petstore.yaml";
-        String newApiPath = "responetypechange/differenttypesameattributes/petstore_v2.yaml";
+        String oldApiPath = "response/differenttypesameattributes/petstore.yaml";
+        String newApiPath = "response/differenttypesameattributes/petstore_v2.yaml";
         // when
         Collection<BreakingChange> result = underTest.execute(oldApiPath, newApiPath);
         // then
@@ -39,8 +39,8 @@ public class ResponseTypeChangeIntTest extends AbstractSwaggerBreakerTest {
     @Test
     public void testResponseTypeChangeIsBreakingChangeWhenDifferentTypeIsUsedWithDifferentAttributes() {
         // given
-        String oldApiPath = "responetypechange/differenttypesdifferentattributes/petstore.yaml";
-        String newApiPath = "responetypechange/differenttypesdifferentattributes/petstore_v2.yaml";
+        String oldApiPath = "response/differenttypesdifferentattributes/petstore.yaml";
+        String newApiPath = "response/differenttypesdifferentattributes/petstore_v2.yaml";
         ResponseTypeAttributeRemovedBreakingChange expected = new ResponseTypeAttributeRemovedBreakingChange("Pet", "category");
         // when
         Collection<BreakingChange> result = underTest.execute(oldApiPath, newApiPath);

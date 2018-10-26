@@ -3,7 +3,6 @@ package com.arnoldgalovics.blog.swagger.breaker.core.rule.path;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.arnoldgalovics.blog.swagger.breaker.core.BreakingChange;
 import com.arnoldgalovics.blog.swagger.breaker.core.model.Path;
 import com.arnoldgalovics.blog.swagger.breaker.core.model.Specification;
 import com.arnoldgalovics.blog.swagger.breaker.core.rule.BreakingChangeRule;
@@ -12,11 +11,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class PathDeletedRule implements BreakingChangeRule {
+public class PathDeletedRule implements BreakingChangeRule<PathDeletedBreakingChange> {
     @Override
-    public Collection<? extends BreakingChange> checkRule(Specification oldApi, Specification newApi) {
+    public Collection<PathDeletedBreakingChange> checkRule(Specification oldApi, Specification newApi) {
         log.debug("Checking for path deletions..");
-        Collection<BreakingChange> breakingChanges = new ArrayList<>();
+        Collection<PathDeletedBreakingChange> breakingChanges = new ArrayList<>();
         for (Path p : oldApi.getPaths()) {
             if (!newApi.getPath(p).isPresent()) {
                 log.debug("Path {} is not included in the new API", p);
