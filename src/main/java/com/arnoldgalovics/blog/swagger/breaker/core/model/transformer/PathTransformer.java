@@ -24,6 +24,9 @@ public class PathTransformer implements Transformer<Paths, Collection<Path>> {
     }
 
     private Collection<Path> transform(String path, PathItem pathItem) {
-        return pathItemTransformer.transform(pathItem).stream().map(detail -> new Path(path, detail.getMethod(), detail.getResponses())).collect(toList());
+        return pathItemTransformer.transform(pathItem)
+            .stream()
+            .map(detail -> new Path(path, detail.getMethod(), detail.getRequestParameters(), detail.getResponses()))
+            .collect(toList());
     }
 }

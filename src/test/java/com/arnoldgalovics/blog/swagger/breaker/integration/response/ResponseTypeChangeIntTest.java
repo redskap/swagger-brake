@@ -1,4 +1,4 @@
-package com.arnoldgalovics.blog.swagger.breaker.integration;
+package com.arnoldgalovics.blog.swagger.breaker.integration.response;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -9,6 +9,7 @@ import java.util.Collections;
 import com.arnoldgalovics.blog.swagger.breaker.core.BreakingChange;
 import com.arnoldgalovics.blog.swagger.breaker.core.model.HttpMethod;
 import com.arnoldgalovics.blog.swagger.breaker.core.rule.response.ResponseTypeAttributeRemovedBreakingChange;
+import com.arnoldgalovics.blog.swagger.breaker.integration.AbstractSwaggerBreakerTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;

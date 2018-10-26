@@ -14,6 +14,7 @@ sourceCompatibility = 1.8
 
 dependencies {
     compile group: 'org.springframework', name: 'spring-context', version: '5.1.1.RELEASE'
+    compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.2'
 
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.2'
     compile group: 'io.swagger.parser.v3', name: 'swagger-parser', version: '2.0.5'
