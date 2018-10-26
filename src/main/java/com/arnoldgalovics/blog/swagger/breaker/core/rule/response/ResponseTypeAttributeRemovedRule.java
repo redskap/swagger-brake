@@ -1,13 +1,11 @@
 package com.arnoldgalovics.blog.swagger.breaker.core.rule.response;
 
-import static java.util.Collections.emptyList;
+import java.util.*;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-
-import com.arnoldgalovics.blog.swagger.breaker.core.model.*;
+import com.arnoldgalovics.blog.swagger.breaker.core.model.Path;
+import com.arnoldgalovics.blog.swagger.breaker.core.model.Response;
+import com.arnoldgalovics.blog.swagger.breaker.core.model.Schema;
+import com.arnoldgalovics.blog.swagger.breaker.core.model.Specification;
 import com.arnoldgalovics.blog.swagger.breaker.core.rule.BreakingChangeRule;
 import org.springframework.stereotype.Component;
 
@@ -24,15 +22,18 @@ public class ResponseTypeAttributeRemovedRule implements BreakingChangeRule<Resp
                     Optional<Response> newApiResponse = newPath.getResponseByCode(apiResponse.getCode());
                     if (newApiResponse.isPresent()) {
                         Response newResponse = newApiResponse.get();
-                        for (SchemaRef schemaRef : apiResponse.getSchemaRefs()) {
-                            Optional<SchemaRef> newApiSchemaRef = newResponse.getSchemaRefByMediaType(schemaRef.getMediaType());
-                            if (newApiSchemaRef.isPresent()) {
-                                SchemaRef newSchemaRef = newApiSchemaRef.get();
-                                Collection<String> oldAttributeNames = getAttributeNamesFromRef(oldApi, schemaRef);
-                                Collection<String> newAttributeNames = getAttributeNamesFromRef(newApi, newSchemaRef);
+                        for (Map.Entry<String, Schema> entry : apiResponse.getMediaTypes().entrySet()) {
+                            String mediaType = entry.getKey();
+                            Schema schema = entry.getValue();
+                            Optional<Schema> newApiSchema = newResponse.getSchemaByMediaType(mediaType);
+                            if (newApiSchema.isPresent()) {
+                                Schema newSchema = newApiSchema.get();
+                                Collection<String> oldAttributeNames = schema.getAttributeNames();
+                                Collection<String> newAttributeNames = newSchema.getAttributeNames();
                                 for (String oldAttributeName : oldAttributeNames) {
                                     if (!newAttributeNames.contains(oldAttributeName)) {
-                                        breakingChanges.add(new ResponseTypeAttributeRemovedBreakingChange(schemaRef.getRefName(), oldAttributeName));
+                                        breakingChanges.add(
+                                            new ResponseTypeAttributeRemovedBreakingChange(path.getPath(), path.getMethod(), apiResponse.getCode(), oldAttributeName));
                                     }
                                 }
                             }
@@ -42,9 +43,5 @@ public class ResponseTypeAttributeRemovedRule implements BreakingChangeRule<Resp
             }
         }
         return breakingChanges;
-    }
-
-    private Collection<String> getAttributeNamesFromRef(Specification apiSpec, SchemaRef schemaRef) {
-        return apiSpec.getSchemaStore().get(schemaRef.getRefName()).map(Schema::getAttributeNames).orElse(emptyList());
     }
 }

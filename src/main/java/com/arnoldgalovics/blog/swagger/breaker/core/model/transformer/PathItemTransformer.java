@@ -6,10 +6,11 @@ import java.util.*;
 import java.util.function.Function;
 
 import com.arnoldgalovics.blog.swagger.breaker.core.model.HttpMethod;
+import com.arnoldgalovics.blog.swagger.breaker.core.model.RequestParameter;
 import com.arnoldgalovics.blog.swagger.breaker.core.model.Response;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.PathItem;
-import io.swagger.v3.oas.models.responses.ApiResponse;
+import io.swagger.v3.oas.models.parameters.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.stereotype.Component;
@@ -31,6 +32,7 @@ public class PathItemTransformer implements Transformer<PathItem, Collection<Pat
     }
 
     private final ApiResponseTransformer apiResponseTransformer;
+    private final ParameterTransformer parameterTransformer;
 
     @Override
     public Collection<PathDetail> transform(PathItem from) {
@@ -39,14 +41,29 @@ public class PathItemTransformer implements Transformer<PathItem, Collection<Pat
             Operation operation = e.getValue().apply(from);
             if (operation != null) {
                 HttpMethod key = e.getKey();
-                Set<Map.Entry<String, ApiResponse>> responses = operation.getResponses().entrySet();
-                List<Response> transformerResponses = responses.stream()
-                    .map(entry -> new ImmutablePair<>(entry.getKey(), entry.getValue()))
-                    .map(apiResponseTransformer::transform)
-                    .collect(toList());
-                result.add(new PathDetail(key, transformerResponses));
+
+                List<RequestParameter> requestParameters = getRequestParameters(operation);
+                List<Response> responses = getResponses(operation);
+                PathDetail detail = new PathDetail(key, requestParameters, responses);
+                result.add(detail);
             }
         }
         return result;
+    }
+
+    private List<RequestParameter> getRequestParameters(Operation operation) {
+        List<RequestParameter> result = Collections.emptyList();
+        List<Parameter> parameters = operation.getParameters();
+        if (parameters != null) {
+            result = parameters.stream().map(parameterTransformer::transform).collect(toList());
+        }
+        return result;
+    }
+
+    private List<Response> getResponses(Operation operation) {
+        return operation.getResponses().entrySet().stream()
+            .map(entry -> new ImmutablePair<>(entry.getKey(), entry.getValue()))
+            .map(apiResponseTransformer::transform)
+            .collect(toList());
     }
 }

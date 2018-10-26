@@ -1,13 +1,10 @@
 package com.arnoldgalovics.blog.swagger.breaker.core.rule.response;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import com.arnoldgalovics.blog.swagger.breaker.core.model.Path;
 import com.arnoldgalovics.blog.swagger.breaker.core.model.Response;
-import com.arnoldgalovics.blog.swagger.breaker.core.model.SchemaRef;
+import com.arnoldgalovics.blog.swagger.breaker.core.model.Schema;
 import com.arnoldgalovics.blog.swagger.breaker.core.model.Specification;
 import com.arnoldgalovics.blog.swagger.breaker.core.rule.BreakingChangeRule;
 import org.springframework.stereotype.Component;
@@ -25,13 +22,14 @@ public class ResponseTypChangedRule implements BreakingChangeRule<ResponseTypeCh
                     Optional<Response> newApiResponse = newPath.getResponseByCode(apiResponse.getCode());
                     if (newApiResponse.isPresent()) {
                         Response newResponse = newApiResponse.get();
-                        for (SchemaRef schemaRef : apiResponse.getSchemaRefs()) {
-                            Optional<SchemaRef> newApiSchemaRef = newResponse.getSchemaRefByMediaType(schemaRef.getMediaType());
-                            if (newApiSchemaRef.isPresent()) {
-                                SchemaRef newSchemaRef = newApiSchemaRef.get();
-                                String newSchemaTypeName = newSchemaRef.getSchemaTypeName();
-                                if (!schemaRef.getSchemaTypeName().equals(newSchemaTypeName)) {
-                                    breakingChanges.add(createBreakingChange(path, apiResponse, schemaRef.getSchemaTypeName(), newSchemaTypeName));
+                        for (Map.Entry<String, Schema> entry : apiResponse.getMediaTypes().entrySet()) {
+                            String mediaType = entry.getKey();
+                            Schema schema = entry.getValue();
+                            Optional<Schema> newApiSchema = newResponse.getSchemaByMediaType(mediaType);
+                            if (newApiSchema.isPresent()) {
+                                Schema newSchema = newApiSchema.get();
+                                if (!schema.getType().equals(newSchema.getType())) {
+                                    breakingChanges.add(createBreakingChange(path, apiResponse, schema.getType(), newSchema.getType()));
                                 }
                             }
                         }

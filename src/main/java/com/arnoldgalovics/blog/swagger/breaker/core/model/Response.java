@@ -1,6 +1,6 @@
 package com.arnoldgalovics.blog.swagger.breaker.core.model;
 
-import java.util.Collection;
+import java.util.Map;
 import java.util.Optional;
 
 import lombok.EqualsAndHashCode;
@@ -14,9 +14,9 @@ import lombok.ToString;
 @ToString
 public class Response {
     private final String code;
-    private final Collection<SchemaRef> schemaRefs;
+    private final Map<String, Schema> mediaTypes;
 
-    public Optional<SchemaRef> getSchemaRefByMediaType(String mediaType) {
-        return schemaRefs.stream().filter(r -> mediaType.equals(r.getMediaType())).findAny();
+    public Optional<Schema> getSchemaByMediaType(String mediaType) {
+        return Optional.ofNullable(mediaTypes.get(mediaType));
     }
 }

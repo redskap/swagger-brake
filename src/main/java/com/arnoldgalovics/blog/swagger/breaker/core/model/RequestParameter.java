@@ -9,8 +9,7 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class SchemaRef {
-    private final String mediaType;
-    private final String schemaTypeName;
-    private final String refName;
+public class RequestParameter {
+    private final RequestParameterType type;
+    private final String name;
 }

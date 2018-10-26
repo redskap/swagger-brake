@@ -5,6 +5,7 @@ import java.util.Collection;
 import com.arnoldgalovics.blog.swagger.breaker.core.model.Path;
 import com.arnoldgalovics.blog.swagger.breaker.core.model.Specification;
 import com.arnoldgalovics.blog.swagger.breaker.core.model.service.SchemaStore;
+import com.arnoldgalovics.blog.swagger.breaker.core.model.service.SchemaStoreProvider;
 import io.swagger.v3.oas.models.OpenAPI;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -13,15 +14,21 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OpenApiTransformer implements Transformer<OpenAPI, Specification> {
     private final PathTransformer pathTransformer;
-    private final SchemaTransformer schemaTransformer;
+    private final ComponentsTransformer componentsTransformer;
 
     @Override
     public Specification transform(OpenAPI from) {
         if (from == null) {
             throw new IllegalArgumentException("input must not be null");
         }
-        Collection<Path> paths = pathTransformer.transform(from.getPaths());
-        SchemaStore schemaStore = schemaTransformer.transform(from.getComponents());
-        return new Specification(paths, schemaStore);
+        SchemaStore schemaStore = componentsTransformer.transform(from.getComponents());
+        Collection<Path> paths;
+        try {
+            SchemaStoreProvider.setSchemaStore(schemaStore);
+            paths = pathTransformer.transform(from.getPaths());
+        } finally {
+            SchemaStoreProvider.clear();
+        }
+        return new Specification(paths);
     }
 }
