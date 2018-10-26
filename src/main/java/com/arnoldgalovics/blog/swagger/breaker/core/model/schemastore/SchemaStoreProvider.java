@@ -1,4 +1,4 @@
-package com.arnoldgalovics.blog.swagger.breaker.core.model.service;
+package com.arnoldgalovics.blog.swagger.breaker.core.model.schemastore;
 
 public class SchemaStoreProvider {
     private static final ThreadLocal<SchemaStore> schemaStore = new ThreadLocal<>();

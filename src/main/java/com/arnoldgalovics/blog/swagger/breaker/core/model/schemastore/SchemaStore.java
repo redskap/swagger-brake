@@ -1,4 +1,4 @@
-package com.arnoldgalovics.blog.swagger.breaker.core.model.service;
+package com.arnoldgalovics.blog.swagger.breaker.core.model.schemastore;
 
 import java.util.Map;
 import java.util.Optional;

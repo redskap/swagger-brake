@@ -4,8 +4,9 @@ import java.util.Collection;
 
 import com.arnoldgalovics.blog.swagger.breaker.core.model.Path;
 import com.arnoldgalovics.blog.swagger.breaker.core.model.Specification;
-import com.arnoldgalovics.blog.swagger.breaker.core.model.service.SchemaStore;
-import com.arnoldgalovics.blog.swagger.breaker.core.model.service.SchemaStoreProvider;
+import com.arnoldgalovics.blog.swagger.breaker.core.model.schemastore.ComponentsTransformer;
+import com.arnoldgalovics.blog.swagger.breaker.core.model.schemastore.SchemaStore;
+import com.arnoldgalovics.blog.swagger.breaker.core.model.schemastore.SchemaStoreProvider;
 import io.swagger.v3.oas.models.OpenAPI;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
