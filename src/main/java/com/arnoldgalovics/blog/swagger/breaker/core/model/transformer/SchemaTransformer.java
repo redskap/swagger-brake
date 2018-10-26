@@ -1,9 +1,9 @@
 package com.arnoldgalovics.blog.swagger.breaker.core.model.transformer;
 
-import java.util.Collections;
+import static java.util.stream.Collectors.toList;
+
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import com.arnoldgalovics.blog.swagger.breaker.core.model.Schema;
 import com.arnoldgalovics.blog.swagger.breaker.core.model.SchemaAttribute;
@@ -11,6 +11,7 @@ import com.arnoldgalovics.blog.swagger.breaker.core.model.schemastore.SchemaStor
 import com.arnoldgalovics.blog.swagger.breaker.core.model.service.TypeRefNameResolver;
 import io.swagger.v3.oas.models.media.ArraySchema;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +30,8 @@ public class SchemaTransformer implements Transformer<io.swagger.v3.oas.models.m
             return null;
         }
         if (swSchema instanceof ArraySchema) {
-            return transformSchema(swSchema, internalTransform(((ArraySchema) swSchema).getItems()));
+            Schema childSchema = internalTransform(((ArraySchema) swSchema).getItems());
+            return transformSchema(swSchema, childSchema);
         } else {
             return transformSchema(swSchema);
         }
@@ -45,12 +47,19 @@ public class SchemaTransformer implements Transformer<io.swagger.v3.oas.models.m
             return SchemaStoreProvider.provide().get(refName).orElseThrow(() -> new IllegalStateException("Reference not found for " + swSchema.get$ref()));
         }
 
-        String type = swSchema.getType();
+        Schema.Builder schemaBuilder = new Schema.Builder(swSchema.getType()).schema(childSchema);
         Map<String, io.swagger.v3.oas.models.media.Schema> properties = swSchema.getProperties();
-        List<SchemaAttribute> attributes = Collections.emptyList();
         if (properties != null) {
-            attributes = properties.entrySet().stream().map(e -> new SchemaAttribute(e.getKey())).collect(Collectors.toList());
+            List<SchemaAttribute> attributes = properties.entrySet()
+                .stream()
+                .map(e -> new SchemaAttribute(e.getKey()))
+                .collect(toList());
+            schemaBuilder.schemaAttributes(attributes);
         }
-        return new Schema(type, attributes, childSchema);
+        List<String> enumValues = swSchema.getEnum();
+        if (CollectionUtils.isNotEmpty(enumValues)) {
+            schemaBuilder.enumValues(enumValues);
+        }
+        return schemaBuilder.build();
     }
 }

@@ -6,6 +6,7 @@ import static java.util.stream.Collectors.toMap;
 import java.util.Collection;
 
 import com.arnoldgalovics.blog.swagger.breaker.core.model.Schema;
+import com.arnoldgalovics.blog.swagger.breaker.core.model.transformer.SchemaTransformer;
 import com.arnoldgalovics.blog.swagger.breaker.core.model.transformer.Transformer;
 import io.swagger.v3.oas.models.Components;
 import lombok.RequiredArgsConstructor;
@@ -16,14 +17,14 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class ComponentsTransformer implements Transformer<Components, SchemaStore> {
-    private final SchemaStoreSchemaTransformer schemaStoreSchemaTransformer;
+    private final SchemaTransformer schemaTransformer;
 
     @Override
     public SchemaStore transform(Components from) {
         Collection<Pair<String, Schema>> schemas = from.getSchemas()
             .entrySet()
             .stream().map(e -> {
-                Schema schema = schemaStoreSchemaTransformer.transform(e.getValue());
+                Schema schema = schemaTransformer.transform(e.getValue());
                 return new ImmutablePair<>(e.getKey(), schema);
             })
             .collect(toList());

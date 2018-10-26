@@ -10,15 +10,15 @@ import lombok.ToString;
 public class RequestParameter {
     private final RequestParameterType type;
     private final String name;
-    private final Schema requestBody;
+    private final Schema schema;
 
     public RequestParameter(RequestParameterType type, String name) {
         this(type, name, null);
     }
 
-    public RequestParameter(RequestParameterType type, String name, Schema requestBody) {
+    public RequestParameter(RequestParameterType type, String name, Schema schema) {
         this.type = type;
         this.name = name;
-        this.requestBody = requestBody;
+        this.schema = schema;
     }
 }
