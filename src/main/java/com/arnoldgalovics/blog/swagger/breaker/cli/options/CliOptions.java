@@ -4,6 +4,7 @@ public abstract class CliOptions {
     public static final String OLD_API_PATH = "old-api";
     public static final String NEW_API_PATH = "new-api";
     public static final String HELP = "help";
+    public static final String VERBOSE = "verbose";
 
     public static String getAsCliOption(String option) {
         return "--" + option;

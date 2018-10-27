@@ -3,7 +3,6 @@ package com.arnoldgalovics.blog.swagger.breaker.core;
 import static java.util.stream.Collectors.toList;
 
 import java.util.Collection;
-import javax.annotation.PostConstruct;
 
 import com.arnoldgalovics.blog.swagger.breaker.core.model.Specification;
 import com.arnoldgalovics.blog.swagger.breaker.core.rule.BreakingChangeRule;
@@ -18,15 +17,11 @@ import org.springframework.stereotype.Component;
 public class DefaultBreakChecker implements BreakChecker {
     private final Collection<BreakingChangeRule<? extends BreakingChange>> rules;
 
-    @PostConstruct
-    public void postConstruct() {
+    @Override
+    public Collection<BreakingChange> check(Specification oldApi, Specification newApi) {
         if (log.isDebugEnabled()) {
             rules.stream().map(BreakingChangeRule::getClass).map(Class::getName).forEach(name -> log.debug("Rule configured: {}", name));
         }
-    }
-
-    @Override
-    public Collection<BreakingChange> check(Specification oldApi, Specification newApi) {
         if (oldApi == null) {
             throw new IllegalArgumentException("oldApi must be provided");
         }

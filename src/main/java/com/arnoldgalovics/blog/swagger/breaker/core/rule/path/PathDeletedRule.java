@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class PathDeletedRule implements BreakingChangeRule<PathDeletedBreakingChange> {
     @Override
     public Collection<PathDeletedBreakingChange> checkRule(Specification oldApi, Specification newApi) {
-        log.debug("Checking for path deletions..");
+        log.info("Checking for path deletions..");
         Collection<PathDeletedBreakingChange> breakingChanges = new ArrayList<>();
         for (Path p : oldApi.getPaths()) {
             if (!newApi.getPath(p).isPresent()) {

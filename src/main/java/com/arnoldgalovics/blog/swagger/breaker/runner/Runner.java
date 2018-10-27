@@ -29,11 +29,11 @@ public class Runner {
         if (StringUtils.isBlank(newApiPath)) {
             throw new IllegalArgumentException("newApiPath must be provided");
         }
-        log.debug("Loading old API from {}", oldApiPath);
-        log.debug("Loading new API from {}", newApiPath);
+        log.info("Loading old API from {}", oldApiPath);
+        log.info("Loading new API from {}", newApiPath);
         OpenAPI oldApi = loadApi(oldApiPath);
         OpenAPI newApi = loadApi(newApiPath);
-        log.debug("Successfully loaded APIs");
+        log.info("Successfully loaded APIs");
         return breakChecker.check(transformer.transform(oldApi), transformer.transform(newApi));
     }
 
