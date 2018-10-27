@@ -1,12 +1,12 @@
 package com.arnoldgalovics.blog.swagger.breaker.core.model.service;
 
-import com.arnoldgalovics.blog.swagger.breaker.core.model.RequestParameterType;
+import com.arnoldgalovics.blog.swagger.breaker.core.model.RequestParameterInType;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RequestParameterTypeResolver implements Resolver<String, RequestParameterType> {
+public class RequestParameterTypeResolver implements Resolver<String, RequestParameterInType> {
     @Override
-    public RequestParameterType resolve(String from) {
-        return RequestParameterType.fromName(from);
+    public RequestParameterInType resolve(String from) {
+        return RequestParameterInType.fromName(from);
     }
 }

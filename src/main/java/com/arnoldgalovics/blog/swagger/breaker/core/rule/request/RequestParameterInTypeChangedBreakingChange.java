@@ -13,7 +13,7 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class RequestParameterTypeChangedBreakingChange implements BreakingChange {
+public class RequestParameterInTypeChangedBreakingChange implements BreakingChange {
     private final String path;
     private final HttpMethod method;
     private final String name;

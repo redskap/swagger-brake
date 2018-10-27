@@ -13,10 +13,10 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RequestParameterTypeChangedRule implements BreakingChangeRule<RequestParameterTypeChangedBreakingChange> {
+public class RequestParameterInTypeChangedRule implements BreakingChangeRule<RequestParameterInTypeChangedBreakingChange> {
     @Override
-    public Collection<RequestParameterTypeChangedBreakingChange> checkRule(Specification oldApi, Specification newApi) {
-        Set<RequestParameterTypeChangedBreakingChange> breakingChanges = new HashSet<>();
+    public Collection<RequestParameterInTypeChangedBreakingChange> checkRule(Specification oldApi, Specification newApi) {
+        Set<RequestParameterInTypeChangedBreakingChange> breakingChanges = new HashSet<>();
         for (Path path : oldApi.getPaths()) {
             Optional<Path> newApiPath = newApi.getPath(path);
             if (newApiPath.isPresent()) {
@@ -28,7 +28,7 @@ public class RequestParameterTypeChangedRule implements BreakingChangeRule<Reque
                             RequestParameter newRequestParam = newRequestParameter.get();
                             if (!requestParameter.getType().equals(newRequestParam.getType())) {
                                 breakingChanges.add(
-                                    new RequestParameterTypeChangedBreakingChange(path.getPath(), path.getMethod(),
+                                    new RequestParameterInTypeChangedBreakingChange(path.getPath(), path.getMethod(),
                                         requestParameter.getName(), requestParameter.getType().getName(), newRequestParam.getType().getName()));
                             }
                         }
