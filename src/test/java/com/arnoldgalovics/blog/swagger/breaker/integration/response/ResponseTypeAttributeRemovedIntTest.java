@@ -45,6 +45,24 @@ public class ResponseTypeAttributeRemovedIntTest extends AbstractSwaggerBreakerT
     }
 
     @Test
+    public void testResponseTypeChangeIsBreakingChangeWhenExistingDeepAttributeRemoved() {
+        // given
+        String oldApiPath = "response/deepattributeremoved/petstore.yaml";
+        String newApiPath = "response/deepattributeremoved/petstore_v2.yaml";
+        ResponseTypeAttributeRemovedBreakingChange bc1 = new ResponseTypeAttributeRemovedBreakingChange("/pet/findByStatus", HttpMethod.GET, "200", "category.name");
+        ResponseTypeAttributeRemovedBreakingChange bc2 = new ResponseTypeAttributeRemovedBreakingChange("/pet/{petId}", HttpMethod.GET, "200", "category.name");
+        ResponseTypeAttributeRemovedBreakingChange bc3 = new ResponseTypeAttributeRemovedBreakingChange("/pet/findByTags", HttpMethod.GET, "200", "category.name");
+        RequestTypeAttributeRemovedBreakingChange bc4 = new RequestTypeAttributeRemovedBreakingChange("/pet", HttpMethod.PUT, "category.name");
+        RequestTypeAttributeRemovedBreakingChange bc5 = new RequestTypeAttributeRemovedBreakingChange("/pet", HttpMethod.POST, "category.name");
+        Collection<BreakingChange> expected = Arrays.asList(bc1, bc2, bc3, bc4, bc5);
+        // when
+        Collection<BreakingChange> result = underTest.execute(oldApiPath, newApiPath);
+        // then
+        assertThat(result).hasSize(5);
+        assertThat(result).hasSameElementsAs(expected);
+    }
+
+    @Test
     public void testResponseTypeChangeIsNotBreakingChangeWhenDifferentTypeIsUsedButSameAttributes() {
         // given
         String oldApiPath = "response/differenttypesameattributes/petstore.yaml";
