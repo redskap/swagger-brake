@@ -7,20 +7,20 @@ import java.util.Collections;
 
 import com.arnoldgalovics.blog.swagger.breaker.core.BreakingChange;
 import com.arnoldgalovics.blog.swagger.breaker.core.model.HttpMethod;
-import com.arnoldgalovics.blog.swagger.breaker.core.rule.request.RequestParameterDeletedBreakingChange;
+import com.arnoldgalovics.blog.swagger.breaker.core.rule.request.RequestParameterTypeChangedBreakingChange;
 import com.arnoldgalovics.blog.swagger.breaker.integration.AbstractSwaggerBreakerTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-public class RequestParameterDeletedIntTest extends AbstractSwaggerBreakerTest {
+public class RequestParameterTypeChangedIntTest extends AbstractSwaggerBreakerTest {
     @Test
-    public void testRequestParameterDeletedWorksCorrectly() {
+    public void testRequestParameterTypeChangedWorksCorrectly() {
         // given
-        String oldApiPath = "request/parameterdeleted/petstore.yaml";
-        String newApiPath = "request/parameterdeleted/petstore_v2.yaml";
-        RequestParameterDeletedBreakingChange bc = new RequestParameterDeletedBreakingChange("/pet/findByStatus", HttpMethod.GET, "status");
+        String oldApiPath = "request/parametertypechanged/petstore.yaml";
+        String newApiPath = "request/parametertypechanged/petstore_v2.yaml";
+        RequestParameterTypeChangedBreakingChange bc = new RequestParameterTypeChangedBreakingChange("/pet/findByTags", HttpMethod.GET, "tags", "", "array", "string");
         Collection<BreakingChange> expected = Collections.singleton(bc);
         // when
         Collection<BreakingChange> result = underTest.execute(oldApiPath, newApiPath);

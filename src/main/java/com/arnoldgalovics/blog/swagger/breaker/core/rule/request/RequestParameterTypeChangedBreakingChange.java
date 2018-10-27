@@ -13,15 +13,16 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class RequestParameterInTypeChangedBreakingChange implements BreakingChange {
+public class RequestParameterTypeChangedBreakingChange implements BreakingChange {
     private final String path;
     private final HttpMethod method;
     private final String name;
+    private final String attributeName;
     private final String oldType;
     private final String newType;
 
     @Override
     public String getMessage() {
-        return format("%s parameter in type has been changed in %s %s from %s to %s", name, method, path, oldType, newType);
+        return format("%s parameter type has been changed in %s %s at attribute %s from %s to %s", name, method, path, attributeName, oldType, newType);
     }
 }

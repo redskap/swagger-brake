@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 public class RequestParameterInTypeChangedIntTest extends AbstractSwaggerBreakerTest {
     @Test
-    public void testResponseTypeChangeIsBreakingChangeWhenExistingAttributeRemoved() {
+    public void testRequestParameterInTypeChangedWorksCorrectly() {
         // given
         String oldApiPath = "request/parameterintypechanged/petstore.yaml";
         String newApiPath = "request/parameterintypechanged/petstore_v2.yaml";

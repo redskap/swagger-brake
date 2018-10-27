@@ -10,16 +10,16 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 public class RequestParameter {
-    private final RequestParameterInType type;
+    private final RequestParameterInType inType;
     private final String name;
     private final Schema schema;
 
-    public RequestParameter(RequestParameterInType type, String name) {
-        this(type, name, null);
+    public RequestParameter(RequestParameterInType inType, String name) {
+        this(inType, name, null);
     }
 
-    public RequestParameter(RequestParameterInType type, String name, Schema schema) {
-        this.type = type;
+    public RequestParameter(RequestParameterInType inType, String name, Schema schema) {
+        this.inType = inType;
         this.name = name;
         this.schema = schema;
     }

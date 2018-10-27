@@ -4,7 +4,7 @@ import com.arnoldgalovics.blog.swagger.breaker.core.model.RequestParameterInType
 import org.springframework.stereotype.Component;
 
 @Component
-public class RequestParameterTypeResolver implements Resolver<String, RequestParameterInType> {
+public class RequestParameterInTypeResolver implements Resolver<String, RequestParameterInType> {
     @Override
     public RequestParameterInType resolve(String from) {
         return RequestParameterInType.fromName(from);

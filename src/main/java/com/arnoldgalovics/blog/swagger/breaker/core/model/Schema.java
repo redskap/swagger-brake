@@ -2,12 +2,10 @@ package com.arnoldgalovics.blog.swagger.breaker.core.model;
 
 import static java.lang.String.format;
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 import static org.apache.commons.collections4.CollectionUtils.isEmpty;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -35,6 +33,34 @@ public class Schema {
             return schema.getEnumValues();
         }
         return enumValues;
+    }
+
+    public Map<String, String> getTypes() {
+        Collection<SchemaAttribute> schemaAttrs = schemaAttributes;
+        if (CollectionUtils.isEmpty(schemaAttrs)) {
+            schemaAttrs = Optional.ofNullable(schema).map(Schema::getSchemaAttributes).orElse(Collections.emptyList());
+        }
+        Map<String, String> types = internalGetTypes(schemaAttrs, "");
+        types.put("", type);
+        return types;
+    }
+
+    private Map<String, String> internalGetTypes(Collection<SchemaAttribute> schemaAttributes, String levelName) {
+        Map<String, String> result = schemaAttributes
+            .stream()
+            .filter(a -> a.getSchema() != null)
+            .collect(toMap(a -> generateLeveledName(a.getName(), levelName), a -> a.getSchema().getType()));
+        for (SchemaAttribute schemaAttribute : schemaAttributes) {
+            Schema childSchema = schemaAttribute.getSchema();
+            if (childSchema != null) {
+                Collection<SchemaAttribute> childSchemaAttributes = childSchema.getSchemaAttributes();
+                if (isEmpty(childSchemaAttributes)) {
+                    childSchemaAttributes = childSchema.getSchema().map(Schema::getSchemaAttributes).orElse(Collections.emptyList());
+                }
+                result.putAll(internalGetTypes(childSchemaAttributes, levelName));
+            }
+        }
+        return result;
     }
 
     public Collection<String> getAttributeNames() {

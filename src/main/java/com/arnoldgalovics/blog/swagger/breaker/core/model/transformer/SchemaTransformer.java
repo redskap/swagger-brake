@@ -2,7 +2,9 @@ package com.arnoldgalovics.blog.swagger.breaker.core.model.transformer;
 
 import static java.util.stream.Collectors.toList;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 import com.arnoldgalovics.blog.swagger.breaker.core.model.Schema;
 import com.arnoldgalovics.blog.swagger.breaker.core.model.SchemaAttribute;

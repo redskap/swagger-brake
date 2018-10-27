@@ -26,10 +26,10 @@ public class RequestParameterInTypeChangedRule implements BreakingChangeRule<Req
                         Optional<RequestParameter> newRequestParameter = newPath.getRequestParameterByName(requestParameter.getName());
                         if (newRequestParameter.isPresent()) {
                             RequestParameter newRequestParam = newRequestParameter.get();
-                            if (!requestParameter.getType().equals(newRequestParam.getType())) {
+                            if (!requestParameter.getInType().equals(newRequestParam.getInType())) {
                                 breakingChanges.add(
                                     new RequestParameterInTypeChangedBreakingChange(path.getPath(), path.getMethod(),
-                                        requestParameter.getName(), requestParameter.getType().getName(), newRequestParam.getType().getName()));
+                                        requestParameter.getName(), requestParameter.getInType().getName(), newRequestParam.getInType().getName()));
                             }
                         }
                     }

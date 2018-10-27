@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 public class RequestParameterEnumValueDeletedIntTest extends AbstractSwaggerBreakerTest {
     @Test
-    public void testResponseTypeChangeIsBreakingChangeWhenExistingAttributeRemoved() {
+    public void testRequestParameterEnumValueDeletedWorksCorrectly() {
         // given
         String oldApiPath = "request/parameterenumvaluedeleted/petstore.yaml";
         String newApiPath = "request/parameterenumvaluedeleted/petstore_v2.yaml";
