@@ -17,7 +17,7 @@ public class NoBreakingChangeTest extends AbstractSwaggerBreakerTest {
         String oldApiPath = "nobreakingchange/petstore.yaml";
         String newApiPath = "nobreakingchange/petstore_v2.yaml";
         // when
-        Collection<BreakingChange> result = underTest.execute(oldApiPath, newApiPath);
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
         // then
         assertThat(result).isEmpty();
     }

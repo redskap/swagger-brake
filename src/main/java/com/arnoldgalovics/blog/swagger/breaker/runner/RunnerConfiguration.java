@@ -5,5 +5,5 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan
-public class SwaggerBreakerRunnerConfiguration {
+public class RunnerConfiguration {
 }

@@ -5,9 +5,9 @@
         </encoder>
     </appender>
 
-    <logger name="com.arnoldgalovics.blog.swagger.breaker" level="DEBUG" />
+    <logger name="com.arnoldgalovics.blog.swagger.breaker" level="OFF" />
 
-    <root level="WARN">
+    <root level="OFF">
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>

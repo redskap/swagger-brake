@@ -38,7 +38,7 @@ public class RequestTypeAttributeRemovedIntTest extends AbstractSwaggerBreakerTe
         RequestTypeAttributeRemovedBreakingChange bc15 = new RequestTypeAttributeRemovedBreakingChange("/pet", HttpMethod.POST, "category.name");
         Collection<BreakingChange> expected = Arrays.asList(bc1, bc2, bc3, bc4, bc5, bc6, bc7, bc8, bc9, bc10, bc11, bc12, bc13, bc14, bc15);
         // when
-        Collection<BreakingChange> result = underTest.execute(oldApiPath, newApiPath);
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
         // then
         assertThat(result).hasSize(15);
         assertThat(result).hasSameElementsAs(expected);
@@ -56,7 +56,7 @@ public class RequestTypeAttributeRemovedIntTest extends AbstractSwaggerBreakerTe
         RequestTypeAttributeRemovedBreakingChange bc5 = new RequestTypeAttributeRemovedBreakingChange("/pet", HttpMethod.POST, "category.name");
         Collection<BreakingChange> expected = Arrays.asList(bc1, bc2, bc3, bc4, bc5);
         // when
-        Collection<BreakingChange> result = underTest.execute(oldApiPath, newApiPath);
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
         // then
         assertThat(result).hasSize(5);
         assertThat(result).hasSameElementsAs(expected);
@@ -68,7 +68,7 @@ public class RequestTypeAttributeRemovedIntTest extends AbstractSwaggerBreakerTe
         String oldApiPath = "request/differenttypesameattributes/petstore.yaml";
         String newApiPath = "request/differenttypesameattributes/petstore_v2.yaml";
         // when
-        Collection<BreakingChange> result = underTest.execute(oldApiPath, newApiPath);
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
         // then
         assertThat(result).hasSize(0);
     }
@@ -83,7 +83,7 @@ public class RequestTypeAttributeRemovedIntTest extends AbstractSwaggerBreakerTe
         RequestTypeAttributeRemovedBreakingChange bc3 = new RequestTypeAttributeRemovedBreakingChange("/pet", HttpMethod.POST, "category.name");
         Collection<BreakingChange> expected = Arrays.asList(bc1, bc2, bc3);
         // when
-        Collection<BreakingChange> result = underTest.execute(oldApiPath, newApiPath);
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
         // then
         assertThat(result).hasSize(3);
         assertThat(result).hasSameElementsAs(expected);

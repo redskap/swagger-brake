@@ -1,6 +1,16 @@
 group 'com.arnoldgalovics.blog'
 version '0.0.1-SNAPSHOT'
 
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:4.0.1'
+    }
+}
+
 repositories {
     mavenCentral()
 }
@@ -9,8 +19,13 @@ apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
+apply plugin: 'application'
+apply plugin: 'com.github.johnrengelman.shadow'
 
 sourceCompatibility = 1.8
+
+
+mainClassName = 'com.arnoldgalovics.blog.swagger.breaker.SwaggerBreaker'
 
 dependencies {
     compileOnly "org.projectlombok:lombok:1.18.2"

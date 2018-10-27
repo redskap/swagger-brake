@@ -23,7 +23,7 @@ public class RequestParameterTypeChangedIntTest extends AbstractSwaggerBreakerTe
         RequestParameterTypeChangedBreakingChange bc = new RequestParameterTypeChangedBreakingChange("/pet/findByTags", HttpMethod.GET, "tags", "", "array", "string");
         Collection<BreakingChange> expected = Collections.singleton(bc);
         // when
-        Collection<BreakingChange> result = underTest.execute(oldApiPath, newApiPath);
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
         // then
         assertThat(result).hasSize(1);
         assertThat(result).hasSameElementsAs(expected);

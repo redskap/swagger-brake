@@ -23,7 +23,7 @@ public class RequestParameterEnumValueDeletedIntTest extends AbstractSwaggerBrea
         RequestParameterEnumValueDeletedBreakingChange bc = new RequestParameterEnumValueDeletedBreakingChange("/pet/findByStatus", HttpMethod.GET, "status", "pending");
         Collection<BreakingChange> expected = Collections.singleton(bc);
         // when
-        Collection<BreakingChange> result = underTest.execute(oldApiPath, newApiPath);
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
         // then
         assertThat(result).hasSize(1);
         assertThat(result).hasSameElementsAs(expected);

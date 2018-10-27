@@ -24,7 +24,7 @@ public class ResponseTypeChangedIntTest extends AbstractSwaggerBreakerTest {
         ResponseTypeChangedBreakingChange bc2 = new ResponseTypeChangedBreakingChange("/pet/findByTags", HttpMethod.GET, "200", "", "array", "string");
         Collection<BreakingChange> expected = Arrays.asList(bc1, bc2);
         // when
-        Collection<BreakingChange> result = underTest.execute(oldApiPath, newApiPath);
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
         // then
         assertThat(result).hasSize(2);
         assertThat(result).hasSameElementsAs(expected);

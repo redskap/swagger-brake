@@ -23,7 +23,7 @@ public class RequestParameterDeletedIntTest extends AbstractSwaggerBreakerTest {
         RequestParameterDeletedBreakingChange bc = new RequestParameterDeletedBreakingChange("/pet/findByStatus", HttpMethod.GET, "status");
         Collection<BreakingChange> expected = Collections.singleton(bc);
         // when
-        Collection<BreakingChange> result = underTest.execute(oldApiPath, newApiPath);
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
         // then
         assertThat(result).hasSize(1);
         assertThat(result).hasSameElementsAs(expected);

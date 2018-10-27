@@ -1,13 +1,24 @@
 package com.arnoldgalovics.blog.swagger.breaker.integration;
 
-import com.arnoldgalovics.blog.swagger.breaker.core.SwaggerBreakerCoreConfiguration;
-import com.arnoldgalovics.blog.swagger.breaker.runner.SwaggerBreakerRunner;
-import com.arnoldgalovics.blog.swagger.breaker.runner.SwaggerBreakerRunnerConfiguration;
+import java.util.Collection;
+
+import com.arnoldgalovics.blog.swagger.breaker.core.BreakingChange;
+import com.arnoldgalovics.blog.swagger.breaker.core.CoreConfiguration;
+import com.arnoldgalovics.blog.swagger.breaker.runner.Options;
+import com.arnoldgalovics.blog.swagger.breaker.runner.Runner;
+import com.arnoldgalovics.blog.swagger.breaker.runner.RunnerConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
-@ContextConfiguration(classes = {SwaggerBreakerCoreConfiguration.class, SwaggerBreakerRunnerConfiguration.class})
+@ContextConfiguration(classes = {CoreConfiguration.class, RunnerConfiguration.class})
 public abstract class AbstractSwaggerBreakerTest {
     @Autowired
-    protected SwaggerBreakerRunner underTest;
+    protected Runner underTest;
+
+    protected Collection<BreakingChange> execute(String oldApiPath, String newApiPath) {
+        Options options = new Options();
+        options.setOldApiPath(oldApiPath);
+        options.setNewApiPath(newApiPath);
+        return underTest.run(options);
+    }
 }

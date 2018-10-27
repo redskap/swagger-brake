@@ -23,7 +23,7 @@ public class PathDeletionIntTest extends AbstractSwaggerBreakerTest {
         PathDeletedBreakingChange bc = new PathDeletedBreakingChange("/pet/findByStatus", HttpMethod.GET);
         Collection<BreakingChange> expected = Collections.singleton(bc);
         // when
-        Collection<BreakingChange> result = underTest.execute(oldApiPath, newApiPath);
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
         // then
         assertThat(result).hasSize(1);
         assertThat(result).hasSameElementsAs(expected);

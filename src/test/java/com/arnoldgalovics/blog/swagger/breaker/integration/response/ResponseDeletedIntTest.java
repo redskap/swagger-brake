@@ -23,7 +23,7 @@ public class ResponseDeletedIntTest extends AbstractSwaggerBreakerTest {
         ResponseDeletedBreakingChange bc = new ResponseDeletedBreakingChange("/pet", HttpMethod.PUT, "404");
         Collection<BreakingChange> expected = Collections.singleton(bc);
         // when
-        Collection<BreakingChange> result = underTest.execute(oldApiPath, newApiPath);
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
         // then
         assertThat(result).hasSize(1);
         assertThat(result).hasSameElementsAs(expected);

@@ -24,7 +24,7 @@ public class RequestParameterRequiredIntTest extends AbstractSwaggerBreakerTest 
         RequestParameterRequiredBreakingChange bc2 = new RequestParameterRequiredBreakingChange("/pet/findByStatus", HttpMethod.GET, "test");
         Collection<BreakingChange> expected = Arrays.asList(bc1, bc2);
         // when
-        Collection<BreakingChange> result = underTest.execute(oldApiPath, newApiPath);
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
         // then
         assertThat(result).hasSize(2);
         assertThat(result).hasSameElementsAs(expected);

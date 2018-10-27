@@ -16,14 +16,16 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 @Slf4j
-public class SwaggerBreakerRunner {
+public class Runner {
     private final Transformer<OpenAPI, Specification> transformer;
     private final BreakChecker breakChecker;
 
-    public Collection<BreakingChange> execute(String oldApiPath, String newApiPath) {
+    public Collection<BreakingChange> run(Options options) {
+        String oldApiPath = options.getOldApiPath();
         if (StringUtils.isBlank(oldApiPath)) {
             throw new IllegalArgumentException("oldApiPath must be provided");
         }
+        String newApiPath = options.getNewApiPath();
         if (StringUtils.isBlank(newApiPath)) {
             throw new IllegalArgumentException("newApiPath must be provided");
         }
@@ -35,11 +37,15 @@ public class SwaggerBreakerRunner {
         return breakChecker.check(transformer.transform(oldApi), transformer.transform(newApi));
     }
 
-    private OpenAPI loadApi(String oldApiPath) {
-        OpenAPI loadedApi = new OpenAPIV3Parser().read(oldApiPath);
-        if (loadedApi == null) {
-            throw new IllegalStateException("API cannot be loaded from path " + oldApiPath);
+    private OpenAPI loadApi(String apiPath) {
+        try {
+            OpenAPI loadedApi = new OpenAPIV3Parser().read(apiPath);
+            if (loadedApi == null) {
+                throw new IllegalStateException("API cannot be loaded from path " + apiPath);
+            }
+            return loadedApi;
+        } catch (Exception e) {
+            throw new IllegalStateException("API cannot be loaded from path " + apiPath);
         }
-        return loadedApi;
     }
 }
