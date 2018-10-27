@@ -28,8 +28,15 @@ public class ResponseTypeChangedRule implements BreakingChangeRule<ResponseTypeC
                             Optional<Schema> newApiSchema = newResponse.getSchemaByMediaType(mediaType);
                             if (newApiSchema.isPresent()) {
                                 Schema newSchema = newApiSchema.get();
-                                if (!schema.getType().equals(newSchema.getType())) {
-                                    breakingChanges.add(createBreakingChange(path, apiResponse, schema.getType(), newSchema.getType()));
+                                Map<String, String> newTypes = newSchema.getTypes();
+                                for (Map.Entry<String, String> type : schema.getTypes().entrySet()) {
+                                    String attribute = type.getKey();
+                                    String typeName = type.getValue();
+                                    String newType = newTypes.get(attribute);
+                                    if (newType != null && !newType.equals(typeName)) {
+                                        breakingChanges.add(
+                                            new ResponseTypeChangedBreakingChange(path.getPath(), path.getMethod(), apiResponse.getCode(), attribute, typeName, newType));
+                                    }
                                 }
                             }
                         }
@@ -38,9 +45,5 @@ public class ResponseTypeChangedRule implements BreakingChangeRule<ResponseTypeC
             }
         }
         return breakingChanges;
-    }
-
-    private ResponseTypeChangedBreakingChange createBreakingChange(Path path, Response apiResponse, String schemaTypeName, String newSchemaTypeName) {
-        return new ResponseTypeChangedBreakingChange(path.getPath(), path.getMethod(), apiResponse.getCode(), schemaTypeName, newSchemaTypeName);
     }
 }

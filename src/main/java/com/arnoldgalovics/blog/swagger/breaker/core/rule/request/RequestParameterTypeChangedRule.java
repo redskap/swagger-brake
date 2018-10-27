@@ -8,7 +8,6 @@ import com.arnoldgalovics.blog.swagger.breaker.core.model.Schema;
 import com.arnoldgalovics.blog.swagger.breaker.core.model.Specification;
 import com.arnoldgalovics.blog.swagger.breaker.core.rule.BreakingChangeRule;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -34,7 +33,7 @@ public class RequestParameterTypeChangedRule implements BreakingChangeRule<Reque
                                         String attribute = type.getKey();
                                         String typeName = type.getValue();
                                         String newType = newTypes.get(attribute);
-                                        if (!StringUtils.equals(typeName, newType)) {
+                                        if (newType != null && !newType.equals(typeName)) {
                                             breakingChanges.add(
                                                 new RequestParameterTypeChangedBreakingChange(path.getPath(), path.getMethod(),
                                                     requestParameter.getName(), attribute, typeName, newType));

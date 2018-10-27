@@ -51,7 +51,7 @@ paths:
         description: "Pet object that needs to be added to the store"
         required: true
         schema:
-          $ref: "#/definitions/Pet"
+          type: "array"
       responses:
         405:
           description: "Invalid input"
@@ -151,8 +151,6 @@ paths:
           description: "successful operation"
           schema:
             type: "array"
-            items:
-              $ref: "#/definitions/Pet"
         400:
           description: "Invalid tag value"
       security:

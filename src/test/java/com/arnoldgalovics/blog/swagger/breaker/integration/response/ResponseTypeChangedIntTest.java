@@ -2,8 +2,8 @@ package com.arnoldgalovics.blog.swagger.breaker.integration.response;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 
 import com.arnoldgalovics.blog.swagger.breaker.core.BreakingChange;
 import com.arnoldgalovics.blog.swagger.breaker.core.model.HttpMethod;
@@ -20,12 +20,13 @@ public class ResponseTypeChangedIntTest extends AbstractSwaggerBreakerTest {
         // given
         String oldApiPath = "response/typechanged/petstore.yaml";
         String newApiPath = "response/typechanged/petstore_v2.yaml";
-        ResponseTypeChangedBreakingChange bc = new ResponseTypeChangedBreakingChange("/pet/findByStatus", HttpMethod.GET, "200", "array", "object");
-        Collection<BreakingChange> expected = Collections.singleton(bc);
+        ResponseTypeChangedBreakingChange bc1 = new ResponseTypeChangedBreakingChange("/pet/findByStatus", HttpMethod.GET, "200", "","array", "object");
+        ResponseTypeChangedBreakingChange bc2 = new ResponseTypeChangedBreakingChange("/pet/findByTags", HttpMethod.GET, "200", "", "array", "string");
+        Collection<BreakingChange> expected = Arrays.asList(bc1, bc2);
         // when
         Collection<BreakingChange> result = underTest.execute(oldApiPath, newApiPath);
         // then
-        assertThat(result).hasSize(1);
+        assertThat(result).hasSize(2);
         assertThat(result).hasSameElementsAs(expected);
     }
 }
