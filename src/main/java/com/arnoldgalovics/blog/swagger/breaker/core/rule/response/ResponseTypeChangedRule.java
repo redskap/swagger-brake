@@ -10,7 +10,7 @@ import com.arnoldgalovics.blog.swagger.breaker.core.rule.BreakingChangeRule;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ResponseTypChangedRule implements BreakingChangeRule<ResponseTypeChangedBreakingChange> {
+public class ResponseTypeChangedRule implements BreakingChangeRule<ResponseTypeChangedBreakingChange> {
     @Override
     public Collection<ResponseTypeChangedBreakingChange> checkRule(Specification oldApi, Specification newApi) {
         Set<ResponseTypeChangedBreakingChange> breakingChanges = new HashSet<>();

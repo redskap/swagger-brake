@@ -15,6 +15,7 @@ import lombok.ToString;
 public class Path {
     private final String path;
     private final HttpMethod method;
+    private final Request requestBody;
     private final Collection<RequestParameter> requestParameters;
     private final Collection<Response> responses;
 
@@ -24,5 +25,9 @@ public class Path {
 
     public Optional<RequestParameter> getRequestParameterByName(String name) {
         return requestParameters.stream().filter(p -> name.equals(p.getName())).findAny();
+    }
+
+    public Optional<Request> getRequestBody() {
+        return Optional.ofNullable(requestBody);
     }
 }

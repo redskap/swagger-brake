@@ -3,7 +3,7 @@ package com.arnoldgalovics.blog.swagger.breaker.core.model.schemastore;
 import java.util.Map;
 import java.util.Optional;
 
-import com.arnoldgalovics.blog.swagger.breaker.core.model.Schema;
+import io.swagger.v3.oas.models.media.Schema;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

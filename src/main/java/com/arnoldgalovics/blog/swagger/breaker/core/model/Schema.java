@@ -1,15 +1,20 @@
 package com.arnoldgalovics.blog.swagger.breaker.core.model;
 
+import static java.lang.String.format;
 import static java.util.stream.Collectors.toList;
+import static org.apache.commons.collections4.CollectionUtils.isEmpty;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.CollectionUtils;
 
 @Getter
 @EqualsAndHashCode
@@ -21,7 +26,7 @@ public class Schema {
     private final Collection<SchemaAttribute> schemaAttributes;
     private final Schema schema;
 
-    public Optional<Schema> getUnderlyingSchema() {
+    public Optional<Schema> getSchema() {
         return Optional.ofNullable(schema);
     }
 
@@ -33,10 +38,33 @@ public class Schema {
     }
 
     public Collection<String> getAttributeNames() {
-        if (schema != null) {
-            return schema.getAttributeNames();
+        Collection<SchemaAttribute> schemaAttrs = schemaAttributes;
+        if (CollectionUtils.isEmpty(schemaAttrs)) {
+            schemaAttrs = Optional.ofNullable(schema).map(Schema::getSchemaAttributes).orElse(Collections.emptyList());
         }
-        return schemaAttributes.stream().map(SchemaAttribute::getName).collect(toList());
+        return internalGetAttributeNames(schemaAttrs, "");
+    }
+
+    private Collection<String> internalGetAttributeNames(Collection<SchemaAttribute> schemaAttributes, String levelName) {
+        List<String> result = schemaAttributes.stream().map(SchemaAttribute::getName).map(name -> generateLeveledName(name, levelName)).collect(toList());
+        for (SchemaAttribute schemaAttribute : schemaAttributes) {
+            Schema childSchema = schemaAttribute.getSchema();
+            if (childSchema != null) {
+                Collection<SchemaAttribute> childSchemaAttributes = childSchema.getSchemaAttributes();
+                if (isEmpty(childSchemaAttributes)) {
+                    childSchemaAttributes = childSchema.getSchema().map(Schema::getSchemaAttributes).orElse(Collections.emptyList());
+                }
+                result.addAll(internalGetAttributeNames(childSchemaAttributes, generateLeveledName(schemaAttribute.getName(), levelName)));
+            }
+        }
+        return result;
+    }
+
+    private String generateLeveledName(String name, String levelName) {
+        if (!StringUtils.isBlank(levelName)) {
+            return format("%s.%s", levelName, name);
+        }
+        return name;
     }
 
     public static class Builder {

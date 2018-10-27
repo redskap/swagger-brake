@@ -6,11 +6,13 @@ import java.util.*;
 import java.util.function.Function;
 
 import com.arnoldgalovics.blog.swagger.breaker.core.model.HttpMethod;
+import com.arnoldgalovics.blog.swagger.breaker.core.model.Request;
 import com.arnoldgalovics.blog.swagger.breaker.core.model.RequestParameter;
 import com.arnoldgalovics.blog.swagger.breaker.core.model.Response;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.parameters.Parameter;
+import io.swagger.v3.oas.models.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.stereotype.Component;
@@ -33,6 +35,7 @@ public class PathItemTransformer implements Transformer<PathItem, Collection<Pat
 
     private final ApiResponseTransformer apiResponseTransformer;
     private final ParameterTransformer parameterTransformer;
+    private final RequestBodyTransformer requestBodyTransformer;
 
     @Override
     public Collection<PathDetail> transform(PathItem from) {
@@ -42,11 +45,21 @@ public class PathItemTransformer implements Transformer<PathItem, Collection<Pat
             if (operation != null) {
                 HttpMethod key = e.getKey();
 
+                Request requestBody = getRequestBody(operation);
                 List<RequestParameter> requestParameters = getRequestParameters(operation);
                 List<Response> responses = getResponses(operation);
-                PathDetail detail = new PathDetail(key, requestParameters, responses);
+                PathDetail detail = new PathDetail(key, requestBody, requestParameters, responses);
                 result.add(detail);
             }
+        }
+        return result;
+    }
+
+    private Request getRequestBody(Operation operation) {
+        Request result = null;
+        RequestBody requestBody = operation.getRequestBody();
+        if (requestBody != null) {
+            result = requestBodyTransformer.transform(requestBody);
         }
         return result;
     }

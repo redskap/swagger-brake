@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.arnoldgalovics.blog.swagger.breaker.core.model.Path;
 import com.arnoldgalovics.blog.swagger.breaker.core.model.RequestParameter;
+import com.arnoldgalovics.blog.swagger.breaker.core.model.Schema;
 import com.arnoldgalovics.blog.swagger.breaker.core.model.Specification;
 import com.arnoldgalovics.blog.swagger.breaker.core.rule.BreakingChangeRule;
 import org.apache.commons.collections4.CollectionUtils;
@@ -26,13 +27,17 @@ public class RequestParameterEnumValueDeletedRule  implements BreakingChangeRule
                         Optional<RequestParameter> newRequestParameter = newPath.getRequestParameterByName(requestParameter.getName());
                         if (newRequestParameter.isPresent()) {
                             RequestParameter newRequestParam = newRequestParameter.get();
-                            Collection<String> oldEnumValues = requestParameter.getSchema().getEnumValues();
-                            Collection<String> newEnumValues = newRequestParam.getSchema().getEnumValues();
-                            for (String oldEnumValue : oldEnumValues) {
-                                if (!newEnumValues.contains(oldEnumValue)) {
-                                    breakingChanges.add(
-                                        new RequestParameterEnumValueDeletedBreakingChange(path.getPath(), path.getMethod(),
-                                            requestParameter.getName(), oldEnumValue));
+                            Optional<Schema> schema = requestParameter.getSchema();
+                            Optional<Schema> newSchema = newRequestParam.getSchema();
+                            if (schema.isPresent() && newSchema.isPresent()) {
+                                Collection<String> oldEnumValues = schema.get().getEnumValues();
+                                Collection<String> newEnumValues = newSchema.get().getEnumValues();
+                                for (String oldEnumValue : oldEnumValues) {
+                                    if (!newEnumValues.contains(oldEnumValue)) {
+                                        breakingChanges.add(
+                                            new RequestParameterEnumValueDeletedBreakingChange(path.getPath(), path.getMethod(),
+                                                requestParameter.getName(), oldEnumValue));
+                                    }
                                 }
                             }
                         }

@@ -7,8 +7,9 @@ import lombok.ToString;
 
 @Getter
 @RequiredArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(of = "name")
 @ToString
 public class SchemaAttribute {
     private final String name;
+    private final Schema schema;
 }

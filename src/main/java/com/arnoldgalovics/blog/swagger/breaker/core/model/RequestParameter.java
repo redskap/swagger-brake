@@ -1,5 +1,7 @@
 package com.arnoldgalovics.blog.swagger.breaker.core.model;
 
+import java.util.Optional;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -20,5 +22,9 @@ public class RequestParameter {
         this.type = type;
         this.name = name;
         this.schema = schema;
+    }
+
+    public Optional<Schema> getSchema() {
+        return Optional.ofNullable(schema);
     }
 }
