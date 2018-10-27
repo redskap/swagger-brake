@@ -13,16 +13,17 @@ apply plugin: 'findbugs'
 sourceCompatibility = 1.8
 
 dependencies {
-    compile group: 'org.springframework', name: 'spring-context', version: '5.1.1.RELEASE'
-    compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.2'
+    compileOnly "org.projectlombok:lombok:1.18.2"
 
-    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.2'
-    compile group: 'io.swagger.parser.v3', name: 'swagger-parser', version: '2.0.5'
-    compile group: 'ch.qos.logback', name: 'logback-core', version: '1.2.3'
-    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.11.1'
-    testCompile group: 'org.springframework', name: 'spring-test', version: '5.1.1.RELEASE'
+    compile "org.springframework:spring-context:5.1.1.RELEASE"
+    compile "org.apache.commons:commons-collections4:4.2"
+    compile "io.swagger.parser.v3:swagger-parser:2.0.5"
+    compile "ch.qos.logback:logback-core:1.2.3"
+    compile "ch.qos.logback:logback-classic:1.2.3"
+
+    testCompile "junit:junit:4.12"
+    testCompile "org.assertj:assertj-core:3.11.1"
+    testCompile "org.springframework:spring-test:5.1.1.RELEASE"
 }
 
 tasks.withType(Checkstyle) {
