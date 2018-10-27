@@ -28,16 +28,24 @@ public class CliHelpHandler implements CliOptionHandler {
 
     private String getHelp() {
         StringBuilder sb = new StringBuilder();
-        sb.append(format("Usage: java -jar swagger-breaker.jar "));
+        sb.append(format("Usage: java -jar swagger-breaker.jar %s=/home/user/something.yml %s=/home/user/something_v2.yml",
+            formatCliOption(CliOptions.OLD_API_PATH), formatCliOption(CliOptions.NEW_API_PATH)));
         sb.append(lineSeparator());
-        sb.append(format("%s The absolute path of the old api file", formatCliOption(CliOptions.OLD_API_PATH)));
         sb.append(lineSeparator());
-        sb.append(format("%s The absolute path of the new api file", formatCliOption(CliOptions.NEW_API_PATH)));
+        sb.append("Parameters:");
+        sb.append(lineSeparator());
+        sb.append(format("\t%s The absolute path of the old api file", formatPadCliOption(CliOptions.OLD_API_PATH)));
+        sb.append(lineSeparator());
+        sb.append(format("\t%s The absolute path of the new api file", formatPadCliOption(CliOptions.NEW_API_PATH)));
         sb.append(lineSeparator());
         return sb.toString();
     }
 
+    private String formatPadCliOption(String oldApiPath) {
+        return StringUtils.rightPad(formatCliOption(oldApiPath), 15);
+    }
+
     private String formatCliOption(String oldApiPath) {
-        return StringUtils.rightPad(CliOptions.getAsCliOption(oldApiPath), 10);
+        return CliOptions.getAsCliOption(oldApiPath);
     }
 }
