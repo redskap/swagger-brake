@@ -1,7 +1,11 @@
 package com.arnoldgalovics.blog.swagger.breaker.runner;
 
+import static java.lang.System.err;
+
 import java.util.Collection;
 
+import com.arnoldgalovics.blog.swagger.breaker.api.ApiClient;
+import com.arnoldgalovics.blog.swagger.breaker.api.UploadException;
 import com.arnoldgalovics.blog.swagger.breaker.core.BreakChecker;
 import com.arnoldgalovics.blog.swagger.breaker.core.BreakingChange;
 import com.arnoldgalovics.blog.swagger.breaker.core.model.Specification;
@@ -19,6 +23,7 @@ import org.springframework.stereotype.Component;
 public class Runner {
     private final Transformer<OpenAPI, Specification> transformer;
     private final BreakChecker breakChecker;
+    private final ApiClient apiClient;
 
     public Collection<BreakingChange> run(Options options) {
         String oldApiPath = options.getOldApiPath();
@@ -34,7 +39,20 @@ public class Runner {
         OpenAPI oldApi = loadApi(oldApiPath);
         OpenAPI newApi = loadApi(newApiPath);
         log.info("Successfully loaded APIs");
-        return breakChecker.check(transformer.transform(oldApi), transformer.transform(newApi));
+        Collection<BreakingChange> breakingChanges = breakChecker.check(transformer.transform(oldApi), transformer.transform(newApi));
+        if (options.isUploadEnabled()) {
+            upload(options, breakingChanges);
+        }
+        return breakingChanges;
+    }
+
+    private void upload(Options options, Collection<BreakingChange> breakingChanges) {
+        try {
+            apiClient.upload(options.getApiServer(), breakingChanges);
+        } catch (UploadException e) {
+            log.error("Uploading error", e);
+            err.println(e.getMessage());
+        }
     }
 
     private OpenAPI loadApi(String apiPath) {
