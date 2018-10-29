@@ -1,10 +1,11 @@
 package com.arnoldgalovics.blog.swagger.breaker.runner;
 
 import static java.lang.System.err;
+import static java.lang.System.out;
 
 import java.util.Collection;
 
-import com.arnoldgalovics.blog.swagger.breaker.api.ApiClient;
+import com.arnoldgalovics.blog.swagger.breaker.api.ApiFacade;
 import com.arnoldgalovics.blog.swagger.breaker.api.UploadException;
 import com.arnoldgalovics.blog.swagger.breaker.core.BreakChecker;
 import com.arnoldgalovics.blog.swagger.breaker.core.BreakingChange;
@@ -23,7 +24,7 @@ import org.springframework.stereotype.Component;
 public class Runner {
     private final Transformer<OpenAPI, Specification> transformer;
     private final BreakChecker breakChecker;
-    private final ApiClient apiClient;
+    private final ApiFacade apiFacade;
 
     public Collection<BreakingChange> run(Options options) {
         String oldApiPath = options.getOldApiPath();
@@ -48,7 +49,9 @@ public class Runner {
 
     private void upload(Options options, Collection<BreakingChange> breakingChanges) {
         try {
-            apiClient.upload(options.getApiServer(), breakingChanges);
+            out.println("Starting upload..");
+            apiFacade.upload(breakingChanges, options.getApiServer(), options.getProject());
+            out.println("Upload successful");
         } catch (UploadException e) {
             log.error("Uploading error", e);
             err.println(e.getMessage());

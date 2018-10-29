@@ -5,5 +5,5 @@ import java.util.Collection;
 import com.arnoldgalovics.blog.swagger.breaker.core.BreakingChange;
 
 public interface ApiClient {
-    void upload(String apiServer, Collection<BreakingChange> breakingChanges);
+    void upload(Collection<BreakingChange> breakingChanges, String apiServer, String project);
 }

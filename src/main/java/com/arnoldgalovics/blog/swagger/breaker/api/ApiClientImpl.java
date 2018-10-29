@@ -20,18 +20,18 @@ public class ApiClientImpl implements ApiClient {
 
     private RestTemplate restTemplate = new RestTemplate();
 
-    public void upload(String apiServer, Collection<BreakingChange> breakingChanges) {
+    public void upload(Collection<BreakingChange> breakingChanges, String apiServer, String project) {
         String uri = apiServer + "/breaking-changes";
         for (BreakingChange bc : breakingChanges) {
-            upload(uri, bc);
+            upload(bc, uri, project);
         }
     }
 
-    private void upload(String uri, BreakingChange breakingChange) {
+    private void upload(BreakingChange breakingChange, String uri, String project) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        AddBreakingChangeRequest request = new AddBreakingChangeRequest(breakingChange.getMessage());
+        AddBreakingChangeRequest request = new AddBreakingChangeRequest(breakingChange.getMessage(), project);
         try {
             HttpEntity<String> entity = new HttpEntity<>(jsonConverter.convert(request), headers);
             restTemplate.postForEntity(uri, entity, Void.class, Collections.emptyMap());

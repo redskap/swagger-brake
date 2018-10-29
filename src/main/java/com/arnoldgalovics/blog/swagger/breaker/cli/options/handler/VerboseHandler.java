@@ -5,9 +5,12 @@ import ch.qos.logback.classic.Logger;
 import com.arnoldgalovics.blog.swagger.breaker.cli.options.CliOptions;
 import com.arnoldgalovics.blog.swagger.breaker.runner.Options;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Component
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class VerboseHandler implements CliOptionHandler {
     @Override
     public void handle(String propertyValue, Options options) {

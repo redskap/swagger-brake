@@ -7,4 +7,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class AddBreakingChangeRequest {
     private String message;
+    private String project;
 }

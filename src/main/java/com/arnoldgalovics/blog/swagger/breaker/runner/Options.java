@@ -9,4 +9,5 @@ public class Options {
 
     private String apiServer;
     private boolean uploadEnabled;
+    private String project;
 }

@@ -6,7 +6,7 @@ import com.arnoldgalovics.blog.swagger.breaker.core.BreakingChange;
 
 public class ApiClientMock implements ApiClient {
     @Override
-    public void upload(String apiServer, Collection<BreakingChange> breakingChanges) {
+    public void upload(Collection<BreakingChange> breakingChanges, String apiServer, String project) {
         // no implementation on purpose
     }
 }

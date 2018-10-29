@@ -8,6 +8,7 @@ public abstract class CliOptions {
 
     public static final String UPLOAD_ENABLED = "upload";
     public static final String API_SERVER = "api-server";
+    public static final String PROJECT = "project";
 
     public static String getAsCliOption(String option) {
         return "--" + option;
