@@ -12,14 +12,22 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class CliOptionsProvider {
     private final Collection<CliOptionHandler> handlers;
+    private final CliHelpProvider helpProvider;
     private final Environment environment;
 
     public Options provide() {
+        if (isHelpRequired()) {
+            throw new CliHelpException(helpProvider.getHelp());
+        }
         Options options = new Options();
         for (CliOptionHandler handler : handlers) {
             String property = environment.getProperty(handler.getHandledPropertyName());
             handler.handle(property, options);
         }
         return options;
+    }
+
+    private boolean isHelpRequired() {
+        return environment.getProperty(CliOptions.HELP) != null;
     }
 }

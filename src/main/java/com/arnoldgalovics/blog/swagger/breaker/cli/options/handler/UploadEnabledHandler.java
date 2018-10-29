@@ -21,4 +21,9 @@ public class UploadEnabledHandler implements CliOptionHandler {
     public String getHandledPropertyName() {
         return CliOptions.UPLOAD_ENABLED;
     }
+
+    @Override
+    public String getHelpMessage() {
+        return "Determines whether uploading is needed for an api-server";
+    }
 }

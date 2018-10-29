@@ -25,4 +25,9 @@ public class VerboseHandler implements CliOptionHandler {
     public String getHandledPropertyName() {
         return CliOptions.VERBOSE;
     }
+
+    @Override
+    public String getHelpMessage() {
+        return "Sets verbose logging";
+    }
 }

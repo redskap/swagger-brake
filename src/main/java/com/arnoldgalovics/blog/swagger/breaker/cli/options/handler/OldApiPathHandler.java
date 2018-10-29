@@ -19,4 +19,9 @@ class OldApiPathHandler implements CliOptionHandler {
     public String getHandledPropertyName() {
         return CliOptions.OLD_API_PATH;
     }
+
+    @Override
+    public String getHelpMessage() {
+        return "The absolute path of the old api file";
+    }
 }

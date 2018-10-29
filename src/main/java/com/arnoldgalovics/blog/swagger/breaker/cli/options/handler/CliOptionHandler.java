@@ -6,4 +6,6 @@ public interface CliOptionHandler {
     void handle(String propertyValue, Options options);
 
     String getHandledPropertyName();
+
+    String getHelpMessage();
 }

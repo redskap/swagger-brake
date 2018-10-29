@@ -19,4 +19,9 @@ public class ApiServerHandler implements CliOptionHandler {
     public String getHandledPropertyName() {
         return CliOptions.API_SERVER;
     }
+
+    @Override
+    public String getHelpMessage() {
+        return "Sets the api-server URL to upload the results";
+    }
 }

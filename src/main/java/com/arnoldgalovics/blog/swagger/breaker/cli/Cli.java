@@ -4,9 +4,9 @@ import static java.lang.System.out;
 
 import java.util.Collection;
 
+import com.arnoldgalovics.blog.swagger.breaker.cli.options.CliHelpException;
 import com.arnoldgalovics.blog.swagger.breaker.cli.options.CliOptions;
 import com.arnoldgalovics.blog.swagger.breaker.cli.options.CliOptionsProvider;
-import com.arnoldgalovics.blog.swagger.breaker.cli.options.handler.CliHelpException;
 import com.arnoldgalovics.blog.swagger.breaker.core.BreakingChange;
 import com.arnoldgalovics.blog.swagger.breaker.runner.Options;
 import com.arnoldgalovics.blog.swagger.breaker.runner.Runner;

@@ -19,4 +19,9 @@ class NewApiPathHandler implements CliOptionHandler {
     public String getHandledPropertyName() {
         return CliOptions.NEW_API_PATH;
     }
+
+    @Override
+    public String getHelpMessage() {
+        return "The absolute path of the new api file";
+    }
 }

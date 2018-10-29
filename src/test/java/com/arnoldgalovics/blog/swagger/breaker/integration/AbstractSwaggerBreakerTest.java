@@ -10,7 +10,7 @@ import com.arnoldgalovics.blog.swagger.breaker.runner.RunnerConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
-@ContextConfiguration(classes = {CoreConfiguration.class, RunnerConfiguration.class})
+@ContextConfiguration(classes = {CoreConfiguration.class, RunnerConfiguration.class, IntTestConfiguration.class})
 public abstract class AbstractSwaggerBreakerTest {
     @Autowired
     protected Runner underTest;
