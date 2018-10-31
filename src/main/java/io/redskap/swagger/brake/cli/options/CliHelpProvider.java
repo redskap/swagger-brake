@@ -17,7 +17,7 @@ public class CliHelpProvider {
 
     public String getHelp() {
         StringBuilder sb = new StringBuilder();
-        sb.append(format("Usage: java -jar swagger-breaker.jar %s=/home/user/something.yml %s=/home/user/something_v2.yml",
+        sb.append(format("Usage: java -jar swagger-brake.jar %s=/home/user/something.yaml %s=/home/user/something_v2.yaml",
             formatCliOption(CliOptions.OLD_API_PATH), formatCliOption(CliOptions.NEW_API_PATH)));
         sb.append(lineSeparator());
         sb.append(lineSeparator());
