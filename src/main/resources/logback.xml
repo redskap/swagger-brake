@@ -5,7 +5,7 @@
         </encoder>
     </appender>
 
-    <logger name="com.arnoldgalovics.blog.swagger.breaker" level="OFF" />
+    <logger name="io.redskap.swagger.brake" level="OFF" />
 
     <root level="OFF">
         <appender-ref ref="STDOUT" />
