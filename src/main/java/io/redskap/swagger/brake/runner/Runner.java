@@ -34,8 +34,7 @@ public class Runner {
         OpenAPI oldApi = loadApi(oldApiPath);
         OpenAPI newApi = loadApi(newApiPath);
         log.info("Successfully loaded APIs");
-        Collection<BreakingChange> breakingChanges = breakChecker.check(transformer.transform(oldApi), transformer.transform(newApi));
-        return breakingChanges;
+        return breakChecker.check(transformer.transform(oldApi), transformer.transform(newApi));
     }
 
     private OpenAPI loadApi(String apiPath) {
