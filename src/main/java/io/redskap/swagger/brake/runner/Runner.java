@@ -1,12 +1,7 @@
 package io.redskap.swagger.brake.runner;
 
-import static java.lang.System.err;
-import static java.lang.System.out;
-
 import java.util.Collection;
 
-import io.redskap.swagger.brake.api.ApiFacade;
-import io.redskap.swagger.brake.api.UploadException;
 import io.redskap.swagger.brake.core.BreakChecker;
 import io.redskap.swagger.brake.core.BreakingChange;
 import io.redskap.swagger.brake.core.model.Specification;
@@ -24,7 +19,6 @@ import org.springframework.stereotype.Component;
 public class Runner {
     private final Transformer<OpenAPI, Specification> transformer;
     private final BreakChecker breakChecker;
-    private final ApiFacade apiFacade;
 
     public Collection<BreakingChange> run(Options options) {
         String oldApiPath = options.getOldApiPath();
@@ -41,21 +35,7 @@ public class Runner {
         OpenAPI newApi = loadApi(newApiPath);
         log.info("Successfully loaded APIs");
         Collection<BreakingChange> breakingChanges = breakChecker.check(transformer.transform(oldApi), transformer.transform(newApi));
-        if (options.isUploadEnabled()) {
-            upload(options, breakingChanges);
-        }
         return breakingChanges;
-    }
-
-    private void upload(Options options, Collection<BreakingChange> breakingChanges) {
-        try {
-            out.println("Starting upload..");
-            apiFacade.upload(breakingChanges, options.getApiServer(), options.getProject());
-            out.println("Upload successful");
-        } catch (UploadException e) {
-            log.error("Uploading error", e);
-            err.println(e.getMessage());
-        }
     }
 
     private OpenAPI loadApi(String apiPath) {

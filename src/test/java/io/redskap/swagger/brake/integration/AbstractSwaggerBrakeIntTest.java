@@ -10,7 +10,7 @@ import io.redskap.swagger.brake.runner.RunnerConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
-@ContextConfiguration(classes = {CoreConfiguration.class, RunnerConfiguration.class, IntTestConfiguration.class})
+@ContextConfiguration(classes = {CoreConfiguration.class, RunnerConfiguration.class})
 public abstract class AbstractSwaggerBrakeIntTest {
     @Autowired
     protected Runner underTest;
