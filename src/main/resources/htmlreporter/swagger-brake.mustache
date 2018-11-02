@@ -1,0 +1,48 @@
+<html>
+<head>
+    <title>Analysis result</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <style>
+        #main-container {
+            padding: 10px;
+            width: 80%;
+            margin: auto;
+        }
+    </style>
+</head>
+    <body>
+        <div id="main-container">
+            <header>
+                {{#data.breakingChanges.size}}
+                    <div class="alert alert-danger">API is not backward compatible</div>
+                {{/data.breakingChanges.size}}
+                {{^data.breakingChanges.size}}
+                    <div class="alert alert-success">API is backward compatible</div>
+                {{/data.breakingChanges.size}}
+            </header>
+            <main id="breaking-changes-container">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Path</th>
+                            <th>Method</th>
+                            <th>Name</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {{#data.breakingChanges}}
+                        <tr>
+                            <td>{{path}}</td>
+                            <td>{{method}}</td>
+                            <td>{{name}}</td>
+                            <td>{{message}}</td>
+                        </tr>
+                    {{/data.breakingChanges}}
+                    </tbody>
+                </table>
+            </main>
+        </div>
+    </body>
+</html>

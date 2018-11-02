@@ -16,3 +16,5 @@ public class ReporterConfiguration {
         return objectMapper;
     }
 }
+
+
