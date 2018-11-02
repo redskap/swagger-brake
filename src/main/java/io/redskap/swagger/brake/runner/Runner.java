@@ -37,7 +37,7 @@ public class Runner {
         OpenAPI newApi = loadApi(newApiPath);
         log.info("Successfully loaded APIs");
         Collection<BreakingChange> breakingChanges = breakChecker.check(transformer.transform(oldApi), transformer.transform(newApi));
-        reporterFactory.create(options).report(breakingChanges);
+        reporterFactory.create(options).report(breakingChanges, options);
         return breakingChanges;
     }
 
