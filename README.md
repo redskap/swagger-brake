@@ -1,4 +1,4 @@
-# Swagger Brake
+# Swagger Brake [![Build Status](https://travis-ci.com/redskap/swagger-brake.svg?branch=master)](https://travis-ci.com/redskap/swagger-brake)
 The main focus of the project is to have a clear view whether any breaking change
 is getting introduced with the new version of a Swagger API definition.
 
