@@ -19,7 +19,7 @@ public class VerboseHandler implements CliOptionHandler {
         }
 
         if (propertyValue.isEmpty()) {
-            Logger logger = (Logger) LoggerFactory.getLogger("io.redksap.swagger.brake");
+            Logger logger = (Logger) LoggerFactory.getLogger("io.redskap.swagger.brake");
             logger.setLevel(Level.DEBUG);
         }
     }

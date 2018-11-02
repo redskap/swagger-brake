@@ -8,4 +8,6 @@ public class Options {
     private String newApiPath;
 
     private String project;
+    private OutputFormat outputFormat;
+    private String outputFilePath;
 }

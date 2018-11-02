@@ -6,6 +6,7 @@ import io.redskap.swagger.brake.core.BreakChecker;
 import io.redskap.swagger.brake.core.BreakingChange;
 import io.redskap.swagger.brake.core.model.Specification;
 import io.redskap.swagger.brake.core.model.transformer.Transformer;
+import io.redskap.swagger.brake.report.ReporterFactory;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.parser.OpenAPIV3Parser;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Component;
 public class Runner {
     private final Transformer<OpenAPI, Specification> transformer;
     private final BreakChecker breakChecker;
+    private final ReporterFactory reporterFactory;
 
     public Collection<BreakingChange> run(Options options) {
         String oldApiPath = options.getOldApiPath();
@@ -34,7 +36,9 @@ public class Runner {
         OpenAPI oldApi = loadApi(oldApiPath);
         OpenAPI newApi = loadApi(newApiPath);
         log.info("Successfully loaded APIs");
-        return breakChecker.check(transformer.transform(oldApi), transformer.transform(newApi));
+        Collection<BreakingChange> breakingChanges = breakChecker.check(transformer.transform(oldApi), transformer.transform(newApi));
+        reporterFactory.create(options).report(breakingChanges);
+        return breakingChanges;
     }
 
     private OpenAPI loadApi(String apiPath) {

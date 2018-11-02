@@ -6,9 +6,9 @@ public abstract class CliOptions {
     public static final String HELP = "help";
     public static final String VERBOSE = "verbose";
 
-    public static final String UPLOAD_ENABLED = "upload";
-    public static final String API_SERVER = "api-server";
     public static final String PROJECT = "project";
+    public static final String OUTPUT_FORMAT = "output-format";
+    public static final String OUTPUT_PATH = "output-path";
 
     public static String getAsCliOption(String option) {
         return "--" + option;
