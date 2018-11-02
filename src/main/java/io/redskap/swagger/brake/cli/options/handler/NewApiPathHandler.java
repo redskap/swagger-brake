@@ -10,7 +10,7 @@ class NewApiPathHandler implements CliOptionHandler {
     @Override
     public void handle(String propertyValue, Options options) {
         if (StringUtils.isBlank(propertyValue)) {
-            throw new IllegalStateException(CliOptions.getAsCliOption(getHandledPropertyName()) + " must be set");
+            throw new IllegalArgumentException(CliOptions.getAsCliOption(getHandledPropertyName()) + " must be set");
         }
         options.setNewApiPath(propertyValue);
     }
