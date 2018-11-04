@@ -21,8 +21,10 @@ public class Runner {
     private final Transformer<OpenAPI, Specification> transformer;
     private final BreakChecker breakChecker;
     private final ReporterFactory reporterFactory;
+    private final ArtifactDownloaderHandler artifactDownloaderHandler;
 
     public Collection<BreakingChange> run(Options options) {
+        artifactDownloaderHandler.handle(options);
         String oldApiPath = options.getOldApiPath();
         if (StringUtils.isBlank(oldApiPath)) {
             throw new IllegalArgumentException("oldApiPath must be provided");

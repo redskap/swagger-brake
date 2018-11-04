@@ -9,10 +9,9 @@ import org.springframework.stereotype.Component;
 class OldApiPathHandler implements CliOptionHandler {
     @Override
     public void handle(String propertyValue, Options options) {
-        if (StringUtils.isBlank(propertyValue)) {
-            throw new IllegalArgumentException(CliOptions.getAsCliOption(getHandledPropertyName()) + " must be set");
+        if (StringUtils.isNotBlank(propertyValue)) {
+            options.setOldApiPath(propertyValue);
         }
-        options.setOldApiPath(propertyValue);
     }
 
     @Override

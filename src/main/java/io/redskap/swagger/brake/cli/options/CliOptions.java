@@ -10,8 +10,7 @@ public abstract class CliOptions {
     public static final String OUTPUT_FORMAT = "output-format";
     public static final String OUTPUT_PATH = "output-path";
 
-    public static final String NEXUS_REPO_URL = "nexus-repo-url";
-    public static final String ARTIFACTORY_REPO_URL = "artifactory-repo-url";
+    public static final String MAVEN_REPO_URL = "maven-repo-url";
     public static final String ARTIFACT_ID = "artifactId";
     public static final String GROUP_ID = "groupId";
 

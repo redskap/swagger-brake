@@ -1,4 +1,4 @@
-package io.redskap.swagger.brake.maven;
+package io.redskap.swagger.brake.maven.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 

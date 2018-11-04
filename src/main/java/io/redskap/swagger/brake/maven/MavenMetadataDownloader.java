@@ -5,6 +5,7 @@ import java.net.URL;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
+import io.redskap.swagger.brake.maven.model.MavenMetadata;
 import org.springframework.stereotype.Component;
 
 @Component

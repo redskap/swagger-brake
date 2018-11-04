@@ -11,8 +11,7 @@ public class Options {
     private OutputFormat outputFormat;
     private String outputFilePath;
 
-    private String nexusRepoUrl;
-    private String artifactoryRepoUrl;
+    private String mavenRepoUrl;
     private String groupId;
     private String artifactId;
 }

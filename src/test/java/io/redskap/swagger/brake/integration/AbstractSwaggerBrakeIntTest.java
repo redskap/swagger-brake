@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import io.redskap.swagger.brake.core.BreakingChange;
 import io.redskap.swagger.brake.core.CoreConfiguration;
+import io.redskap.swagger.brake.maven.MavenConfiguration;
 import io.redskap.swagger.brake.report.ReporterConfiguration;
 import io.redskap.swagger.brake.runner.Options;
 import io.redskap.swagger.brake.runner.OutputFormat;
@@ -12,7 +13,7 @@ import io.redskap.swagger.brake.runner.RunnerConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
-@ContextConfiguration(classes = {CoreConfiguration.class, RunnerConfiguration.class, ReporterConfiguration.class})
+@ContextConfiguration(classes = {CoreConfiguration.class, RunnerConfiguration.class, ReporterConfiguration.class, MavenConfiguration.class})
 public abstract class AbstractSwaggerBrakeIntTest {
     @Autowired
     protected Runner underTest;

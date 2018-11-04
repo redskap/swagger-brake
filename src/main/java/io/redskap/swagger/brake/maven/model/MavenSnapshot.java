@@ -1,4 +1,4 @@
-package io.redskap.swagger.brake.maven;
+package io.redskap.swagger.brake.maven.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -6,11 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@XmlRootElement(name = "versioning")
+@XmlRootElement(name = "snapshot")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MavenVersioning {
-    private String latest;
-    private MavenSnapshot snapshot;
+public class MavenSnapshot {
+    private String timestamp;
+    private String buildNumber;
 }

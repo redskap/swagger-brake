@@ -6,17 +6,17 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class NexusRepoUrlHandler implements CliOptionHandler {
+public class MavenRepoUrlHandler implements CliOptionHandler {
     @Override
     public void handle(String propertyValue, Options options) {
         if (StringUtils.isNotBlank(propertyValue)) {
-            options.setNexusRepoUrl(propertyValue);
+            options.setMavenRepoUrl(propertyValue);
         }
     }
 
     @Override
     public String getHandledPropertyName() {
-        return CliOptions.NEXUS_REPO_URL;
+        return CliOptions.MAVEN_REPO_URL;
     }
 
     @Override
