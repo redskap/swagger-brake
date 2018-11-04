@@ -2,6 +2,8 @@ package io.redskap.swagger.brake.cli.options.handler;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.Appender;
 import io.redskap.swagger.brake.cli.options.CliOptions;
 import io.redskap.swagger.brake.runner.Options;
 import org.slf4j.LoggerFactory;
@@ -21,7 +23,14 @@ public class VerboseHandler implements CliOptionHandler {
         if (propertyValue.isEmpty()) {
             Logger logger = (Logger) LoggerFactory.getLogger("io.redskap.swagger.brake");
             logger.setLevel(Level.DEBUG);
+            logger.detachAppender("INFO_STDOUT");
+            logger.addAppender(getVerboseAppender());
         }
+    }
+
+    private Appender<ILoggingEvent> getVerboseAppender() {
+        Logger rootLogger = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+        return rootLogger.getAppender("VERBOSE_STDOUT");
     }
 
     @Override

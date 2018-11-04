@@ -20,10 +20,12 @@ import io.redskap.swagger.brake.report.json.JsonConverter;
 import io.redskap.swagger.brake.runner.Options;
 import io.redskap.swagger.brake.runner.OutputFormat;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class HtmlReporter implements Reporter {
     private static final String FILENAME = "swagger-brake.html";
     private final JsonConverter jsonConverter;
@@ -43,8 +45,9 @@ public class HtmlReporter implements Reporter {
             m.execute(sw, ImmutableMap.of("data", jsonConverter.toMap(data))).flush();
             String filePath = options.getOutputFilePath() + File.separator + FILENAME;
             fileWriter.write(filePath, sw.toString());
+            log.info("Report can be found at {}", filePath);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException("An exception occurred while writing the report file", e);
         }
     }
 

@@ -21,11 +21,11 @@ public class Cli {
             Options options = optionsProvider.provide();
             executor.run(options);
         } catch (CliHelpException e) {
-            System.err.println(e.getMessage());
+            log.info(e.getMessage());
         } catch (Exception e) {
             log.debug("Exception occured", e);
-            System.err.println(e.getMessage());
-            System.err.println("For help please use " + CliOptions.getAsCliOption(CliOptions.HELP));
+            log.info(e.getMessage());
+            log.info("For help please use " + CliOptions.getAsCliOption(CliOptions.HELP));
         }
     }
 }
