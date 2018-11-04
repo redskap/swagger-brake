@@ -31,7 +31,7 @@ public class CliHelpProvider {
     }
 
     private String formatPadCliOption(String option) {
-        return StringUtils.rightPad(formatCliOption(option), 15);
+        return StringUtils.rightPad(formatCliOption(option), 20);
     }
 
     private String formatCliOption(String option) {
