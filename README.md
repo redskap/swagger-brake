@@ -30,6 +30,44 @@ There were breaking API changes
 Path /pet/findByStatus GET has been deleted
 ```
 
+## Reporting
+There are multiple output formats for the results. 
+
+Three types are supported:
+- standard output
+- JSON
+- HTML
+
+It can be configured via the `--output-format` argument. The values can be `STDOUT`,`JSON`,`HTML`.
+For file types (e.g. `JSON`,`HTML`) it's necessary to set the `--output-path` argument as well, where
+to save the results.
+
+## Latest artifact resolution
+For easier CI integration, there is a possibility not to provide the old API path directly 
+but to resolve the latest artifact containing the Swagger definition file from any Maven2
+repository (including Nexus and Artifactory as well). This feature requires that  
+the API definition file is packed into a JAR.
+
+Using the functionality needs 3 parameters:
+- `--maven-repo-url`
+  - Specifies the repository base URL. Example: `https://oss.jfrog.org/oss-snapshot-local`
+- `--groupId`
+  - The groupId of the artifact 
+- `--artifactId`
+  - The artifactId
+
+Example command:
+```bash
+$ java -jar swagger-brake.jar --new-api=/home/user/petstore_v2.yaml --maven-repo-url=https://oss.jfrog.org/oss-snapshot-local --groupId=com.example --artifactId=petstore-api
+```
+
+The mechanism under the hood is to resolve the latest artifact based on the maven-metadata.xml
+for a given groupId and artifactId. After the latest version has been determined, it will be 
+downloaded to the temp directory. The downloaded JAR will be scanned for any of the following 
+files which will be used for providing the old API:
+- `swagger.json`
+- `swagger.yaml`
+- `swagger.yml`
 
 ## Building
 The application is using Gradle as a build system and building it can be done 
