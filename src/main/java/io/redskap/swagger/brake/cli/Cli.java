@@ -24,8 +24,8 @@ public class Cli {
             log.info(e.getMessage());
         } catch (Exception e) {
             log.debug("Exception occured", e);
-            log.info(e.getMessage());
-            log.info("For help please use " + CliOptions.getAsCliOption(CliOptions.HELP));
+            log.error(e.getMessage());
+            log.error("For help please use " + CliOptions.getAsCliOption(CliOptions.HELP));
         }
     }
 }
