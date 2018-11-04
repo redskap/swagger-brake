@@ -37,11 +37,11 @@ public class SwaggerFileJarResolver {
 
     private URL findSwaggerFile(File jarFile) throws IOException {
         return jarScanner.find(jarFile, this::isSwaggerFile)
-            .map(e -> getSwaggerFileURL(jarFile, e))
+            .map(e -> getSwaggerFileUrl(jarFile, e))
             .orElseThrow(() -> new IllegalStateException("Swagger file is not present in the artifact"));
     }
 
-    private URL getSwaggerFileURL(File jarFile, JarEntry entry) {
+    private URL getSwaggerFileUrl(File jarFile, JarEntry entry) {
         try {
             URLClassLoader urlClassLoader = new URLClassLoader(new URL[] {jarFile.toURI().toURL()});
             return urlClassLoader.getResource(entry.getName());
