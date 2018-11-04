@@ -7,7 +7,6 @@ public class Options {
     private String oldApiPath;
     private String newApiPath;
 
-    private String project;
     private OutputFormat outputFormat;
     private String outputFilePath;
 
