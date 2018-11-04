@@ -10,20 +10,25 @@ import java.nio.file.Files;
 import java.util.jar.JarEntry;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class SwaggerFileJarResolver {
     private final JarScanner jarScanner;
 
     public File resolve(File jarFile) {
         try {
+            log.debug("Attempting to resolve swagger file from external JAR {}", jarFile.getAbsolutePath());
             URL swaggerFile = findSwaggerFile(jarFile);
             String fileName = new File(swaggerFile.getFile()).getName();
             File destination = Files.createTempFile("swagger-brake", fileName).toFile();
+            log.debug("Extracting swagger file from {} to {}", swaggerFile, destination.getAbsolutePath());
             FileCopyUtils.copy(swaggerFile.openConnection().getInputStream(), new FileOutputStream(destination));
+            log.debug("Extraction done");
             return destination;
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -32,11 +37,11 @@ public class SwaggerFileJarResolver {
 
     private URL findSwaggerFile(File jarFile) throws IOException {
         return jarScanner.find(jarFile, this::isSwaggerFile)
-            .map(e -> get(jarFile, e))
+            .map(e -> getSwaggerFileURL(jarFile, e))
             .orElseThrow(() -> new IllegalStateException("Swagger file is not present in the artifact"));
     }
 
-    private URL get(File jarFile, JarEntry entry) {
+    private URL getSwaggerFileURL(File jarFile, JarEntry entry) {
         try {
             URLClassLoader urlClassLoader = new URLClassLoader(new URL[] {jarFile.toURI().toURL()});
             return urlClassLoader.getResource(entry.getName());
