@@ -45,7 +45,7 @@ to save the results.
 ## Latest artifact resolution
 For easier CI integration, there is a possibility not to provide the old API path directly 
 but to resolve the latest artifact containing the Swagger definition file from any Maven2
-repository (including Nexus and Artifactory as well). This feature requires that  
+repository (including Nexus and Artifactory as well). This feature requires that 
 the API definition file is packed into a JAR.
 
 Using the functionality needs 3 parameters:
