@@ -28,11 +28,35 @@ public class Schema {
         return Optional.ofNullable(schema);
     }
 
-    public Collection<String> getEnumValues() {
-        if (schema != null) {
-            return schema.getEnumValues();
+    public Collection<String> getEnums() {
+        Collection<SchemaAttribute> schemaAttrs = schemaAttributes;
+        if (CollectionUtils.isEmpty(schemaAttrs)) {
+            schemaAttrs = Optional.ofNullable(schema).map(Schema::getSchemaAttributes).orElse(Collections.emptyList());
         }
-        return enumValues;
+        Collection<String> result = internalGetEnums(schemaAttrs, "");
+        result.addAll(Optional.ofNullable(schema).map(Schema::getEnumValues).orElse(enumValues));
+        return result;
+    }
+
+    private Collection<String> internalGetEnums(Collection<SchemaAttribute> schemaAttributes, String levelName) {
+        Collection<String> result = schemaAttributes
+            .stream()
+            .filter(a -> a.getSchema() != null)
+            .map(a -> a.getSchema().getEnumValues().stream().map(e -> generateLeveledName(e, a.getName())).collect(toList()))
+            .flatMap(Collection::stream)
+            .collect(toList());
+
+        for (SchemaAttribute schemaAttribute : schemaAttributes) {
+            Schema childSchema = schemaAttribute.getSchema();
+            if (childSchema != null) {
+                Collection<SchemaAttribute> childSchemaAttributes = childSchema.getSchemaAttributes();
+                if (isEmpty(childSchemaAttributes)) {
+                    childSchemaAttributes = childSchema.getSchema().map(Schema::getSchemaAttributes).orElse(Collections.emptyList());
+                }
+                result.addAll(internalGetEnums(childSchemaAttributes, generateLeveledName(schemaAttribute.getName(), levelName)));
+            }
+        }
+        return result;
     }
 
     public Map<String, String> getTypes() {

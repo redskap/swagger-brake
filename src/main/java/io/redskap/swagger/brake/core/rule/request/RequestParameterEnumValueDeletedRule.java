@@ -30,8 +30,8 @@ public class RequestParameterEnumValueDeletedRule  implements BreakingChangeRule
                             Optional<Schema> schema = requestParameter.getSchema();
                             Optional<Schema> newSchema = newRequestParam.getSchema();
                             if (schema.isPresent() && newSchema.isPresent()) {
-                                Collection<String> oldEnumValues = schema.get().getEnumValues();
-                                Collection<String> newEnumValues = newSchema.get().getEnumValues();
+                                Collection<String> oldEnumValues = schema.get().getEnums();
+                                Collection<String> newEnumValues = newSchema.get().getEnums();
                                 for (String oldEnumValue : oldEnumValues) {
                                     if (!newEnumValues.contains(oldEnumValue)) {
                                         breakingChanges.add(
@@ -47,6 +47,4 @@ public class RequestParameterEnumValueDeletedRule  implements BreakingChangeRule
         }
         return breakingChanges;
     }
-
-
 }
