@@ -3,6 +3,9 @@ package io.redskap.swagger.brake.report;
 import static java.util.stream.Collectors.groupingBy;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -28,8 +31,13 @@ public class JsonReporter implements Reporter {
     public void report(Collection<BreakingChange> breakingChanges, Options options) {
         Map<String, List<BreakingChange>> nameMapping = breakingChanges.stream().collect(groupingBy(this::getBreakingChangeName));
         String json = jsonConverter.convert(nameMapping);
-        String filePath = options.getOutputFilePath() + File.separator + FILENAME;
-        fileWriter.write(filePath, json);
+        try {
+            Files.createDirectories(Paths.get(options.getOutputFilePath()));
+            String filePath = options.getOutputFilePath() + File.separator + FILENAME;
+            fileWriter.write(filePath, json);
+        } catch (IOException e) {
+            throw new RuntimeException("An exception occurred while writing the report file", e);
+        }
     }
 
     @Override

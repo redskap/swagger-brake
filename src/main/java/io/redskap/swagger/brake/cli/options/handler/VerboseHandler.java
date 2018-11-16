@@ -21,10 +21,13 @@ public class VerboseHandler implements CliOptionHandler {
         }
 
         if (propertyValue.isEmpty()) {
-            Logger logger = (Logger) LoggerFactory.getLogger("io.redskap.swagger.brake");
-            logger.setLevel(Level.DEBUG);
-            logger.detachAppender("INFO_STDOUT");
-            logger.addAppender(getVerboseAppender());
+            org.slf4j.Logger slf4jLogger = LoggerFactory.getLogger("io.redskap.swagger.brake");
+            if (slf4jLogger instanceof Logger) {
+                Logger logger = (Logger) slf4jLogger;
+                logger.setLevel(Level.DEBUG);
+                logger.detachAppender("INFO_STDOUT");
+                logger.addAppender(getVerboseAppender());
+            }
         }
     }
 

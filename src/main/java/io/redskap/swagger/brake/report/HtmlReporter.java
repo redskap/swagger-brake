@@ -3,6 +3,8 @@ package io.redskap.swagger.brake.report;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -43,6 +45,7 @@ public class HtmlReporter implements Reporter {
                 data.setBreakingChanges(tableRows);
             }
             m.execute(sw, ImmutableMap.of("data", jsonConverter.toMap(data))).flush();
+            Files.createDirectories(Paths.get(options.getOutputFilePath()));
             String filePath = options.getOutputFilePath() + File.separator + FILENAME;
             fileWriter.write(filePath, sw.toString());
             log.info("Report can be found at {}", filePath);
