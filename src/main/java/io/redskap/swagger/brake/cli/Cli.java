@@ -4,7 +4,7 @@ import io.redskap.swagger.brake.cli.options.CliHelpException;
 import io.redskap.swagger.brake.cli.options.CliOptions;
 import io.redskap.swagger.brake.cli.options.CliOptionsProvider;
 import io.redskap.swagger.brake.runner.Options;
-import io.redskap.swagger.brake.runner.Runner;
+import io.redskap.swagger.brake.runner.Starter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -14,12 +14,11 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class Cli {
     private final CliOptionsProvider optionsProvider;
-    private final Runner executor;
 
     public void start() {
         try {
             Options options = optionsProvider.provide();
-            executor.run(options);
+            Starter.start(options);
         } catch (CliHelpException e) {
             log.info(e.getMessage());
         } catch (Exception e) {
