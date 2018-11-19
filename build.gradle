@@ -6,9 +6,6 @@ buildscript {
         jcenter()
         mavenCentral()
     }
-    dependencies {
-        classpath 'com.github.jengelman.gradle.plugins:shadow:4.0.1'
-    }
 }
 
 repositories {
@@ -19,12 +16,10 @@ apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
-apply plugin: 'application'
-apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'signing'
 
+archivesBaseName = "swagger-brake"
 sourceCompatibility = 1.8
-
-mainClassName = 'io.redskap.swagger.brake.SwaggerBrakeMain'
 
 dependencies {
     compileOnly "org.projectlombok:lombok:1.18.2"
@@ -55,5 +50,67 @@ tasks.withType(FindBugs) {
     reports {
         xml.enabled false
         html.enabled true
+    }
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'Swagger Brake'
+                packaging 'jar'
+                description 'Swagger contract checker for breaking API changes'
+                url 'https://github.com/redskap/swagger-brake'
+
+                scm {
+                    connection 'scm:git:git://github.com/redskap/swagger-brake.git'
+                    developerConnection 'scm:git:ssh://github.com:redskap/swagger-brake.git'
+                    url 'https://github.com/redskap/swagger-brake'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'galovics'
+                        name 'Arnold Galovics'
+                        email 'info@arnoldgalovics.com'
+                    }
+                }
+            }
+        }
     }
 }
