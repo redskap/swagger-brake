@@ -6,6 +6,9 @@ buildscript {
         jcenter()
         mavenCentral()
     }
+    dependencies {
+        classpath "com.github.jengelman.gradle.plugins:shadow:4.0.2"
+    }
 }
 
 repositories {
@@ -67,6 +70,23 @@ artifacts {
     archives javadocJar, sourcesJar
 }
 
+
+
+//<editor-fold desc="Shadow Jar configuration">
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
+task shadowJar(type: ShadowJar) {
+    classifier = 'all'
+    from sourceSets.main.output
+    configurations = [project.configurations.runtime]
+    preserveFileTimestamps = false
+    manifest {
+        attributes 'Main-Class': 'io.redskap.swagger.brake.SwaggerBrakeMain'
+    }
+}
+//</editor-fold>
+
+//<editor-fold desc="Uploading to central">
 if (project.hasProperty('signing.keyId')) {
     signing {
         sign configurations.archives
@@ -118,3 +138,4 @@ if (project.hasProperty('ossrhUsername') && project.hasProperty('ossrhPassword')
         }
     }
 }
+//</editor-fold>
