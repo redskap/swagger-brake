@@ -7,8 +7,8 @@ import io.redskap.swagger.brake.core.BreakingChange;
 import io.redskap.swagger.brake.core.model.Specification;
 import io.redskap.swagger.brake.core.model.transformer.Transformer;
 import io.redskap.swagger.brake.report.ReporterFactory;
+import io.redskap.swagger.brake.runner.openapi.OpenApiFactory;
 import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.parser.OpenAPIV3Parser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -22,6 +22,7 @@ public class Runner {
     private final BreakChecker breakChecker;
     private final ReporterFactory reporterFactory;
     private final ArtifactDownloaderHandler artifactDownloaderHandler;
+    private final OpenApiFactory openApiFactory;
 
     public Collection<BreakingChange> run(Options options) {
         artifactDownloaderHandler.handle(options);
@@ -35,25 +36,13 @@ public class Runner {
         }
         log.info("Loading old API from {}", oldApiPath);
         log.info("Loading new API from {}", newApiPath);
-        OpenAPI oldApi = loadApi(oldApiPath);
-        OpenAPI newApi = loadApi(newApiPath);
+        OpenAPI oldApi = openApiFactory.fromFile(oldApiPath);
+        OpenAPI newApi = openApiFactory.fromFile(newApiPath);
         log.info("Successfully loaded APIs");
         log.info("Starting the check for breaking API changes");
         Collection<BreakingChange> breakingChanges = breakChecker.check(transformer.transform(oldApi), transformer.transform(newApi));
         log.info("Check is finished");
         reporterFactory.create(options).report(breakingChanges, options);
         return breakingChanges;
-    }
-
-    private OpenAPI loadApi(String apiPath) {
-        try {
-            OpenAPI loadedApi = new OpenAPIV3Parser().read(apiPath);
-            if (loadedApi == null) {
-                throw new IllegalStateException("API cannot be loaded from path " + apiPath);
-            }
-            return loadedApi;
-        } catch (Exception e) {
-            throw new IllegalStateException("API cannot be loaded from path " + apiPath);
-        }
     }
 }
