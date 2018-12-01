@@ -21,6 +21,10 @@ apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
 apply plugin: 'signing'
 
+checkstyle {
+    toolVersion = '8.14'
+}
+
 archivesBaseName = "swagger-brake"
 sourceCompatibility = 1.8
 

@@ -1,6 +1,5 @@
 package io.redskap.swagger.brake.cli.options.handler;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 import io.redskap.swagger.brake.runner.Options;
