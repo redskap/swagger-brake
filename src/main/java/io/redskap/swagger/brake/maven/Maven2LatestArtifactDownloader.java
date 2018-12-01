@@ -11,18 +11,18 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class Maven2LatestArtifactDownloader implements LatestArtifactDownloader {
+class Maven2LatestArtifactDownloader implements LatestArtifactDownloader {
     private final MavenMetadataDownloader metadataDownloader;
     private final TemporaryJarFileDownloader temporaryJarFileDownloader;
 
     @Override
-    public File download(String repoUrl, String groupId, String artifactId) {
-        String groupPath = groupId.replaceAll("\\.", "/");
-        String artifactBaseUrl = format("%s/%s/%s", repoUrl, groupPath, artifactId);
+    public File download(DownloadOptions options) {
+        String groupPath = options.getGroupId().replaceAll("\\.", "/");
+        String artifactBaseUrl = format("%s/%s/%s", options.getRepoUrl(), groupPath, options.getArtifactId());
         String latestVersion = getLatestArtifactVersion(artifactBaseUrl);
-        String latestSnapshotName = getLatestSnapshotName(artifactId, artifactBaseUrl, latestVersion);
+        String latestSnapshotName = getLatestSnapshotName(options.getArtifactId(), artifactBaseUrl, latestVersion);
         String latestArtifactUrl = format("%s/%s/%s.jar", artifactBaseUrl, latestVersion, latestSnapshotName);
-        return temporaryJarFileDownloader.download(groupId, artifactId, latestVersion, latestArtifactUrl);
+        return temporaryJarFileDownloader.download(options.getGroupId(), options.getArtifactId(), latestVersion, latestArtifactUrl);
     }
 
     private String getLatestSnapshotName(String artifactId, String artifactUrl, String latestVersion) {

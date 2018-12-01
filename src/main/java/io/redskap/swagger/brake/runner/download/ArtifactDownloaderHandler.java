@@ -1,11 +1,13 @@
-package io.redskap.swagger.brake.runner;
+package io.redskap.swagger.brake.runner.download;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 import java.io.File;
 
+import io.redskap.swagger.brake.maven.DownloadOptions;
 import io.redskap.swagger.brake.maven.LatestArtifactDownloaderFactory;
 import io.redskap.swagger.brake.maven.jar.SwaggerFileJarResolver;
+import io.redskap.swagger.brake.runner.Options;
 import io.redskap.swagger.brake.runner.exception.LatestArtifactDownloadException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Component;
 public class ArtifactDownloaderHandler {
     private final LatestArtifactDownloaderFactory downloaderFactory;
     private final SwaggerFileJarResolver swaggerFileResolver;
+    private final DownloadOptionsFactory downloadOptionsFactory;
 
     public void handle(Options options) {
         if (isLatestArtifactDownloadEnabled(options)) {
@@ -25,7 +28,8 @@ public class ArtifactDownloaderHandler {
             String artifactId = options.getArtifactId();
             try {
                 log.info("Downloading latest artifact from repository '{}' with groupId '{}' artifactId '{}'", url, groupId, artifactId);
-                File apiJar = downloaderFactory.create(options).download(url, groupId, artifactId);
+                DownloadOptions downloadOptions = downloadOptionsFactory.create(url, groupId, artifactId, "", "");
+                File apiJar = downloaderFactory.create(options).download(downloadOptions);
                 File swaggerFile = swaggerFileResolver.resolve(apiJar);
                 options.setOldApiPath(swaggerFile.getAbsolutePath());
             } catch (Exception e) {

@@ -7,6 +7,7 @@ import io.redskap.swagger.brake.core.BreakingChange;
 import io.redskap.swagger.brake.core.model.Specification;
 import io.redskap.swagger.brake.core.model.transformer.Transformer;
 import io.redskap.swagger.brake.report.ReporterFactory;
+import io.redskap.swagger.brake.runner.download.ArtifactDownloaderHandler;
 import io.redskap.swagger.brake.runner.openapi.OpenApiFactory;
 import io.swagger.v3.oas.models.OpenAPI;
 import lombok.RequiredArgsConstructor;

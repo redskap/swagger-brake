@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class LatestArtifactDownloaderFactory {
-    private final Maven2LatestArtifactDownloader nexusDownloader;
+    private final Maven2LatestArtifactDownloader mavenDownloader;
 
     public LatestArtifactDownloader create(Options options) {
         if (StringUtils.isNotBlank(options.getMavenRepoUrl())) {
-            return nexusDownloader;
+            return mavenDownloader;
         } else {
             throw new RuntimeException("Cannot create downloader");
         }

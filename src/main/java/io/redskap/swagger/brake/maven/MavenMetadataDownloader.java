@@ -12,8 +12,8 @@ import io.redskap.swagger.brake.util.ExceptionUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MavenMetadataDownloader {
-    public MavenMetadata download(String baseUrl) {
+class MavenMetadataDownloader {
+    MavenMetadata download(String baseUrl) {
         String metadataUrl = baseUrl + "/maven-metadata.xml";
         try {
             URL url = new URL(metadataUrl);

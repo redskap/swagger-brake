@@ -33,9 +33,13 @@ public class Maven2LatestArtifactDownloaderTest {
         String repoUrl = "https://oss.sonatype.org/content/repositories/snapshots";
         String groupId = "org.spockframework";
         String artifactId = "spock-core";
+        DownloadOptions downloadOptions = new DownloadOptions();
+        downloadOptions.setRepoUrl(repoUrl);
+        downloadOptions.setGroupId(groupId);
+        downloadOptions.setArtifactId(artifactId);
+
         String latestVersion = "1.3-groovy-2.5-SNAPSHOT";
-        MavenMetadata artifactMetadata = new MavenMetadata(groupId, artifactId,
-            new MavenVersioning(latestVersion, null));
+        MavenMetadata artifactMetadata = new MavenMetadata(groupId, artifactId, new MavenVersioning(latestVersion, null));
         String snapshotTimestamp = "20181102.135329";
         String snapshotBuildNumber = "25";
         MavenMetadata latestArtifactMetadata = new MavenMetadata(groupId, artifactId,
@@ -47,7 +51,7 @@ public class Maven2LatestArtifactDownloaderTest {
         given(temporaryJarFileDownloader.download(groupId, artifactId, latestVersion,
             format("%s/%s/%s/%s/spock-core-1.3-groovy-2.5-20181102.135329-25.jar", repoUrl, groupIdWithSlashes, artifactId, latestVersion))).willReturn(expectedFile);
         // when
-        File result = underTest.download(repoUrl, groupId, artifactId);
+        File result = underTest.download(downloadOptions);
         // then
         assertThat(result).isEqualTo(expectedFile);
     }

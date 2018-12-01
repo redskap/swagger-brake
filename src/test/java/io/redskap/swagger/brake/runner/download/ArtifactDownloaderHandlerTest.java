@@ -1,15 +1,18 @@
-package io.redskap.swagger.brake.runner;
+package io.redskap.swagger.brake.runner.download;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import java.io.File;
 
+import io.redskap.swagger.brake.maven.DownloadOptions;
 import io.redskap.swagger.brake.maven.LatestArtifactDownloader;
 import io.redskap.swagger.brake.maven.LatestArtifactDownloaderFactory;
 import io.redskap.swagger.brake.maven.jar.SwaggerFileJarResolver;
+import io.redskap.swagger.brake.runner.Options;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -23,6 +26,9 @@ public class ArtifactDownloaderHandlerTest {
 
     @Mock
     private SwaggerFileJarResolver swaggerFileResolver;
+
+    @Mock
+    private DownloadOptionsFactory downloadOptionsFactory;
 
     @InjectMocks
     private ArtifactDownloaderHandler underTest;
@@ -46,6 +52,11 @@ public class ArtifactDownloaderHandlerTest {
         String artifactId = "artifactId";
         String mavenRepoUrl = "mavenRepoUrl";
 
+        DownloadOptions downloadOptions = new DownloadOptions();
+        downloadOptions.setRepoUrl(mavenRepoUrl);
+        downloadOptions.setGroupId(groupId);
+        downloadOptions.setArtifactId(artifactId);
+
         Options options = new Options();
         options.setNewApiPath("newApi");
         options.setGroupId(groupId);
@@ -56,8 +67,9 @@ public class ArtifactDownloaderHandlerTest {
         File mockSwaggerFile = mock(File.class);
         String swaggerFilePath = "absoluteSwaggerFilePath";
         LatestArtifactDownloader downloader = mock(LatestArtifactDownloader.class);
+        given(downloadOptionsFactory.create(anyString(), anyString(), anyString(), anyString(), anyString())).willReturn(downloadOptions);
         given(downloaderFactory.create(options)).willReturn(downloader);
-        given(downloader.download(mavenRepoUrl, groupId, artifactId)).willReturn(mockDownloadedFile);
+        given(downloader.download(downloadOptions)).willReturn(mockDownloadedFile);
         given(swaggerFileResolver.resolve(mockDownloadedFile)).willReturn(mockSwaggerFile);
         given(mockSwaggerFile.getAbsolutePath()).willReturn(swaggerFilePath);
         // when

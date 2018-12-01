@@ -9,8 +9,8 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TemporaryJarFileDownloader {
-    public File download(String groupId, String artifactId, String version, String url) {
+class TemporaryJarFileDownloader {
+    File download(String groupId, String artifactId, String version, String url) {
         try {
             File destination = Files.createTempFile("swagger-brake", groupId + "-" + artifactId + "-" + version + ".jar").toFile();
             FileUtils.copyURLToFile(new URL(url), destination);

@@ -13,4 +13,6 @@ public class Options {
     private String mavenRepoUrl;
     private String groupId;
     private String artifactId;
+    private String mavenRepoUsername;
+    private String mavenRepoPassword;
 }
