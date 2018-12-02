@@ -1,7 +1,6 @@
 package io.redskap.swagger.brake.runner.download;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -51,23 +50,30 @@ public class ArtifactDownloaderHandlerTest {
         String groupId = "groupId";
         String artifactId = "artifactId";
         String mavenRepoUrl = "mavenRepoUrl";
+        String mavenRepoUsername = "username";
+        String mavenRepoPassword = "password";
 
         DownloadOptions downloadOptions = new DownloadOptions();
         downloadOptions.setRepoUrl(mavenRepoUrl);
         downloadOptions.setGroupId(groupId);
         downloadOptions.setArtifactId(artifactId);
+        downloadOptions.setUsername(mavenRepoUsername);
+        downloadOptions.setPassword(mavenRepoPassword);
+
 
         Options options = new Options();
         options.setNewApiPath("newApi");
         options.setGroupId(groupId);
         options.setArtifactId(artifactId);
         options.setMavenRepoUrl(mavenRepoUrl);
+        options.setMavenRepoUsername(mavenRepoUsername);
+        options.setMavenRepoPassword(mavenRepoPassword);
 
         File mockDownloadedFile = mock(File.class);
         File mockSwaggerFile = mock(File.class);
         String swaggerFilePath = "absoluteSwaggerFilePath";
         LatestArtifactDownloader downloader = mock(LatestArtifactDownloader.class);
-        given(downloadOptionsFactory.create(anyString(), anyString(), anyString(), anyString(), anyString())).willReturn(downloadOptions);
+        given(downloadOptionsFactory.create(mavenRepoUrl, groupId, artifactId, mavenRepoUsername, mavenRepoPassword)).willReturn(downloadOptions);
         given(downloaderFactory.create(options)).willReturn(downloader);
         given(downloader.download(downloadOptions)).willReturn(mockDownloadedFile);
         given(swaggerFileResolver.resolve(mockDownloadedFile)).willReturn(mockSwaggerFile);

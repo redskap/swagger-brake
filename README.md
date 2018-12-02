@@ -61,6 +61,13 @@ Example command:
 $ java -jar swagger-brake.jar --new-api=/home/user/petstore_v2.yaml --maven-repo-url=https://oss.jfrog.org/oss-snapshot-local --groupId=com.example --artifactId=petstore-api
 ```
 
+#### Secured Maven repository
+It's also possible that the repository is secured with username and password. The following
+2 parameters can be used to provide the credentials to access the repository:
+- `--maven-repo-username`
+- `--maven-repo-password`
+
+#### Implementation details
 The mechanism under the hood is to resolve the latest artifact based on the maven-metadata.xml
 for a given groupId and artifactId. After the latest version has been determined, it will be 
 downloaded to the temp directory. The downloaded JAR will be scanned for any of the following 

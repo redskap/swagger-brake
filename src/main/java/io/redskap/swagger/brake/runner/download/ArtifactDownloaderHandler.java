@@ -6,6 +6,7 @@ import java.io.File;
 
 import io.redskap.swagger.brake.maven.DownloadOptions;
 import io.redskap.swagger.brake.maven.LatestArtifactDownloaderFactory;
+import io.redskap.swagger.brake.maven.http.UnauthorizedException;
 import io.redskap.swagger.brake.maven.jar.SwaggerFileJarResolver;
 import io.redskap.swagger.brake.runner.Options;
 import io.redskap.swagger.brake.runner.exception.LatestArtifactDownloadException;
@@ -24,14 +25,18 @@ public class ArtifactDownloaderHandler {
     public void handle(Options options) {
         if (isLatestArtifactDownloadEnabled(options)) {
             String url = options.getMavenRepoUrl();
+            String username = options.getMavenRepoUsername();
+            String password = options.getMavenRepoPassword();
             String groupId = options.getGroupId();
             String artifactId = options.getArtifactId();
             try {
                 log.info("Downloading latest artifact from repository '{}' with groupId '{}' artifactId '{}'", url, groupId, artifactId);
-                DownloadOptions downloadOptions = downloadOptionsFactory.create(url, groupId, artifactId, "", "");
+                DownloadOptions downloadOptions = downloadOptionsFactory.create(url, groupId, artifactId, username, password);
                 File apiJar = downloaderFactory.create(options).download(downloadOptions);
                 File swaggerFile = swaggerFileResolver.resolve(apiJar);
                 options.setOldApiPath(swaggerFile.getAbsolutePath());
+            } catch (UnauthorizedException e) {
+                throw new LatestArtifactDownloadException("Cannot access Maven repository due to insufficient privileges. Consider providing username and password.", e);
             } catch (Exception e) {
                 throw new LatestArtifactDownloadException("Error while downloading the latest version of the artifact", e);
             }
