@@ -1,10 +1,9 @@
 package io.redskap.swagger.brake.core.model.transformer;
 
 import static java.util.stream.Collectors.toList;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import io.redskap.swagger.brake.core.model.Schema;
 import io.redskap.swagger.brake.core.model.SchemaAttribute;
@@ -14,7 +13,6 @@ import io.redskap.swagger.brake.core.model.service.TypeRefNameResolver;
 import io.swagger.v3.oas.models.media.ArraySchema;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -24,7 +22,11 @@ public class SchemaTransformer implements Transformer<io.swagger.v3.oas.models.m
 
     @Override
     public Schema transform(io.swagger.v3.oas.models.media.Schema from) {
-        return internalTransform(from);
+        try {
+            return internalTransform(from);
+        } finally {
+            SeenRefHolder.clear();
+        }
     }
 
     private Schema internalTransform(io.swagger.v3.oas.models.media.Schema swSchema) {
@@ -40,8 +42,10 @@ public class SchemaTransformer implements Transformer<io.swagger.v3.oas.models.m
     }
 
     private Schema transformSchema(io.swagger.v3.oas.models.media.Schema swSchema) {
-        if (!StringUtils.isBlank(swSchema.get$ref())) {
-            io.swagger.v3.oas.models.media.Schema resolvedSchema = getSchemaForRef(swSchema.get$ref());
+        String ref = swSchema.get$ref();
+        if (isNotBlank(ref) && SeenRefHolder.isNotSeen(ref)) {
+            io.swagger.v3.oas.models.media.Schema resolvedSchema = getSchemaForRef(ref);
+            SeenRefHolder.store(ref);
             return internalTransform(resolvedSchema);
         }
 
@@ -79,5 +83,37 @@ public class SchemaTransformer implements Transformer<io.swagger.v3.oas.models.m
             return null;
         }
         return schemaStore.get(refName).orElseThrow(() -> new IllegalStateException("Reference not found for " + refName));
+    }
+
+    /*
+     * The purpose of this class is to keep track of already seen schema references to avoid recursive schemas breaking the functionality.
+     */
+    private static class SeenRefHolder {
+        private static final ThreadLocal<Collection<String>> HOLDER = new ThreadLocal<>();
+
+        private static Collection<String> get() {
+            Collection<String> seenRefs = HOLDER.get();
+            if (seenRefs == null) {
+                seenRefs = new HashSet<>();
+                HOLDER.set(seenRefs);
+            }
+            return seenRefs;
+        }
+
+        static boolean isSeen(String refName) {
+            return get().contains(refName);
+        }
+
+        static boolean isNotSeen(String refName) {
+            return !isSeen(refName);
+        }
+
+        static void store(String refName) {
+            get().add(refName);
+        }
+
+        static void clear() {
+            HOLDER.remove();
+        }
     }
 }
