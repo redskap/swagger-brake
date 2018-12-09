@@ -1,0 +1,42 @@
+openapi: 3.0.0
+info:
+  title: EXAMPLE
+  version: '1'
+paths:
+  /actuator/info:
+    get:
+      tags:
+      - operation-handler
+      summary: handle
+      operationId: handleUsingGET_1
+      responses:
+        '200':
+          description: OK
+          responseSchema:
+            type: object
+          content:
+            application/json:
+              schema:
+                type: object
+            application/vnd.spring-boot.actuator.v2+json:
+              schema:
+                type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+      requestBody:
+        $ref: '#/components/requestBodies/handleUsingGETBody'
+components:
+  requestBodies:
+    handleUsingGETBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties:
+              type: string
+      description: body
