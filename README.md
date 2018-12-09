@@ -12,6 +12,13 @@ The following changes are classified as breaking:
 The tool is very useful in case it's necessary not to introduce any backward
 incompatible API change unintentionally.
 
+On top of the CLI, there are Maven and Gradle plugins also available for 
+easier integration into any existing pipeline.
+
+Maven plugin can be found [here](https://github.com/redskap/swagger-brake-maven-plugin).
+
+Gradle plugin can be found [here](https://github.com/redskap/swagger-brake-gradle).
+
 ## Usage
 The check can be started by executing the following command:
 ```bash
