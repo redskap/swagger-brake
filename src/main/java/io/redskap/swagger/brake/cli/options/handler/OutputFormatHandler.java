@@ -2,10 +2,13 @@ package io.redskap.swagger.brake.cli.options.handler;
 
 import static java.lang.String.format;
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
+import com.google.common.collect.ImmutableSet;
 import io.redskap.swagger.brake.cli.options.CliOptions;
 import io.redskap.swagger.brake.runner.Options;
 import io.redskap.swagger.brake.runner.OutputFormat;
@@ -18,17 +21,18 @@ import org.springframework.stereotype.Component;
 public class OutputFormatHandler implements CliOptionHandler {
     @Override
     public void handle(String propertyValue, Options options) {
-        OutputFormat format = OutputFormat.STDOUT;
+        Set<OutputFormat> formats = ImmutableSet.of(OutputFormat.STDOUT);
 
         if (!StringUtils.isBlank(propertyValue)) {
             try {
-                format = OutputFormat.valueOf(propertyValue.toUpperCase());
+                String[] formatStrings = propertyValue.split(",");
+                formats = Arrays.stream(formatStrings).map(String::trim).map(String::toUpperCase).map(OutputFormat::valueOf).collect(toSet());
             } catch (IllegalArgumentException e) {
                 log.debug("Format cannot be resolved", e);
             }
         }
 
-        options.setOutputFormat(format);
+        options.setOutputFormats(ImmutableSet.copyOf(formats));
     }
 
     @Override

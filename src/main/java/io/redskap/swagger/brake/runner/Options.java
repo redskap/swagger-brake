@@ -1,5 +1,8 @@
 package io.redskap.swagger.brake.runner;
 
+import java.util.Collections;
+import java.util.Set;
+
 import lombok.Data;
 
 @Data
@@ -7,7 +10,7 @@ public class Options {
     private String oldApiPath;
     private String newApiPath;
 
-    private OutputFormat outputFormat;
+    private Set<OutputFormat> outputFormats = Collections.emptySet();
     private String outputFilePath;
 
     private String mavenRepoUrl;

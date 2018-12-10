@@ -1,6 +1,7 @@
 package io.redskap.swagger.brake.report;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import io.redskap.swagger.brake.runner.Options;
 import io.redskap.swagger.brake.runner.OutputFormat;
@@ -10,11 +11,14 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class ReporterFactory {
-    private final StdOutReporter stdOutReporter;
-    private final Collection<Reporter> reporters;
+    private final Collection<CheckableReporter> reporters;
 
     public Reporter create(Options options) {
-        OutputFormat outputFormat = options.getOutputFormat();
-        return reporters.stream().filter(r -> r.canReport(outputFormat)).findAny().orElse(stdOutReporter);
+        Collection<Reporter> reporters = options.getOutputFormats().stream().map(this::findReporter).collect(Collectors.toList());
+        return new CompositeReporter(reporters);
+    }
+
+    private Reporter findReporter(OutputFormat outputFormat) {
+        return reporters.stream().filter(r -> r.canReport(outputFormat)).findAny().orElseThrow(() -> new RuntimeException("Reporter cannot be found for format " + outputFormat));
     }
 }

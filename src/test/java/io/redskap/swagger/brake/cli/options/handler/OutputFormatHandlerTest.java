@@ -1,5 +1,6 @@
 package io.redskap.swagger.brake.cli.options.handler;
 
+import static com.google.common.collect.ImmutableSet.of;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import io.redskap.swagger.brake.runner.Options;
@@ -16,7 +17,7 @@ public class OutputFormatHandlerTest {
         // when
         underTest.handle(null, options);
         // then
-        assertThat(options.getOutputFormat()).isEqualTo(OutputFormat.STDOUT);
+        assertThat(options.getOutputFormats()).isEqualTo(of(OutputFormat.STDOUT));
     }
 
     @Test
@@ -26,7 +27,7 @@ public class OutputFormatHandlerTest {
         // when
         underTest.handle("", options);
         // then
-        assertThat(options.getOutputFormat()).isEqualTo(OutputFormat.STDOUT);
+        assertThat(options.getOutputFormats()).isEqualTo(of(OutputFormat.STDOUT));
     }
 
     @Test
@@ -36,7 +37,7 @@ public class OutputFormatHandlerTest {
         // when
         underTest.handle("something", options);
         // then
-        assertThat(options.getOutputFormat()).isEqualTo(OutputFormat.STDOUT);
+        assertThat(options.getOutputFormats()).isEqualTo(of(OutputFormat.STDOUT));
     }
 
     @Test
@@ -46,16 +47,37 @@ public class OutputFormatHandlerTest {
         // when
         underTest.handle("stdout", options);
         // then
-        assertThat(options.getOutputFormat()).isEqualTo(OutputFormat.STDOUT);
+        assertThat(options.getOutputFormats()).isEqualTo(of(OutputFormat.STDOUT));
     }
 
     @Test
-    public void testHandleShouldSetFormatToStandardOutWhenPropertyValueIsJson() {
+    public void testHandleShouldSetFormatToJsonWhenPropertyValueIsJson() {
         // given
         Options options = new Options();
         // when
         underTest.handle("json", options);
         // then
-        assertThat(options.getOutputFormat()).isEqualTo(OutputFormat.JSON);
+        assertThat(options.getOutputFormats()).isEqualTo(of(OutputFormat.JSON));
+    }
+
+    @Test
+    public void testHandleShouldSetFormatToJsonAndHtmlWhenValueIsJsonCommaHtml() {
+        // given
+        Options options = new Options();
+        // when
+        underTest.handle("json,html", options);
+        // then
+        assertThat(options.getOutputFormats()).isEqualTo(of(OutputFormat.HTML, OutputFormat.JSON));
+    }
+
+
+    @Test
+    public void testHandleShouldSetFormatToJsonAndHtmlWhenValueIsJsonCommaHtmlWithSpaces() {
+        // given
+        Options options = new Options();
+        // when
+        underTest.handle("json,       html", options);
+        // then
+        assertThat(options.getOutputFormats()).isEqualTo(of(OutputFormat.HTML, OutputFormat.JSON));
     }
 }

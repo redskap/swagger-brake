@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class HtmlReporter extends AbstractFileReporter {
+public class HtmlReporter extends AbstractFileReporter implements CheckableReporter {
     private static final String FILENAME = "swagger-brake.html";
     private final JsonConverter jsonConverter;
     private final MustacheContentResolver mustacheContentResolver;

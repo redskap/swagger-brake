@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class JsonReporter extends AbstractFileReporter {
+public class JsonReporter extends AbstractFileReporter implements CheckableReporter {
     private static final String FILENAME = "swagger-brake.json";
     private final JsonConverter jsonConverter;
 
