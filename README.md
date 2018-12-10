@@ -49,6 +49,11 @@ It can be configured via the `--output-format` argument. The values can be `STDO
 For file types (e.g. `JSON`,`HTML`) it's necessary to set the `--output-path` argument as well, where
 to save the results.
 
+Multiple reporters can be set up at the same time by separating the types with commas:
+```bash
+--output-format=JSON,HTML
+```
+
 ## Latest artifact resolution
 For easier CI integration, there is a possibility not to provide the old API path directly 
 but to resolve the latest artifact containing the Swagger definition file from any Maven2
