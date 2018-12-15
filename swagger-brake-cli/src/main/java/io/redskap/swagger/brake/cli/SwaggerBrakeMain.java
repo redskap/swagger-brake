@@ -1,4 +1,4 @@
-package io.redskap.swagger.brake;
+package io.redskap.swagger.brake.cli;
 
 import io.redskap.swagger.brake.cli.Cli;
 import io.redskap.swagger.brake.cli.CliConfiguration;

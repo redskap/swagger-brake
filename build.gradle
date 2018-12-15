@@ -6,141 +6,49 @@ buildscript {
         jcenter()
         mavenCentral()
     }
-    dependencies {
-        classpath "com.github.jengelman.gradle.plugins:shadow:4.0.2"
-    }
 }
 
 repositories {
     mavenCentral()
 }
 
-apply plugin: 'java'
-apply plugin: 'maven'
-apply plugin: 'checkstyle'
-apply plugin: 'findbugs'
-apply plugin: 'signing'
+subprojects {
+    group = rootProject.group
+    version = rootProject.version
 
-checkstyle {
-    toolVersion = '8.14'
-}
+    apply plugin: 'java'
+    apply plugin: 'maven'
+    apply plugin: 'checkstyle'
+    apply plugin: 'findbugs'
 
-archivesBaseName = "swagger-brake"
-sourceCompatibility = 1.8
+    sourceCompatibility = 1.8
 
-dependencies {
-    compileOnly "org.projectlombok:lombok:1.18.2"
+    dependencies {
+        compileOnly "org.projectlombok:lombok:1.18.2"
 
-    compile "org.springframework:spring-context:5.1.1.RELEASE"
-    compile "org.apache.commons:commons-collections4:4.2"
-    compile "io.swagger.parser.v3:swagger-parser:2.0.5"
-    compile "ch.qos.logback:logback-core:1.2.3"
-    compile "ch.qos.logback:logback-classic:1.2.3"
-    compile "com.fasterxml.jackson.core:jackson-databind:2.9.7"
-    compile "com.github.spullara.mustache.java:compiler:0.9.5"
-    compile "org.apache.httpcomponents:httpclient:4.5.6"
+        compile "org.springframework:spring-context:5.1.1.RELEASE"
 
-
-    testCompile "junit:junit:4.12"
-    testCompile "org.assertj:assertj-core:3.11.1"
-    testCompile "org.springframework:spring-test:5.1.1.RELEASE"
-    testCompile "org.mockito:mockito-core:2.23.0"
-}
-
-tasks.withType(Checkstyle) {
-    reports {
-        xml.enabled false
-        html.enabled true
+        testCompile "junit:junit:4.12"
+        testCompile "org.assertj:assertj-core:3.11.1"
+        testCompile "org.springframework:spring-test:5.1.1.RELEASE"
+        testCompile "org.mockito:mockito-core:2.23.0"
     }
-}
 
-tasks.withType(FindBugs) {
-    reports {
-        xml.enabled false
-        html.enabled true
+    checkstyle {
+        toolVersion = '8.14'
     }
-}
 
-task javadocJar(type: Jar) {
-    classifier = 'javadoc'
-    from javadoc
-}
-
-task sourcesJar(type: Jar) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-artifacts {
-    archives javadocJar, sourcesJar
-}
-
-
-
-//<editor-fold desc="Shadow Jar configuration">
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-
-task shadowJar(type: ShadowJar) {
-    classifier = 'all'
-    from sourceSets.main.output
-    configurations = [project.configurations.runtime]
-    preserveFileTimestamps = false
-    manifest {
-        attributes 'Main-Class': 'io.redskap.swagger.brake.SwaggerBrakeMain'
+    tasks.withType(Checkstyle) {
+        reports {
+            xml.enabled false
+            html.enabled true
+        }
     }
-}
-//</editor-fold>
 
-//<editor-fold desc="Uploading to central">
-if (project.hasProperty('signing.keyId')) {
-    signing {
-        sign configurations.archives
-    }
-}
-
-if (project.hasProperty('ossrhUsername') && project.hasProperty('ossrhPassword')) {
-    uploadArchives {
-        repositories {
-            mavenDeployer {
-                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-                repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                    authentication(userName: ossrhUsername, password: ossrhPassword)
-                }
-
-                snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                    authentication(userName: ossrhUsername, password: ossrhPassword)
-                }
-
-                pom.project {
-                    name 'Swagger Brake'
-                    packaging 'jar'
-                    description 'Swagger contract checker for breaking API changes'
-                    url 'https://github.com/redskap/swagger-brake'
-
-                    scm {
-                        connection 'scm:git:git://github.com/redskap/swagger-brake.git'
-                        developerConnection 'scm:git:ssh://github.com:redskap/swagger-brake.git'
-                        url 'https://github.com/redskap/swagger-brake'
-                    }
-
-                    licenses {
-                        license {
-                            name 'The Apache License, Version 2.0'
-                            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                        }
-                    }
-
-                    developers {
-                        developer {
-                            id 'galovics'
-                            name 'Arnold Galovics'
-                            email 'info@arnoldgalovics.com'
-                        }
-                    }
-                }
-            }
+    tasks.withType(FindBugs) {
+        reports {
+            xml.enabled false
+            html.enabled true
         }
     }
 }
-//</editor-fold>

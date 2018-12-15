@@ -1,2 +1,5 @@
-rootProject.name = 'swagger-brake'
+rootProject.name = 'swagger-brake-root'
+
+include 'swagger-brake'
+include 'swagger-brake-cli'
 
