@@ -46,7 +46,9 @@ public class SchemaTransformer implements Transformer<io.swagger.v3.oas.models.m
         if (isNotBlank(ref) && SeenRefHolder.isNotSeen(ref)) {
             io.swagger.v3.oas.models.media.Schema resolvedSchema = getSchemaForRef(ref);
             SeenRefHolder.store(ref);
-            return internalTransform(resolvedSchema);
+            Schema schema = internalTransform(resolvedSchema);
+            SeenRefHolder.remove(ref);
+            return schema;
         }
 
         Schema.Builder schemaBuilder = new Schema.Builder(swSchema.getType());
@@ -110,6 +112,10 @@ public class SchemaTransformer implements Transformer<io.swagger.v3.oas.models.m
 
         static void store(String refName) {
             get().add(refName);
+        }
+
+        static void remove(String refName) {
+            get().remove(refName);
         }
 
         static void clear() {

@@ -73,6 +73,16 @@
     }
   },
   "definitions": {
+    "Sort": {
+      "sorted": {
+        "type": "boolean"
+      }
+    },
+    "Pageable": {
+      "sort": {
+        "$ref": "#/definitions/schemas/Sort"
+      }
+    },
     "AuditSummaryDTO": {
       "type": "object",
       "properties": {
@@ -122,7 +132,13 @@
           ]
         }
       },
-      "title": "PaymentItemDTO"
+      "title": "PaymentItemDTO",
+      "pageable": {
+        "$ref": "#/definitions/Pageable"
+      },
+      "sort": {
+        "$ref": "#/definitions/Sort"
+      }
     }
   }
 }
