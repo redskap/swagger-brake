@@ -2,10 +2,7 @@ package io.redskap.swagger.brake.runner;
 
 import java.util.Collection;
 
-import io.redskap.swagger.brake.core.BreakChecker;
 import io.redskap.swagger.brake.core.BreakingChange;
-import io.redskap.swagger.brake.core.model.Specification;
-import io.redskap.swagger.brake.core.model.transformer.Transformer;
 import io.redskap.swagger.brake.report.ReporterFactory;
 import io.redskap.swagger.brake.runner.download.ArtifactDownloaderHandler;
 import io.redskap.swagger.brake.runner.openapi.OpenApiFactory;
@@ -19,11 +16,10 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class Runner {
-    private final Transformer<OpenAPI, Specification> transformer;
-    private final BreakChecker breakChecker;
     private final ReporterFactory reporterFactory;
     private final ArtifactDownloaderHandler artifactDownloaderHandler;
     private final OpenApiFactory openApiFactory;
+    private final Checker checker;
 
     public Collection<BreakingChange> run(Options options) {
         artifactDownloaderHandler.handle(options);
@@ -40,9 +36,7 @@ public class Runner {
         OpenAPI oldApi = openApiFactory.fromFile(oldApiPath);
         OpenAPI newApi = openApiFactory.fromFile(newApiPath);
         log.info("Successfully loaded APIs");
-        log.info("Starting the check for breaking API changes");
-        Collection<BreakingChange> breakingChanges = breakChecker.check(transformer.transform(oldApi), transformer.transform(newApi));
-        log.info("Check is finished");
+        Collection<BreakingChange> breakingChanges = checker.check(oldApi, newApi);
         reporterFactory.create(options).report(breakingChanges, options);
         return breakingChanges;
     }
