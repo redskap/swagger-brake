@@ -2,10 +2,7 @@ package io.redskap.swagger.brake.core.rule.response;
 
 import java.util.*;
 
-import io.redskap.swagger.brake.core.model.Path;
-import io.redskap.swagger.brake.core.model.Response;
-import io.redskap.swagger.brake.core.model.Schema;
-import io.redskap.swagger.brake.core.model.Specification;
+import io.redskap.swagger.brake.core.model.*;
 import io.redskap.swagger.brake.core.rule.BreakingChangeRule;
 import org.springframework.stereotype.Component;
 
@@ -22,16 +19,20 @@ public class ResponseMediaTypeDeletedRule implements BreakingChangeRule<Response
                     Optional<Response> newApiResponse = newPath.getResponseByCode(apiResponse.getCode());
                     if (newApiResponse.isPresent()) {
                         Response newResponse = newApiResponse.get();
-                        for (Map.Entry<String, Schema> entry : apiResponse.getMediaTypes().entrySet()) {
-                            String mediaType = entry.getKey();
-                            if (!newResponse.getMediaTypes().containsKey(mediaType)) {
-                                breakingChanges.add(new ResponseMediaTypeDeletedBreakingChange(path.getPath(), path.getMethod(), mediaType));
-                            }
-                        }
+                        checkMediaTypeBreaking(breakingChanges, path, apiResponse, newResponse);
                     }
                 }
             }
         }
         return breakingChanges;
+    }
+
+    private void checkMediaTypeBreaking(Set<ResponseMediaTypeDeletedBreakingChange> breakingChanges, Path path, Response apiResponse, Response newResponse) {
+        for (Map.Entry<MediaType, Schema> entry : apiResponse.getMediaTypes().entrySet()) {
+            MediaType mediaType = entry.getKey();
+            if (!newResponse.isMediaTypeAllowed(mediaType)) {
+                breakingChanges.add(new ResponseMediaTypeDeletedBreakingChange(path.getPath(), path.getMethod(), mediaType));
+            }
+        }
     }
 }

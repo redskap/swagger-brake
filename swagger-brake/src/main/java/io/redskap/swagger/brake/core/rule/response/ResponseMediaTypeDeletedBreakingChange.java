@@ -4,6 +4,7 @@ import static java.lang.String.format;
 
 import io.redskap.swagger.brake.core.BreakingChange;
 import io.redskap.swagger.brake.core.model.HttpMethod;
+import io.redskap.swagger.brake.core.model.MediaType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,7 @@ import lombok.ToString;
 public class ResponseMediaTypeDeletedBreakingChange implements BreakingChange {
     private final String path;
     private final HttpMethod method;
-    private final String mediaType;
+    private final MediaType mediaType;
 
     @Override
     public String getMessage() {

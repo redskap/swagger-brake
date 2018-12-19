@@ -2,10 +2,7 @@ package io.redskap.swagger.brake.core.rule.request;
 
 import java.util.*;
 
-import io.redskap.swagger.brake.core.model.Path;
-import io.redskap.swagger.brake.core.model.Request;
-import io.redskap.swagger.brake.core.model.Schema;
-import io.redskap.swagger.brake.core.model.Specification;
+import io.redskap.swagger.brake.core.model.*;
 import io.redskap.swagger.brake.core.rule.BreakingChangeRule;
 import org.springframework.stereotype.Component;
 
@@ -21,8 +18,8 @@ public class RequestTypeEnumValueDeletedRule implements BreakingChangeRule<Reque
                 Optional<Request> requestBody = path.getRequestBody();
                 Optional<Request> newRequestBody = newPath.getRequestBody();
                 if (requestBody.isPresent() && newRequestBody.isPresent()) {
-                    for (Map.Entry<String, Schema> entry : requestBody.get().getMediaTypes().entrySet()) {
-                        String mediaType = entry.getKey();
+                    for (Map.Entry<MediaType, Schema> entry : requestBody.get().getMediaTypes().entrySet()) {
+                        MediaType mediaType = entry.getKey();
                         Schema schema = entry.getValue();
                         Optional<Schema> newApiSchema = newRequestBody.get().getSchemaByMediaType(mediaType);
                         if (newApiSchema.isPresent()) {

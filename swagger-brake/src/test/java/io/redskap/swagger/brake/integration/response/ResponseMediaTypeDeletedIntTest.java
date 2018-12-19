@@ -7,6 +7,7 @@ import java.util.Collections;
 
 import io.redskap.swagger.brake.core.BreakingChange;
 import io.redskap.swagger.brake.core.model.HttpMethod;
+import io.redskap.swagger.brake.core.model.MediaType;
 import io.redskap.swagger.brake.core.rule.response.ResponseMediaTypeDeletedBreakingChange;
 import io.redskap.swagger.brake.integration.AbstractSwaggerBrakeIntTest;
 import org.junit.Test;
@@ -20,7 +21,7 @@ public class ResponseMediaTypeDeletedIntTest extends AbstractSwaggerBrakeIntTest
         // given
         String oldApiPath = "response/mediatypedeleted/petstore.yaml";
         String newApiPath = "response/mediatypedeleted/petstore_v2.yaml";
-        ResponseMediaTypeDeletedBreakingChange bc = new ResponseMediaTypeDeletedBreakingChange("/pet/findByStatus", HttpMethod.GET, "application/json");
+        ResponseMediaTypeDeletedBreakingChange bc = new ResponseMediaTypeDeletedBreakingChange("/pet/findByStatus", HttpMethod.GET, new MediaType("application/json"));
         Collection<BreakingChange> expected = Collections.singleton(bc);
         // when
         Collection<BreakingChange> result = execute(oldApiPath, newApiPath);

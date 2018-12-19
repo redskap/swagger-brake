@@ -2,10 +2,7 @@ package io.redskap.swagger.brake.core.rule.response;
 
 import java.util.*;
 
-import io.redskap.swagger.brake.core.model.Path;
-import io.redskap.swagger.brake.core.model.Response;
-import io.redskap.swagger.brake.core.model.Schema;
-import io.redskap.swagger.brake.core.model.Specification;
+import io.redskap.swagger.brake.core.model.*;
 import io.redskap.swagger.brake.core.rule.BreakingChangeRule;
 import org.springframework.stereotype.Component;
 
@@ -22,8 +19,8 @@ public class ResponseTypeEnumValueDeletedRule implements BreakingChangeRule<Resp
                     Optional<Response> newApiResponse = newPath.getResponseByCode(apiResponse.getCode());
                     if (newApiResponse.isPresent()) {
                         Response newResponse = newApiResponse.get();
-                        for (Map.Entry<String, Schema> entry : apiResponse.getMediaTypes().entrySet()) {
-                            String mediaType = entry.getKey();
+                        for (Map.Entry<MediaType, Schema> entry : apiResponse.getMediaTypes().entrySet()) {
+                            MediaType mediaType = entry.getKey();
                             Schema schema = entry.getValue();
                             Optional<Schema> newApiSchema = newResponse.getSchemaByMediaType(mediaType);
                             if (newApiSchema.isPresent()) {

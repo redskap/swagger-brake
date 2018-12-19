@@ -67,7 +67,7 @@ paths:
       operationId: "updatePet"
       consumes:
       - "application/json"
-      - "application/xml"
+      - "*/*"
       produces:
       - "application/xml"
       - "application/json"
@@ -99,7 +99,7 @@ paths:
       description: "Multiple status values can be provided with comma separated strings"
       operationId: "findPetsByStatus"
       produces:
-      - "application/xml"
+      - "*/*"
       - "application/json"
       parameters:
       - name: "status"
