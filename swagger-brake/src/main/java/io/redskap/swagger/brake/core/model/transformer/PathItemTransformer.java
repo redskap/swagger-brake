@@ -14,6 +14,7 @@ import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.parameters.Parameter;
 import io.swagger.v3.oas.models.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.stereotype.Component;
 
@@ -45,10 +46,11 @@ public class PathItemTransformer implements Transformer<PathItem, Collection<Pat
             if (operation != null) {
                 HttpMethod key = e.getKey();
 
+                boolean isDeprecated = BooleanUtils.isTrue(operation.getDeprecated());
                 Request requestBody = getRequestBody(operation);
                 List<RequestParameter> requestParameters = getRequestParameters(operation);
                 List<Response> responses = getResponses(operation);
-                PathDetail detail = new PathDetail(key, requestBody, requestParameters, responses);
+                PathDetail detail = new PathDetail(key, requestBody, requestParameters, responses, isDeprecated);
                 result.add(detail);
             }
         }

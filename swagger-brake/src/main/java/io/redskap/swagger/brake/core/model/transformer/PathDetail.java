@@ -20,4 +20,5 @@ class PathDetail {
     private final Request requestBody;
     private final Collection<RequestParameter> requestParameters;
     private final Collection<Response> responses;
+    private final boolean deprecated;
 }

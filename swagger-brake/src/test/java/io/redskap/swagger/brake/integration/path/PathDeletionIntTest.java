@@ -28,4 +28,15 @@ public class PathDeletionIntTest extends AbstractSwaggerBrakeIntTest {
         assertThat(result).hasSize(1);
         assertThat(result).hasSameElementsAs(expected);
     }
+
+    @Test
+    public void testPathDeletionDoesntTriggerWhenDeprecated() {
+        // given
+        String oldApiPath = "path/deleted/deprecated/petstore.yaml";
+        String newApiPath = "path/deleted/deprecated/petstore_v2.yaml";
+        // when
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
+        // then
+        assertThat(result).isEmpty();
+    }
 }

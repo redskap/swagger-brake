@@ -18,8 +18,12 @@ public class PathDeletedRule implements BreakingChangeRule<PathDeletedBreakingCh
         Collection<PathDeletedBreakingChange> breakingChanges = new ArrayList<>();
         for (Path p : oldApi.getPaths()) {
             if (!newApi.getPath(p).isPresent()) {
-                log.debug("Path {} is not included in the new API", p);
-                breakingChanges.add(new PathDeletedBreakingChange(p.getPath(), p.getMethod()));
+                if (!p.isDeprecated()) {
+                    log.debug("Path {} is not included in the new API", p);
+                    breakingChanges.add(new PathDeletedBreakingChange(p.getPath(), p.getMethod()));
+                } else {
+                    log.debug("Path {} is not included in the new API however it was marked as deprecated", p);
+                }
             } else {
                 log.debug("Path {} is present in the new API as well", p);
             }
