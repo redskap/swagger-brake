@@ -18,4 +18,6 @@ public class Options {
     private String artifactId;
     private String mavenRepoUsername;
     private String mavenRepoPassword;
+
+    private Boolean deprecatedApiDeletionAllowed;
 }

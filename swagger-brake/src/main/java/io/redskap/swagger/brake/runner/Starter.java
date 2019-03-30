@@ -3,6 +3,7 @@ package io.redskap.swagger.brake.runner;
 import java.util.Collection;
 
 import io.redskap.swagger.brake.core.BreakingChange;
+import io.redskap.swagger.brake.core.CheckerOptions;
 import io.redskap.swagger.brake.core.CoreConfiguration;
 import io.redskap.swagger.brake.maven.MavenConfiguration;
 import io.redskap.swagger.brake.report.ReporterConfiguration;
@@ -23,7 +24,21 @@ public class Starter {
      * @return a collection of breaking changes. The collection is never null.
      */
     public static Collection<BreakingChange> check(OpenAPI oldApi, OpenAPI newApi) {
-        return createApplicationContext().getBean(Checker.class).check(oldApi, newApi);
+        return check(oldApi, newApi, new CheckerOptions());
+    }
+
+    /**
+     * Checks breaking changes between two {@link OpenAPI} instances. The check configuration also can be provided
+     * using this method.
+     * <br>
+     * For library users who want to use the check functionality only.
+     * @param oldApi the old API
+     * @param newApi the new API
+     * @param checkerOptions the options for the check
+     * @return a collection of breaking changes. The collection is never null.
+     */
+    public static Collection<BreakingChange> check(OpenAPI oldApi, OpenAPI newApi, CheckerOptions checkerOptions) {
+        return createApplicationContext().getBean(Checker.class).check(oldApi, newApi, checkerOptions);
     }
 
     private static AnnotationConfigApplicationContext createApplicationContext() {

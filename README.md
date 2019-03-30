@@ -54,6 +54,18 @@ Multiple reporters can be set up at the same time by separating the types with c
 --output-format=JSON,HTML
 ```
 
+## API deprecation handling
+The [OpenAPI specification](https://swagger.io/specification/#fixed-fields-8) 
+defines the `deprecated` attribute on operation level for marking an API deprecated. 
+Swagger Brake utilizes this property so that it's possible to delete a deprecated API 
+without marking the API broken.
+
+The default behavior is that deprecated APIs can be deleted without any issue but there is
+a possibility to override this behavior so that the new API will be considered as broken.
+
+The `--deprecated-api-deletion-allowed` parameter is responsible for setting this behavior
+in Swagger Brake. The default value is `true` but it can be overridden to `false` anytime. 
+
 ## Latest artifact resolution
 For easier CI integration, there is a possibility not to provide the old API path directly 
 but to resolve the latest artifact containing the Swagger definition file from any Maven2
@@ -80,7 +92,7 @@ It's also possible that the repository is secured with username and password. Th
 - `--maven-repo-password`
 
 #### Implementation details
-The mechanism under the hood is to resolve the latest artifact based on the maven-metadata.xml
+The mechanism under the hood is to resolve the latest artifact based on the `maven-metadata.xml`
 for a given groupId and artifactId. After the latest version has been determined, it will be 
 downloaded to the temp directory. The downloaded JAR will be scanned for any of the following 
 files which will be used for providing the old API:

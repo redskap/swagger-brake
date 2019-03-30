@@ -23,6 +23,10 @@ public abstract class AbstractSwaggerBrakeIntTest {
         Options options = new Options();
         options.setOldApiPath(oldApiPath);
         options.setNewApiPath(newApiPath);
+        return execute(options);
+    }
+
+    protected Collection<BreakingChange> execute(Options options) {
         options.setOutputFormats(ImmutableSet.of(OutputFormat.STDOUT));
         return underTest.run(options);
     }

@@ -3,6 +3,7 @@ package io.redskap.swagger.brake.runner;
 import java.util.Collection;
 
 import io.redskap.swagger.brake.core.BreakingChange;
+import io.redskap.swagger.brake.core.CheckerOptions;
 import io.redskap.swagger.brake.report.ReporterFactory;
 import io.redskap.swagger.brake.runner.download.ArtifactDownloaderHandler;
 import io.redskap.swagger.brake.runner.openapi.OpenApiFactory;
@@ -20,6 +21,7 @@ public class Runner {
     private final ArtifactDownloaderHandler artifactDownloaderHandler;
     private final OpenApiFactory openApiFactory;
     private final Checker checker;
+    private final CheckerOptionsFactory checkerOptionsFactory;
 
     public Collection<BreakingChange> run(Options options) {
         artifactDownloaderHandler.handle(options);
@@ -36,7 +38,8 @@ public class Runner {
         OpenAPI oldApi = openApiFactory.fromFile(oldApiPath);
         OpenAPI newApi = openApiFactory.fromFile(newApiPath);
         log.info("Successfully loaded APIs");
-        Collection<BreakingChange> breakingChanges = checker.check(oldApi, newApi);
+        CheckerOptions checkerOptions = checkerOptionsFactory.create(options);
+        Collection<BreakingChange> breakingChanges = checker.check(oldApi, newApi, checkerOptions);
         reporterFactory.create(options).report(breakingChanges, options);
         return breakingChanges;
     }

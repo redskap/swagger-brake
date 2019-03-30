@@ -16,9 +16,10 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class DefaultBreakChecker implements BreakChecker {
     private final Collection<BreakingChangeRule<? extends BreakingChange>> rules;
+    private final CheckerOptionsProvider checkerOptionsProvider;
 
     @Override
-    public Collection<BreakingChange> check(Specification oldApi, Specification newApi) {
+    public Collection<BreakingChange> check(Specification oldApi, Specification newApi, CheckerOptions checkerOptions) {
         if (log.isDebugEnabled()) {
             rules.stream().map(BreakingChangeRule::getClass).map(Class::getName).forEach(name -> log.debug("Rule configured: {}", name));
         }
@@ -28,6 +29,10 @@ public class DefaultBreakChecker implements BreakChecker {
         if (newApi == null) {
             throw new IllegalArgumentException("newApi must be provided");
         }
+        if (checkerOptions == null) {
+            throw new IllegalArgumentException("checkerOptions must be provided");
+        }
+        checkerOptionsProvider.set(checkerOptions);
         return rules.stream().map(rule -> rule.checkRule(oldApi, newApi)).flatMap(Collection::stream).collect(toList());
     }
 }
