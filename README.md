@@ -100,6 +100,15 @@ files which will be used for providing the old API:
 - `swagger.yaml`
 - `swagger.yml`
 
+## Running with Docker
+This repo contains a `Dockerfile` for running `swagger-brake` in a container context.
+
+```bash
+$ docker build -t redskap/swagger-brake .
+$ docker run -v $(pwd):/app -it redskap/swagger-brake --old-api=petstore.yaml --new-api=petstore_v2.yaml  
+
+```
+
 ## Building
 The application is using Gradle as a build system and building it can be done 
 by executing the following command:
