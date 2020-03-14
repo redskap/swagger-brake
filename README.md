@@ -85,6 +85,20 @@ Example command:
 $ java -jar swagger-brake.jar --new-api=/home/user/petstore_v2.yaml --maven-repo-url=https://oss.jfrog.org/oss-snapshot-local --groupId=com.example --artifactId=petstore-api
 ```
 
+By default, Swagger Brake scans the downloaded artifact for one of the following 3 files:
+- swagger.json
+- swagger.yaml
+- swagger.yml
+
+This behavior can be customized by providing the `--api-filename` parameter.
+Note that it's enough to provide the filename without the extension as well, in that case the JSON, YAML and YML
+extension will be used for scanning.
+
+Example command:
+```bash
+$ java -jar swagger-brake.jar --new-api=/home/user/petstore_v2.yaml --maven-repo-url=https://oss.jfrog.org/oss-snapshot-local --groupId=com.example --artifactId=petstore-api --api-filename=something.yaml
+```
+
 #### Secured Maven repository
 It's also possible that the repository is secured with username and password. The following
 2 parameters can be used to provide the credentials to access the repository:
@@ -94,11 +108,7 @@ It's also possible that the repository is secured with username and password. Th
 #### Implementation details
 The mechanism under the hood is to resolve the latest artifact based on the `maven-metadata.xml`
 for a given groupId and artifactId. After the latest version has been determined, it will be 
-downloaded to the temp directory. The downloaded JAR will be scanned for any of the following 
-files which will be used for providing the old API:
-- `swagger.json`
-- `swagger.yaml`
-- `swagger.yml`
+downloaded to the temp directory. The downloaded JAR will be scanned for the Swagger file.
 
 ## Building
 The application is using Gradle as a build system and building it can be done 
