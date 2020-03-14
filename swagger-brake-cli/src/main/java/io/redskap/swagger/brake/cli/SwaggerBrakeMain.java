@@ -1,7 +1,5 @@
 package io.redskap.swagger.brake.cli;
 
-import io.redskap.swagger.brake.cli.Cli;
-import io.redskap.swagger.brake.cli.CliConfiguration;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.SimpleCommandLinePropertySource;

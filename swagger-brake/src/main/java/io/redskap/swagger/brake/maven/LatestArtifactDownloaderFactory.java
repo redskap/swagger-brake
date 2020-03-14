@@ -11,6 +11,12 @@ import org.springframework.stereotype.Component;
 public class LatestArtifactDownloaderFactory {
     private final ApplicationContext applicationContext;
 
+    /**
+     * Factory that constructs a {@link LatestArtifactDownloader} instance.
+     * @param options the {@link Options} with which the {@link LatestArtifactDownloader} can be configured.
+     * @return the created {@link LatestArtifactDownloader} instance.
+     * @throws RuntimeException if the provided {@link Options} does not have the Options#mavenRepoUrl set.
+     */
     public LatestArtifactDownloader create(Options options) {
         if (StringUtils.isNotBlank(options.getMavenRepoUrl())) {
             return applicationContext.getBean("maven2LatestArtifactDownloader", LatestArtifactDownloader.class);

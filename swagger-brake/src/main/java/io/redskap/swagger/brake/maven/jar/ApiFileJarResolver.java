@@ -9,6 +9,7 @@ import java.net.URLClassLoader;
 import java.nio.file.Files;
 import java.util.jar.JarEntry;
 
+import io.redskap.swagger.brake.maven.jar.filename.ApiFilenameCheckerFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -17,13 +18,15 @@ import org.springframework.util.FileCopyUtils;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class SwaggerFileJarResolver {
+public class ApiFileJarResolver {
     private final JarScanner jarScanner;
+    private final ApiFilenameCheckerFactory apiFilenameCheckerFactory;
 
-    public File resolve(File jarFile) {
+    public File resolve(ApiFileResolverParameter parameter) {
         try {
+            File jarFile = parameter.getApiJar();
             log.debug("Attempting to resolve swagger file from external JAR {}", jarFile.getAbsolutePath());
-            URL swaggerFile = findSwaggerFile(jarFile);
+            URL swaggerFile = findSwaggerFile(jarFile, parameter.getConfiguredApiFilename());
             String fileName = new File(swaggerFile.getFile()).getName();
             File destination = Files.createTempFile("swagger-brake", fileName).toFile();
             log.debug("Extracting swagger file from {} to {}", swaggerFile, destination.getAbsolutePath());
@@ -35,8 +38,8 @@ public class SwaggerFileJarResolver {
         }
     }
 
-    private URL findSwaggerFile(File jarFile) throws IOException {
-        return jarScanner.find(jarFile, this::isSwaggerFile)
+    private URL findSwaggerFile(File jarFile, String configuredApiFilename) throws IOException {
+        return jarScanner.find(jarFile, entry -> isSwaggerFile(entry, configuredApiFilename))
             .map(e -> getSwaggerFileUrl(jarFile, e))
             .orElseThrow(() -> new IllegalStateException("Swagger file is not present in the artifact"));
     }
@@ -50,10 +53,8 @@ public class SwaggerFileJarResolver {
         }
     }
 
-    private boolean isSwaggerFile(JarEntry entry) {
+    private boolean isSwaggerFile(JarEntry entry, String configuredApiFilename) {
         String entryName = entry.getName();
-        return entryName.endsWith("swagger.json")
-            || entryName.endsWith("swagger.yml")
-            || entryName.endsWith("swagger.yaml");
+        return apiFilenameCheckerFactory.create(configuredApiFilename).isApiFile(entryName);
     }
 }

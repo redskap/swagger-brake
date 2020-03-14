@@ -7,7 +7,8 @@ import java.io.File;
 import io.redskap.swagger.brake.maven.DownloadOptions;
 import io.redskap.swagger.brake.maven.LatestArtifactDownloaderFactory;
 import io.redskap.swagger.brake.maven.http.UnauthorizedException;
-import io.redskap.swagger.brake.maven.jar.SwaggerFileJarResolver;
+import io.redskap.swagger.brake.maven.jar.ApiFileJarResolver;
+import io.redskap.swagger.brake.maven.jar.ApiFileResolverParameter;
 import io.redskap.swagger.brake.runner.Options;
 import io.redskap.swagger.brake.runner.exception.LatestArtifactDownloadException;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class ArtifactDownloaderHandler {
     private final LatestArtifactDownloaderFactory downloaderFactory;
-    private final SwaggerFileJarResolver swaggerFileResolver;
+    private final ApiFileJarResolver apiFileResolver;
     private final DownloadOptionsFactory downloadOptionsFactory;
 
     public void handle(Options options) {
@@ -33,7 +34,8 @@ public class ArtifactDownloaderHandler {
                 log.info("Downloading latest artifact from repository '{}' with groupId '{}' artifactId '{}'", url, groupId, artifactId);
                 DownloadOptions downloadOptions = downloadOptionsFactory.create(url, groupId, artifactId, username, password);
                 File apiJar = downloaderFactory.create(options).download(downloadOptions);
-                File swaggerFile = swaggerFileResolver.resolve(apiJar);
+                ApiFileResolverParameter apiFileResolverParameter = new ApiFileResolverParameter(apiJar, options.getApiFilename());
+                File swaggerFile = apiFileResolver.resolve(apiFileResolverParameter);
                 options.setOldApiPath(swaggerFile.getAbsolutePath());
             } catch (UnauthorizedException e) {
                 throw new LatestArtifactDownloadException("Cannot access Maven repository due to insufficient privileges. Consider providing username and password.", e);

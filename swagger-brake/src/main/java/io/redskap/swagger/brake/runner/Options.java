@@ -20,4 +20,6 @@ public class Options {
     private String mavenRepoPassword;
 
     private Boolean deprecatedApiDeletionAllowed;
+
+    private String apiFilename;
 }

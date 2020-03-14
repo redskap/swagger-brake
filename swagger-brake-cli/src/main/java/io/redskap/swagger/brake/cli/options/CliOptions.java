@@ -15,6 +15,8 @@ public abstract class CliOptions {
 
     public static final String DEPRECATED_API_DELETION_ALLOWED = "deprecated-api-deletion-allowed";
 
+    public static final String API_FILENAME = "api-filename";
+
     public static String getAsCliOption(String option) {
         return "--" + option;
     }

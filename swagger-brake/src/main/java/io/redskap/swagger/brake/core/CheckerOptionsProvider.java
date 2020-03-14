@@ -13,7 +13,11 @@ public class CheckerOptionsProvider {
         checkerOptions = options;
     }
 
-
+    /**
+     * Returns the {@link CheckerOptions} from the context.
+     * @return the {@link CheckerOptions} if set, exception otherwise.
+     * @throws RuntimeException if no {@link CheckerOptions} has been set.
+     */
     public CheckerOptions get() {
         if (checkerOptions == null) {
             throw new RuntimeException("CheckerOptions has not been set up yet.");
