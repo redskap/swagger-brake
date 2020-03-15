@@ -19,6 +19,7 @@ public class Path {
     private final Collection<RequestParameter> requestParameters;
     private final Collection<Response> responses;
     private final boolean deprecated;
+    private final boolean betaApi;
 
     public Optional<Response> getResponseByCode(String code) {
         return responses.stream().filter(r -> code.equals(r.getCode())).findAny();

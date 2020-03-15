@@ -4,14 +4,20 @@ import java.util.*;
 
 import io.redskap.swagger.brake.core.model.*;
 import io.redskap.swagger.brake.core.rule.BreakingChangeRule;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 public class ResponseTypeAttributeRemovedRule implements BreakingChangeRule<ResponseTypeAttributeRemovedBreakingChange> {
     @Override
     public Collection<ResponseTypeAttributeRemovedBreakingChange> checkRule(Specification oldApi, Specification newApi) {
         Set<ResponseTypeAttributeRemovedBreakingChange> breakingChanges = new HashSet<>();
         for (Path path : oldApi.getPaths()) {
+            if (path.isBetaApi()) {
+                log.debug("Skipping {} as it's marked as a beta API", path);
+                continue;
+            }
             Optional<Path> newApiPath = newApi.getPath(path);
             if (newApiPath.isPresent()) {
                 Path newPath = newApiPath.get();

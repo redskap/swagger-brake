@@ -47,14 +47,26 @@ public class PathItemTransformer implements Transformer<PathItem, Collection<Pat
                 HttpMethod key = e.getKey();
 
                 boolean isDeprecated = BooleanUtils.isTrue(operation.getDeprecated());
+                boolean isBetaApi = getBetaApiValue(operation);
                 Request requestBody = getRequestBody(operation);
                 List<RequestParameter> requestParameters = getRequestParameters(operation);
                 List<Response> responses = getResponses(operation);
-                PathDetail detail = new PathDetail(key, requestBody, requestParameters, responses, isDeprecated);
+                PathDetail detail = new PathDetail(key, requestBody, requestParameters, responses, isDeprecated, isBetaApi);
                 result.add(detail);
             }
         }
         return result;
+    }
+
+    private boolean getBetaApiValue(Operation operation) {
+        Map<String, Object> extensions = operation.getExtensions();
+        if (extensions != null) {
+            Object betaApiAttribute = extensions.get("x-beta-api");
+            if (betaApiAttribute != null) {
+                return BooleanUtils.toBoolean(betaApiAttribute.toString());
+            }
+        }
+        return false;
     }
 
     private Request getRequestBody(Operation operation) {

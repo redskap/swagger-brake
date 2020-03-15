@@ -18,6 +18,9 @@ public class RequestParameterDeletedRule implements BreakingChangeRule<RequestPa
     public Collection<RequestParameterDeletedBreakingChange> checkRule(Specification oldApi, Specification newApi) {
         Set<RequestParameterDeletedBreakingChange> breakingChanges = new HashSet<>();
         for (Path path : oldApi.getPaths()) {
+            if (path.isBetaApi()) {
+                continue;
+            }
             Optional<Path> newApiPath = newApi.getPath(path);
             if (newApiPath.isPresent()) {
                 Path newPath = newApiPath.get();

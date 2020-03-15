@@ -24,6 +24,10 @@ public class PathDeletedRule implements BreakingChangeRule<PathDeletedBreakingCh
         CheckerOptions checkerOptions = checkerOptionsProvider.get();
         Collection<PathDeletedBreakingChange> breakingChanges = new ArrayList<>();
         for (Path p : oldApi.getPaths()) {
+            if (p.isBetaApi()) {
+                log.debug("Skipping {} as it's marked as a beta API", p);
+                continue;
+            }
             if (!newApi.getPath(p).isPresent()) {
                 if (!p.isDeprecated() || !checkerOptions.isDeprecatedApiDeletionAllowed()) {
                     log.debug("Path {} is not included in the new API", p);

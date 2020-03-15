@@ -21,4 +21,5 @@ class PathDetail {
     private final Collection<RequestParameter> requestParameters;
     private final Collection<Response> responses;
     private final boolean deprecated;
+    private final boolean betaApi;
 }

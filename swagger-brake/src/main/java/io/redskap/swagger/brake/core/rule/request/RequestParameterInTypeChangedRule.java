@@ -9,15 +9,21 @@ import io.redskap.swagger.brake.core.model.Path;
 import io.redskap.swagger.brake.core.model.RequestParameter;
 import io.redskap.swagger.brake.core.model.Specification;
 import io.redskap.swagger.brake.core.rule.BreakingChangeRule;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 public class RequestParameterInTypeChangedRule implements BreakingChangeRule<RequestParameterInTypeChangedBreakingChange> {
     @Override
     public Collection<RequestParameterInTypeChangedBreakingChange> checkRule(Specification oldApi, Specification newApi) {
         Set<RequestParameterInTypeChangedBreakingChange> breakingChanges = new HashSet<>();
         for (Path path : oldApi.getPaths()) {
+            if (path.isBetaApi()) {
+                log.debug("Skipping {} as it's marked as a beta API", path);
+                continue;
+            }
             Optional<Path> newApiPath = newApi.getPath(path);
             if (newApiPath.isPresent()) {
                 Path newPath = newApiPath.get();

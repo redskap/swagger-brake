@@ -36,6 +36,7 @@ public class PathTransformer implements Transformer<Paths, Collection<Path>> {
         Collection<RequestParameter> requestParameters = detail.getRequestParameters();
         Collection<Response> responses = detail.getResponses();
         boolean deprecated = detail.isDeprecated();
-        return new Path(path, method, requestBody, requestParameters, responses, deprecated);
+        boolean betaApi = detail.isBetaApi();
+        return new Path(path, method, requestBody, requestParameters, responses, deprecated, betaApi);
     }
 }
