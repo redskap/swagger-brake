@@ -12,6 +12,8 @@ The following changes are classified as breaking:
 The tool is very useful in case it's necessary not to introduce any backward
 incompatible API change unintentionally.
 
+The available releases can be found [here](https://github.com/redskap/swagger-brake/releases)
+
 On top of the CLI, there are Maven and Gradle plugins also available for 
 easier integration into any existing pipeline.
 
