@@ -112,6 +112,55 @@ The mechanism under the hood is to resolve the latest artifact based on the `mav
 for a given groupId and artifactId. After the latest version has been determined, it will be 
 downloaded to the temp directory. The downloaded JAR will be scanned for the Swagger file.
 
+## Beta API support
+There might be a need to work with beta APIs. In those use-cases you might want to release a version of your API
+to receive quick feedback from the clients. Usually it means incremental changes, knowing the fact that
+they might not be backward compatible but this is acceptable.
+
+Swagger Brake provides a way to mark APIs beta, in this case those API operation changes are not going to be 
+considered as breaking and will be ignored.
+
+The following table shows the rules:
+
+| Use-case                     | Old API operation  | New API operation                 | Breaking change?  |
+|:----------------------------:|:------------------:|:---------------------------------:|:-----------------:|
+| Beta API created             | Does not exist     | Exists as beta                    | No                |
+| Beta API modified            | Exists as beta     | Exists as beta and modified       | No                |
+| Beta API is not beta anymore | Exists as beta     | Exists as non-beta (flag removed) | No                |
+| Beta API removed             | Exists as beta     | Does not exists                   | No                |
+| Standard API marked as beta  | Exists as non-beta | Exists as beta                    | Yes               |
+
+A beta API can be marked with the `x-beta-api` vendor extension in the specification file on
+operation level. It can have a boolean value only.
+
+Example snippet:
+
+```text
+...
+paths:
+  /pet:
+    post:
+      operationId: "addPet"
+      x-beta-api: true
+...
+```
+
+### Beta API vendor extension customization
+There is no standard way of denoting an API beta in the OpenAPI specification yet. Due to this
+there might be a need in different projects to use various vendor extension attribute names
+to mark APIs beta.
+
+There is a customization option that can be utilized for these cases.
+
+By providing the `--beta-api-extension-name`, one can override the default `x-beta-api` attribute name
+and the provided one will be used.
+
+Example command:
+
+```bash
+$ java -jar swagger-brake.jar --old-api=/home/user/something.yaml --new-api=/home/user/something_v2.yaml --beta-api-extension-name=x-custom-beta-attributes
+```
+
 ## Building
 The application is using Gradle as a build system and building it can be done 
 by executing the following command:

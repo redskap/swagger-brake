@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.toList;
 import java.util.*;
 import java.util.function.Function;
 
+import io.redskap.swagger.brake.core.CheckerOptionsProvider;
 import io.redskap.swagger.brake.core.model.HttpMethod;
 import io.redskap.swagger.brake.core.model.Request;
 import io.redskap.swagger.brake.core.model.RequestParameter;
@@ -37,6 +38,7 @@ public class PathItemTransformer implements Transformer<PathItem, Collection<Pat
     private final ApiResponseTransformer apiResponseTransformer;
     private final ParameterTransformer parameterTransformer;
     private final RequestBodyTransformer requestBodyTransformer;
+    private final CheckerOptionsProvider checkerOptionsProvider;
 
     @Override
     public Collection<PathDetail> transform(PathItem from) {
@@ -61,7 +63,7 @@ public class PathItemTransformer implements Transformer<PathItem, Collection<Pat
     private boolean getBetaApiValue(Operation operation) {
         Map<String, Object> extensions = operation.getExtensions();
         if (extensions != null) {
-            Object betaApiAttribute = extensions.get("x-beta-api");
+            Object betaApiAttribute = extensions.get(checkerOptionsProvider.get().getBetaApiExtensionName());
             if (betaApiAttribute != null) {
                 return BooleanUtils.toBoolean(betaApiAttribute.toString());
             }

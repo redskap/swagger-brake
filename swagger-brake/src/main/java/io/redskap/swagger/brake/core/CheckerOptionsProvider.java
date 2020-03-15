@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 public class CheckerOptionsProvider {
     private CheckerOptions checkerOptions;
 
-    void set(CheckerOptions options) {
+    public void set(CheckerOptions options) {
         if (options == null) {
             throw new IllegalArgumentException("options cannot be null");
         }

@@ -22,4 +22,5 @@ public class Options {
     private Boolean deprecatedApiDeletionAllowed;
 
     private String apiFilename;
+    private String betaApiExtensionName;
 }

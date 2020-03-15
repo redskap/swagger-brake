@@ -8,6 +8,7 @@ import io.redskap.swagger.brake.core.BreakingChange;
 import io.redskap.swagger.brake.core.model.HttpMethod;
 import io.redskap.swagger.brake.core.rule.beta.StandardApiToBetaApiBreakingChange;
 import io.redskap.swagger.brake.integration.AbstractSwaggerBrakeIntTest;
+import io.redskap.swagger.brake.runner.Options;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -32,6 +33,22 @@ public class BetaApiIntTest extends AbstractSwaggerBrakeIntTest {
         String newApiPath = "beta/betaapimodified/petstore_v2.yaml";
         // when
         Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
+        // then
+        assertThat(result).isEmpty();
+    }
+
+    @Test
+    public void testBetaApiModificationDoesntTriggerABreakWhenUsingCustomAttribute() {
+        // given
+        String oldApiPath = "beta/customextensionname/petstore.yaml";
+        String newApiPath = "beta/customextensionname/petstore_v2.yaml";
+
+        Options options = new Options();
+        options.setOldApiPath(oldApiPath);
+        options.setNewApiPath(newApiPath);
+        options.setBetaApiExtensionName("x-custom-beta-attribute");
+        // when
+        Collection<BreakingChange> result = execute(options);
         // then
         assertThat(result).isEmpty();
     }
