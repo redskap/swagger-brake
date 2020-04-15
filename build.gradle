@@ -27,6 +27,7 @@ subprojects {
         compileOnly "org.projectlombok:lombok:1.18.2"
 
         compile "org.springframework:spring-context:5.1.1.RELEASE"
+        compile 'com.google.code.findbugs:findbugs-annotations:3.0.1'
 
         testCompile "junit:junit:4.12"
         testCompile "org.assertj:assertj-core:3.11.1"
