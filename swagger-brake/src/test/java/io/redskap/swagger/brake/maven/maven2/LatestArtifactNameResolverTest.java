@@ -8,7 +8,6 @@ import io.redskap.swagger.brake.maven.DownloadOptions;
 import io.redskap.swagger.brake.maven.model.MavenMetadata;
 import io.redskap.swagger.brake.maven.model.MavenSnapshot;
 import io.redskap.swagger.brake.maven.model.MavenVersioning;
-import io.redskap.swagger.brake.maven.url.UrlFactory;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,9 +16,9 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class LatestSnapshotNameResolverTest {
+public class LatestArtifactNameResolverTest {
     @Mock
-    private UrlFactory urlFactory;
+    private Maven2UrlFactory urlFactory;
 
     @Mock
     private MavenMetadataDownloader metadataDownloader;
@@ -28,10 +27,10 @@ public class LatestSnapshotNameResolverTest {
     private RepositoryRequestFactory requestFactory;
 
     @InjectMocks
-    private LatestSnapshotNameResolver underTest;
+    private LatestArtifactNameResolver underTest;
 
     @Test
-    public void testResolveShouldWorkProperly() {
+    public void testResolveSnapshotShouldWorkProperly() {
         // given
         String latestVersion = "1.2.0-SNAPSHOT";
         String artifactId = "swagger-brake-example";
@@ -48,7 +47,21 @@ public class LatestSnapshotNameResolverTest {
         given(requestFactory.create(metadataUrl, options)).willReturn(metadataRequest);
         given(metadataDownloader.download(metadataRequest)).willReturn(mavenMetadata);
         // when
-        String result = underTest.resolve(options, latestVersion);
+        String result = underTest.resolveSnapshot(options, latestVersion);
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    public void testResolveReleaseShouldWorkProperly() {
+        // given
+        String latestVersion = "1.2.0";
+        String artifactId = "swagger-brake-example";
+        String expected = "swagger-brake-example-1.2.0";
+        DownloadOptions options = new DownloadOptions();
+        options.setArtifactId(artifactId);
+        // when
+        String result = underTest.resolveRelease(options, latestVersion);
         // then
         assertThat(result).isEqualTo(expected);
     }

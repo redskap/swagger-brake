@@ -19,7 +19,7 @@ public class Maven2LatestArtifactDownloaderTest {
     private LatestArtifactVersionResolver latestArtifactVersionResolver;
 
     @Mock
-    private LatestSnapshotNameResolver latestSnapshotNameResolver;
+    private LatestArtifactNameResolver latestArtifactNameResolver;
 
     @Mock
     private LatestJarArtifactDownloader latestJarArtifactDownloader;
@@ -28,16 +28,33 @@ public class Maven2LatestArtifactDownloaderTest {
     private Maven2LatestArtifactDownloader underTest;
 
     @Test
-    public void testDownloadWorksCorrectly() {
+    public void testDownloadWorksCorrectlyForSnapshot() {
         // given
-        String latestVersion = "a";
-        String latestSnapshotName = "b";
+        String latestVersion = "1.0.0-SNAPSHOT";
+        String latestArtifactName = "b";
         File expectedFile = mock(File.class);
         DownloadOptions downloadOptions = mock(DownloadOptions.class);
 
         given(latestArtifactVersionResolver.resolve(downloadOptions)).willReturn(latestVersion);
-        given(latestSnapshotNameResolver.resolve(downloadOptions, latestVersion)).willReturn(latestSnapshotName);
-        given(latestJarArtifactDownloader.download(downloadOptions, latestSnapshotName, latestVersion)).willReturn(expectedFile);
+        given(latestArtifactNameResolver.resolveSnapshot(downloadOptions, latestVersion)).willReturn(latestArtifactName);
+        given(latestJarArtifactDownloader.download(downloadOptions, latestArtifactName, latestVersion)).willReturn(expectedFile);
+        // when
+        File result = underTest.download(downloadOptions);
+        // then
+        assertThat(result).isEqualTo(expectedFile);
+    }
+
+    @Test
+    public void testDownloadWorksCorrectlyForRelease() {
+        // given
+        String latestVersion = "1.0.0";
+        String latestArtifactName = "b";
+        File expectedFile = mock(File.class);
+        DownloadOptions downloadOptions = mock(DownloadOptions.class);
+
+        given(latestArtifactVersionResolver.resolve(downloadOptions)).willReturn(latestVersion);
+        given(latestArtifactNameResolver.resolveRelease(downloadOptions, latestVersion)).willReturn(latestArtifactName);
+        given(latestJarArtifactDownloader.download(downloadOptions, latestArtifactName, latestVersion)).willReturn(expectedFile);
         // when
         File result = underTest.download(downloadOptions);
         // then

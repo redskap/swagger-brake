@@ -6,21 +6,21 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MavenRepoUrlHandler implements CliOptionHandler {
+public class CurrentArtifactVersionHandler implements CliOptionHandler {
     @Override
     public void handle(String propertyValue, Options options) {
         if (StringUtils.isNotBlank(propertyValue)) {
-            options.setMavenRepoUrl(propertyValue);
+            options.setCurrentArtifactVersion(propertyValue);
         }
     }
 
     @Override
     public String getHandledPropertyName() {
-        return CliOptions.MAVEN_REPO_URL;
+        return CliOptions.CURRENT_ARTIFACT_VERSION;
     }
 
     @Override
     public String getHelpMessage() {
-        return "Specifies the Maven repository URL where the latest artifact denoted by the groupId and artifactId will be downloaded";
+        return "Specifies the current artifact version against the latest artifact resolution. Example: 1.0.0, 1.0.0-SNAPSHOT";
     }
 }

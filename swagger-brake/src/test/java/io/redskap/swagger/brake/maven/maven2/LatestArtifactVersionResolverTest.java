@@ -7,7 +7,6 @@ import static org.mockito.Mockito.mock;
 import io.redskap.swagger.brake.maven.DownloadOptions;
 import io.redskap.swagger.brake.maven.model.MavenMetadata;
 import io.redskap.swagger.brake.maven.model.MavenVersioning;
-import io.redskap.swagger.brake.maven.url.UrlFactory;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +17,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class LatestArtifactVersionResolverTest {
     @Mock
-    private UrlFactory urlFactory;
+    private Maven2UrlFactory urlFactory;
 
     @Mock
     private MavenMetadataDownloader metadataDownloader;

@@ -74,17 +74,22 @@ but to resolve the latest artifact containing the Swagger definition file from a
 repository (including Nexus and Artifactory as well). This feature requires that 
 the API definition file is packed into a JAR.
 
-Using the functionality needs 3 parameters:
+Using the functionality requires the following parameters:
 - `--maven-repo-url`
-  - Specifies the repository base URL. Example: `https://oss.jfrog.org/oss-snapshot-local`
+  - Specifies the release repository base URL. Example: `https://oss.jfrog.org/oss-release-local/`
+- `--maven-snapshot-repo-url`
+  - Specifies the snapshot repository base URL. Example: `https://oss.jfrog.org/oss-snapshot-local/`
 - `--groupId`
   - The groupId of the artifact 
 - `--artifactId`
   - The artifactId
+- `--current-artifact-version`
+  - The version of the artifact that contains the new API. This is mostly used to determine if the snapshot
+  or the release repository needs to be used. Example values are: 1.0.0, 1.0.0-SNAPSHOT
 
 Example command:
 ```bash
-$ java -jar swagger-brake.jar --new-api=/home/user/petstore_v2.yaml --maven-repo-url=https://oss.jfrog.org/oss-snapshot-local --groupId=com.example --artifactId=petstore-api
+$ java -jar swagger-brake.jar --new-api=/home/user/petstore_v2.yaml --maven-repo-url=https://oss.jfrog.org/oss-snapshot-local --maven-snapshot-repo-url=https://oss.jfrog.org/oss-snapshot-local --groupId=com.example --artifactId=petstore-api --current-artifact-version=1.0.0-SNAPSHOT
 ```
 
 By default, Swagger Brake scans the downloaded artifact for one of the following 3 files:
@@ -93,12 +98,12 @@ By default, Swagger Brake scans the downloaded artifact for one of the following
 - swagger.yml
 
 This behavior can be customized by providing the `--api-filename` parameter.
-Note that it's enough to provide the filename without the extension as well, in that case the JSON, YAML and YML
+Note that it's enough to provide the filename without the extension, in that case the JSON, YAML and YML
 extension will be used for scanning.
 
 Example command:
 ```bash
-$ java -jar swagger-brake.jar --new-api=/home/user/petstore_v2.yaml --maven-repo-url=https://oss.jfrog.org/oss-snapshot-local --groupId=com.example --artifactId=petstore-api --api-filename=something.yaml
+$ java -jar swagger-brake.jar --new-api=/home/user/petstore_v2.yaml --maven-repo-url=https://oss.jfrog.org/oss-snapshot-local --maven-snapshot-repo-url=https://oss.jfrog.org/oss-snapshot-local --groupId=com.example --artifactId=petstore-api --current-artifact-version=1.0.0-SNAPSHOT --api-filename=something.yaml
 ```
 
 #### Secured Maven repository

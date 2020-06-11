@@ -11,13 +11,18 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 class Maven2LatestArtifactDownloader implements LatestArtifactDownloader {
     private final LatestArtifactVersionResolver latestArtifactVersionResolver;
-    private final LatestSnapshotNameResolver latestSnapshotNameResolver;
+    private final LatestArtifactNameResolver latestArtifactNameResolver;
     private final LatestJarArtifactDownloader latestJarArtifactDownloader;
 
     @Override
     public File download(DownloadOptions options) {
         String latestVersion = latestArtifactVersionResolver.resolve(options);
-        String latestSnapshotName = latestSnapshotNameResolver.resolve(options, latestVersion);
-        return latestJarArtifactDownloader.download(options, latestSnapshotName, latestVersion);
+        String latestFilename;
+        if (ArtifactVersionDecider.isSnapshot(latestVersion)) {
+            latestFilename = latestArtifactNameResolver.resolveSnapshot(options, latestVersion);
+        } else {
+            latestFilename = latestArtifactNameResolver.resolveRelease(options, latestVersion);
+        }
+        return latestJarArtifactDownloader.download(options, latestFilename, latestVersion);
     }
 }

@@ -10,8 +10,10 @@ public abstract class CliOptions {
     public static final String OUTPUT_PATH = "output-path";
 
     public static final String MAVEN_REPO_URL = "maven-repo-url";
+    public static final String MAVEN_SNAPSHOT_REPO_URL = "maven-snapshot-repo-url";
     public static final String ARTIFACT_ID = "artifactId";
     public static final String GROUP_ID = "groupId";
+    public static final String CURRENT_ARTIFACT_VERSION = "current-artifact-version";
 
     public static final String DEPRECATED_API_DELETION_ALLOWED = "deprecated-api-deletion-allowed";
 

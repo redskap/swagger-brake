@@ -14,10 +14,12 @@ public class Options {
     private String outputFilePath;
 
     private String mavenRepoUrl;
+    private String mavenSnapshotRepoUrl;
     private String groupId;
     private String artifactId;
     private String mavenRepoUsername;
     private String mavenRepoPassword;
+    private String currentArtifactVersion;
 
     private Boolean deprecatedApiDeletionAllowed;
 

@@ -25,14 +25,11 @@ public class ArtifactDownloaderHandler {
 
     public void handle(Options options) {
         if (isLatestArtifactDownloadEnabled(options)) {
-            String url = options.getMavenRepoUrl();
-            String username = options.getMavenRepoUsername();
-            String password = options.getMavenRepoPassword();
-            String groupId = options.getGroupId();
-            String artifactId = options.getArtifactId();
             try {
-                log.info("Downloading latest artifact from repository '{}' with groupId '{}' artifactId '{}'", url, groupId, artifactId);
-                DownloadOptions downloadOptions = downloadOptionsFactory.create(url, groupId, artifactId, username, password);
+                String groupId = options.getGroupId();
+                String artifactId = options.getArtifactId();
+                log.info("Downloading latest artifact with groupId '{}' artifactId '{}'", groupId, artifactId);
+                DownloadOptions downloadOptions = downloadOptionsFactory.create(options);
                 File apiJar = downloaderFactory.create(options).download(downloadOptions);
                 ApiFileResolverParameter apiFileResolverParameter = new ApiFileResolverParameter(apiJar, options.getApiFilename());
                 File swaggerFile = apiFileResolver.resolve(apiFileResolverParameter);
@@ -42,10 +39,24 @@ public class ArtifactDownloaderHandler {
             } catch (Exception e) {
                 throw new LatestArtifactDownloadException("Error while downloading the latest version of the artifact", e);
             }
+        } else if (isLatestArtifactDownloadWronglyConfigured(options)) {
+            log.warn("Seems like latest artifact resolution is intended to be used but missing some of the parameters");
         }
     }
 
     private boolean isLatestArtifactDownloadEnabled(Options options) {
-        return isNotBlank(options.getMavenRepoUrl()) && isNotBlank(options.getGroupId()) && isNotBlank(options.getArtifactId());
+        return isNotBlank(options.getMavenRepoUrl())
+            && isNotBlank(options.getMavenSnapshotRepoUrl())
+            && isNotBlank(options.getGroupId())
+            && isNotBlank(options.getArtifactId())
+            && isNotBlank(options.getCurrentArtifactVersion());
+    }
+
+    private boolean isLatestArtifactDownloadWronglyConfigured(Options options) {
+        return isNotBlank(options.getMavenRepoUrl())
+            || isNotBlank(options.getMavenSnapshotRepoUrl())
+            || isNotBlank(options.getGroupId())
+            || isNotBlank(options.getArtifactId())
+            || isNotBlank(options.getCurrentArtifactVersion());
     }
 }
