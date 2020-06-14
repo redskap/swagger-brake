@@ -1,13 +1,12 @@
-package io.redskap.swagger.brake.cli.options;
+package io.redskap.swagger.brake.runner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import io.redskap.swagger.brake.runner.Options;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
-public class CliOptionsValidatorTest {
-    private CliOptionsValidator underTest = new CliOptionsValidator();
+public class OptionsValidatorTest {
+    private OptionsValidator underTest = new OptionsValidator();
 
     @Test
     public void testValidateThrowsExceptionWhenNewApiPathIsNotSet() {
@@ -18,7 +17,7 @@ public class CliOptionsValidatorTest {
         Throwable result = Assertions.catchThrowable(() -> underTest.validate(options));
         // then
         assertThat(result).isInstanceOf(IllegalArgumentException.class);
-        assertThat(result.getMessage()).contains(CliOption.NEW_API_PATH.asCliOption());
+        assertThat(result.getMessage()).contains("newApiPath");
     }
 
     @Test
@@ -30,7 +29,7 @@ public class CliOptionsValidatorTest {
         Throwable result = Assertions.catchThrowable(() -> underTest.validate(options));
         // then
         assertThat(result).isInstanceOf(IllegalArgumentException.class);
-        assertThat(result.getMessage()).contains(CliOption.OLD_API_PATH.asCliOption());
+        assertThat(result.getMessage()).contains("oldApiPath");
         assertThat(result.getMessage()).containsIgnoringCase("maven");
     }
 
@@ -58,7 +57,7 @@ public class CliOptionsValidatorTest {
         Throwable result = Assertions.catchThrowable(() -> underTest.validate(options));
         // then
         assertThat(result).isInstanceOf(IllegalArgumentException.class);
-        assertThat(result.getMessage()).contains(CliOption.MAVEN_SNAPSHOT_REPO_URL.asCliOption());
+        assertThat(result.getMessage()).contains("mavenSnapshotRepoUrl");
     }
 
     @Test
@@ -74,7 +73,7 @@ public class CliOptionsValidatorTest {
         Throwable result = Assertions.catchThrowable(() -> underTest.validate(options));
         // then
         assertThat(result).isInstanceOf(IllegalArgumentException.class);
-        assertThat(result.getMessage()).contains(CliOption.MAVEN_REPO_URL.asCliOption());
+        assertThat(result.getMessage()).contains("mavenRepoUrl");
     }
 
     @Test
@@ -90,7 +89,7 @@ public class CliOptionsValidatorTest {
         Throwable result = Assertions.catchThrowable(() -> underTest.validate(options));
         // then
         assertThat(result).isInstanceOf(IllegalArgumentException.class);
-        assertThat(result.getMessage()).contains(CliOption.CURRENT_ARTIFACT_VERSION.asCliOption());
+        assertThat(result.getMessage()).contains("currentArtifactVersion");
     }
 
     @Test
@@ -106,7 +105,7 @@ public class CliOptionsValidatorTest {
         Throwable result = Assertions.catchThrowable(() -> underTest.validate(options));
         // then
         assertThat(result).isInstanceOf(IllegalArgumentException.class);
-        assertThat(result.getMessage()).contains(CliOption.GROUP_ID.asCliOption());
+        assertThat(result.getMessage()).contains("groupId");
     }
 
     @Test
@@ -122,7 +121,7 @@ public class CliOptionsValidatorTest {
         Throwable result = Assertions.catchThrowable(() -> underTest.validate(options));
         // then
         assertThat(result).isInstanceOf(IllegalArgumentException.class);
-        assertThat(result.getMessage()).contains(CliOption.ARTIFACT_ID.asCliOption());
+        assertThat(result.getMessage()).contains("artifactId");
     }
 
     @Test
@@ -155,7 +154,7 @@ public class CliOptionsValidatorTest {
         Throwable result = Assertions.catchThrowable(() -> underTest.validate(options));
         // then
         assertThat(result).isInstanceOf(IllegalArgumentException.class);
-        assertThat(result.getMessage()).contains(CliOption.OLD_API_PATH.asCliOption());
+        assertThat(result.getMessage()).contains("oldApiPath");
         assertThat(result.getMessage()).containsIgnoringCase("maven");
     }
 }

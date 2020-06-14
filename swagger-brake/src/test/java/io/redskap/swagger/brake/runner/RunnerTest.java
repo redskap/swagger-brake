@@ -26,6 +26,9 @@ public class RunnerTest {
     @Mock
     private ArtifactDownloaderHandler artifactDownloaderHandler;
 
+    @Mock
+    private OptionsValidator optionsValidator;
+
     @InjectMocks
     private Runner underTest;
 

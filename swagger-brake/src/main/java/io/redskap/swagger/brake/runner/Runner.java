@@ -22,8 +22,10 @@ public class Runner {
     private final OpenApiFactory openApiFactory;
     private final Checker checker;
     private final CheckerOptionsFactory checkerOptionsFactory;
+    private final OptionsValidator optionsValidator;
 
     public Collection<BreakingChange> run(Options options) {
+        optionsValidator.validate(options);
         artifactDownloaderHandler.handle(options);
         String oldApiPath = options.getOldApiPath();
         if (StringUtils.isBlank(oldApiPath)) {
