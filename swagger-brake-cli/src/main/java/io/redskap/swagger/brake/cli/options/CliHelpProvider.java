@@ -18,23 +18,20 @@ public class CliHelpProvider {
     public String getHelp() {
         StringBuilder sb = new StringBuilder();
         sb.append(format("Usage: java -jar swagger-brake.jar %s=/home/user/something.yaml %s=/home/user/something_v2.yaml",
-            formatCliOption(CliOptions.OLD_API_PATH), formatCliOption(CliOptions.NEW_API_PATH)));
+            CliOption.OLD_API_PATH.asCliOption(), CliOption.NEW_API_PATH.asCliOption()));
         sb.append(lineSeparator());
         sb.append(lineSeparator());
         sb.append("Parameters:");
         for (CliOptionHandler handler : optionHandlers) {
             sb.append(lineSeparator());
             sb.append("\t");
-            sb.append(format("%s %s", formatPadCliOption(handler.getHandledPropertyName()), handler.getHelpMessage()));
+            sb.append(format("%s %s", formatPadCliOption(handler.getHandledCliOption()), handler.getHelpMessage()));
         }
         return sb.toString();
     }
 
-    private String formatPadCliOption(String option) {
-        return StringUtils.rightPad(formatCliOption(option), 40);
+    private String formatPadCliOption(CliOption option) {
+        return StringUtils.rightPad(option.asCliOption(), 40);
     }
 
-    private String formatCliOption(String option) {
-        return CliOptions.getAsCliOption(option);
-    }
 }

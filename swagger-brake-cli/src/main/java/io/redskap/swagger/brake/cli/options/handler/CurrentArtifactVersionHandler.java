@@ -1,6 +1,6 @@
 package io.redskap.swagger.brake.cli.options.handler;
 
-import io.redskap.swagger.brake.cli.options.CliOptions;
+import io.redskap.swagger.brake.cli.options.CliOption;
 import io.redskap.swagger.brake.runner.Options;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
@@ -8,15 +8,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class CurrentArtifactVersionHandler implements CliOptionHandler {
     @Override
-    public void handle(String propertyValue, Options options) {
-        if (StringUtils.isNotBlank(propertyValue)) {
-            options.setCurrentArtifactVersion(propertyValue);
+    public void handle(String optionValue, Options options) {
+        if (StringUtils.isNotBlank(optionValue)) {
+            options.setCurrentArtifactVersion(optionValue);
         }
     }
 
     @Override
-    public String getHandledPropertyName() {
-        return CliOptions.CURRENT_ARTIFACT_VERSION;
+    public CliOption getHandledCliOption() {
+        return CliOption.CURRENT_ARTIFACT_VERSION;
     }
 
     @Override

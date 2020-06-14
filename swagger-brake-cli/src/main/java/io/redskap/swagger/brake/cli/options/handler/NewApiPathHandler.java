@@ -1,6 +1,6 @@
 package io.redskap.swagger.brake.cli.options.handler;
 
-import io.redskap.swagger.brake.cli.options.CliOptions;
+import io.redskap.swagger.brake.cli.options.CliOption;
 import io.redskap.swagger.brake.runner.Options;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
@@ -8,16 +8,15 @@ import org.springframework.stereotype.Component;
 @Component
 class NewApiPathHandler implements CliOptionHandler {
     @Override
-    public void handle(String propertyValue, Options options) {
-        if (StringUtils.isBlank(propertyValue)) {
-            throw new IllegalArgumentException(CliOptions.getAsCliOption(getHandledPropertyName()) + " must be set");
+    public void handle(String optionValue, Options options) {
+        if (StringUtils.isNotBlank(optionValue)) {
+            options.setNewApiPath(optionValue);
         }
-        options.setNewApiPath(propertyValue);
     }
 
     @Override
-    public String getHandledPropertyName() {
-        return CliOptions.NEW_API_PATH;
+    public CliOption getHandledCliOption() {
+        return CliOption.NEW_API_PATH;
     }
 
     @Override

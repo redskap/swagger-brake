@@ -1,6 +1,6 @@
 package io.redskap.swagger.brake.cli.options.handler;
 
-import io.redskap.swagger.brake.cli.options.CliOptions;
+import io.redskap.swagger.brake.cli.options.CliOption;
 import io.redskap.swagger.brake.runner.Options;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
@@ -8,15 +8,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class MavenRepoUrlHandler implements CliOptionHandler {
     @Override
-    public void handle(String propertyValue, Options options) {
-        if (StringUtils.isNotBlank(propertyValue)) {
-            options.setMavenRepoUrl(propertyValue);
+    public void handle(String optionValue, Options options) {
+        if (StringUtils.isNotBlank(optionValue)) {
+            options.setMavenRepoUrl(optionValue);
         }
     }
 
     @Override
-    public String getHandledPropertyName() {
-        return CliOptions.MAVEN_REPO_URL;
+    public CliOption getHandledCliOption() {
+        return CliOption.MAVEN_REPO_URL;
     }
 
     @Override

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 public class CliOptionsProvider {
     private final List<CliOptionHandler> handlers;
     private final CliHelpProvider helpProvider;
+    private final CliOptionsValidator cliOptionsValidator;
     private final Environment environment;
 
     public Options provide() {
@@ -23,15 +24,16 @@ public class CliOptionsProvider {
         }
         Options options = new Options();
         for (CliOptionHandler handler : handlers) {
-            String handledPropertyName = handler.getHandledPropertyName();
-            String propertyValue = environment.getProperty(handledPropertyName);
-            log.debug("Handling command line argument {} with value of {}", handledPropertyName, propertyValue);
+            CliOption handledOption = handler.getHandledCliOption();
+            String propertyValue = environment.getProperty(handledOption.asName());
+            log.debug("Handling command line argument {} with value of {}", handledOption, propertyValue);
             handler.handle(propertyValue, options);
         }
+        cliOptionsValidator.validate(options);
         return options;
     }
 
     private boolean isHelpRequired() {
-        return environment.getProperty(CliOptions.HELP) != null;
+        return environment.getProperty(CliOption.HELP.asName()) != null;
     }
 }

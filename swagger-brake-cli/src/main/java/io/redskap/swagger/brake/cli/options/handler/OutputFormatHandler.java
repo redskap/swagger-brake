@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.google.common.collect.ImmutableSet;
-import io.redskap.swagger.brake.cli.options.CliOptions;
+import io.redskap.swagger.brake.cli.options.CliOption;
 import io.redskap.swagger.brake.runner.Options;
 import io.redskap.swagger.brake.runner.OutputFormat;
 import lombok.extern.slf4j.Slf4j;
@@ -20,12 +20,12 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class OutputFormatHandler implements CliOptionHandler {
     @Override
-    public void handle(String propertyValue, Options options) {
+    public void handle(String optionValue, Options options) {
         Set<OutputFormat> formats = ImmutableSet.of(OutputFormat.STDOUT);
 
-        if (!StringUtils.isBlank(propertyValue)) {
+        if (!StringUtils.isBlank(optionValue)) {
             try {
-                String[] formatStrings = propertyValue.split(",");
+                String[] formatStrings = optionValue.split(",");
                 formats = Arrays.stream(formatStrings).map(String::trim).map(String::toUpperCase).map(OutputFormat::valueOf).collect(toSet());
             } catch (IllegalArgumentException e) {
                 log.debug("Format cannot be resolved", e);
@@ -36,8 +36,8 @@ public class OutputFormatHandler implements CliOptionHandler {
     }
 
     @Override
-    public String getHandledPropertyName() {
-        return CliOptions.OUTPUT_FORMAT;
+    public CliOption getHandledCliOption() {
+        return CliOption.OUTPUT_FORMAT;
     }
 
     @Override

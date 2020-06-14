@@ -2,21 +2,22 @@ package io.redskap.swagger.brake.cli.options.handler;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
+import io.redskap.swagger.brake.cli.options.CliOption;
 import io.redskap.swagger.brake.runner.Options;
 import org.springframework.stereotype.Component;
 
 @Component
 public class MavenRepoPasswordHandler implements CliOptionHandler {
     @Override
-    public void handle(String propertyValue, Options options) {
-        if (isNotBlank(propertyValue)) {
-            options.setMavenRepoPassword(propertyValue);
+    public void handle(String optionValue, Options options) {
+        if (isNotBlank(optionValue)) {
+            options.setMavenRepoPassword(optionValue);
         }
     }
 
     @Override
-    public String getHandledPropertyName() {
-        return "maven-repo-password";
+    public CliOption getHandledCliOption() {
+        return CliOption.MAVEN_REPO_PASSWORD;
     }
 
     @Override

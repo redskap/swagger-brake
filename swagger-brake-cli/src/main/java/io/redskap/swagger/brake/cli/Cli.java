@@ -2,9 +2,8 @@ package io.redskap.swagger.brake.cli;
 
 import java.util.Collection;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.redskap.swagger.brake.cli.options.CliHelpException;
-import io.redskap.swagger.brake.cli.options.CliOptions;
+import io.redskap.swagger.brake.cli.options.CliOption;
 import io.redskap.swagger.brake.cli.options.CliOptionsProvider;
 import io.redskap.swagger.brake.core.BreakingChange;
 import io.redskap.swagger.brake.runner.Options;
@@ -17,24 +16,35 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-@SuppressFBWarnings("DM_EXIT")
 public class Cli {
     private final CliOptionsProvider optionsProvider;
 
-    public void start() {
+    /**
+     * Starts Swagger Brake and returns the exit code.
+     * <br>
+     * 0 exit code means no breaking changes were detected and the check was executed successfully.<br>
+     * 1 exit code means that breaking changes were found.<br>
+     * 2 exit code means that there was an error during the execution.<br>
+     * 3 exit code means that help was invoked.<br>
+     * @return the exit code
+     */
+    public int start() {
         try {
             Options options = optionsProvider.provide();
             Collection<BreakingChange> breakingChanges = Starter.start(options);
             if (CollectionUtils.isNotEmpty(breakingChanges)) {
-                System.exit(1);
+                return 1;
+            } else {
+                return 0;
             }
         } catch (CliHelpException e) {
             log.info(e.getMessage());
+            return 3;
         } catch (Exception e) {
             log.debug("Exception occured", e);
             log.error(e.getMessage());
-            log.error("For help please use " + CliOptions.getAsCliOption(CliOptions.HELP));
-            System.exit(1);
+            log.error("For help please use " + CliOption.HELP.asCliOption());
+            return 2;
         }
     }
 }

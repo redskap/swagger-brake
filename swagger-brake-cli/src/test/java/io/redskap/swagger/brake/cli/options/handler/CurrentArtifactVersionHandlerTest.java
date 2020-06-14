@@ -6,8 +6,8 @@ import io.redskap.swagger.brake.cli.options.CliOption;
 import io.redskap.swagger.brake.runner.Options;
 import org.junit.Test;
 
-public class NewApiPathHandlerTest {
-    private NewApiPathHandler underTest = new NewApiPathHandler();
+public class CurrentArtifactVersionHandlerTest {
+    private CurrentArtifactVersionHandler underTest = new CurrentArtifactVersionHandler();
 
     @Test
     public void testHandleWorks() {
@@ -17,7 +17,7 @@ public class NewApiPathHandlerTest {
         // when
         underTest.handle(propertyValue, options);
         // then
-        assertThat(options).extracting(Options::getNewApiPath).isEqualTo(propertyValue);
+        assertThat(options).extracting(Options::getCurrentArtifactVersion).isEqualTo(propertyValue);
     }
 
     @Test
@@ -28,7 +28,7 @@ public class NewApiPathHandlerTest {
         // when
         underTest.handle(propertyValue, options);
         // then
-        assertThat(options).extracting(Options::getNewApiPath).isNull();
+        assertThat(options).extracting(Options::getCurrentArtifactVersion).isNull();
     }
 
     @Test
@@ -39,7 +39,7 @@ public class NewApiPathHandlerTest {
         // when
         underTest.handle(propertyValue, options);
         // then
-        assertThat(options).extracting(Options::getNewApiPath).isNull();
+        assertThat(options).extracting(Options::getCurrentArtifactVersion).isNull();
     }
 
     @Test
@@ -50,7 +50,7 @@ public class NewApiPathHandlerTest {
         // when
         underTest.handle(propertyValue, options);
         // then
-        assertThat(options).extracting(Options::getNewApiPath).isNull();
+        assertThat(options).extracting(Options::getCurrentArtifactVersion).isNull();
     }
 
     @Test
@@ -59,6 +59,6 @@ public class NewApiPathHandlerTest {
         // when
         CliOption result = underTest.getHandledCliOption();
         // then
-        assertThat(result).isEqualTo(CliOption.NEW_API_PATH);
+        assertThat(result).isEqualTo(CliOption.CURRENT_ARTIFACT_VERSION);
     }
 }

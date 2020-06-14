@@ -1,11 +1,12 @@
 package io.redskap.swagger.brake.cli.options.handler;
 
+import io.redskap.swagger.brake.cli.options.CliOption;
 import io.redskap.swagger.brake.runner.Options;
 
 public interface CliOptionHandler {
-    void handle(String propertyValue, Options options);
+    void handle(String optionValue, Options options);
 
-    String getHandledPropertyName();
+    CliOption getHandledCliOption();
 
     String getHelpMessage();
 }
