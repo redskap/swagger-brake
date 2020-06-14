@@ -23,6 +23,6 @@ public class StdOutReporterTest {
         // when
         boolean result = underTest.canReport(OutputFormat.HTML);
         // then
-        assertThat(result).isFalse();
+        assertThat(result).isTrue();
     }
 }

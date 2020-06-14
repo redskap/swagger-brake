@@ -23,6 +23,6 @@ public class StdOutReporter implements Reporter, CheckableReporter {
 
     @Override
     public boolean canReport(OutputFormat format) {
-        return OutputFormat.STDOUT.equals(format);
+        return true;
     }
 }

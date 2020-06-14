@@ -14,11 +14,14 @@ public class ReporterFactory {
     private final Collection<CheckableReporter> reporters;
 
     public Reporter create(Options options) {
-        Collection<Reporter> reporters = options.getOutputFormats().stream().map(this::findReporter).collect(Collectors.toList());
+        Collection<Reporter> reporters = options.getOutputFormats().stream().map(this::findReporters).flatMap(Collection::stream).collect(Collectors.toList());
+        if (reporters.isEmpty()) {
+            throw new IllegalStateException("No suitable reporters could be loaded");
+        }
         return new CompositeReporter(reporters);
     }
 
-    private Reporter findReporter(OutputFormat outputFormat) {
-        return reporters.stream().filter(r -> r.canReport(outputFormat)).findAny().orElseThrow(() -> new RuntimeException("Reporter cannot be found for format " + outputFormat));
+    private Collection<Reporter> findReporters(OutputFormat outputFormat) {
+        return reporters.stream().filter(r -> r.canReport(outputFormat)).collect(Collectors.toList());
     }
 }
