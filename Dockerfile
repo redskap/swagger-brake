@@ -8,7 +8,7 @@ RUN sh gradlew clean build shadowJar
 # Actual container
 FROM openjdk:8-jdk
 WORKDIR swagger-brake
-COPY --from=baseimage /swagger-brake/swagger-brake-cli/build/libs/swagger-brake-*.jar swagger-brake.jar
+COPY --from=baseimage /swagger-brake/swagger-brake-cli/build/libs/swagger-brake-*-cli.jar swagger-brake.jar
 
 ENTRYPOINT ["java", "-jar", "swagger-brake.jar"]
 
