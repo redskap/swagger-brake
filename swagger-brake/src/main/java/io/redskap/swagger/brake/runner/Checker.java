@@ -27,7 +27,9 @@ public class Checker {
             throw new IllegalArgumentException("checkerOptions must be provided");
         }
         checkerOptionsProvider.set(checkerOptions);
-        Collection<BreakingChange> breakingChanges = breakChecker.check(transformer.transform(oldApi), transformer.transform(newApi));
+        Specification oldApiSpec = transformer.transform(oldApi);
+        Specification newApiSpec = transformer.transform(newApi);
+        Collection<BreakingChange> breakingChanges = breakChecker.check(oldApiSpec, newApiSpec);
         log.info("Check is finished");
         return breakingChanges;
     }

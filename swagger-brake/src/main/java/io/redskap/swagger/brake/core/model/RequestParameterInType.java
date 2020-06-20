@@ -8,8 +8,7 @@ import lombok.RequiredArgsConstructor;
 public enum RequestParameterInType {
     QUERY("query"),
     PATH("path"),
-    HEADER("header"),
-    COOKIE("cookie");
+    HEADER("header");
 
     private final String name;
 

@@ -56,8 +56,7 @@ paths:
         name: "test"
         description: "Test description"
         required: true
-        schema:
-          type: "string"
+        type: "string"
       responses:
         405:
           description: "Invalid input"
@@ -87,8 +86,7 @@ paths:
       - in: "query"
         name: "test"
         description: "Test description"
-        schema:
-          type: "string"
+        type: "string"
       responses:
         400:
           description: "Invalid ID supplied"
@@ -128,8 +126,7 @@ paths:
         name: "test"
         description: "Test description"
         required: true
-        schema:
-          type: "string"
+        type: "string"
       responses:
         200:
           description: "successful operation"

@@ -22,4 +22,15 @@ public class NoBreakingChangeIntTest extends AbstractSwaggerBrakeIntTest {
         // then
         assertThat(result).isEmpty();
     }
+
+    @Test
+    public void testNoBreakingChangeWhenSameApiUsedWorksCorrectly() {
+        // given
+        String oldApiPath = "nobreakingchange/petstore.yaml";
+        String newApiPath = "nobreakingchange/petstore.yaml";
+        // when
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
+        // then
+        assertThat(result).isEmpty();
+    }
 }

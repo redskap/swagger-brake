@@ -41,10 +41,11 @@ public class Cli {
             log.info(e.getMessage());
             return 3;
         } catch (Exception e) {
-            log.debug("Exception occured", e);
-            log.error(e.getMessage());
+            log.error("Exception occured", e);
             log.error("For help please use " + CliOption.HELP.asCliOption());
             return 2;
         }
     }
+
+    // TODO: add test cases to verify the return codes
 }
