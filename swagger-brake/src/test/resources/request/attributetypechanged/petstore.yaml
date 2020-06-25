@@ -584,6 +584,39 @@ securityDefinitions:
     name: "api_key"
     in: "header"
 definitions:
+  Location:
+    description: Structure describing a location fix obtained for a user.
+    type: object
+    allOf:
+      - "$ref": "#/definitions/Coordinate"
+      - type: object
+        properties:
+          observedTimestamp:
+            description: Time when this location result was observed.
+            type: string
+            format: date-time
+        required:
+          - observedTimestamp
+  Coordinate:
+    description: Structure describing a location coordinate.
+    type: object
+    properties:
+      lat:
+        description: Latitude of location fix, in degrees.
+        type: number
+        format: double
+        maximum: 90
+        minimum: -90
+      lon:
+        description: Longitude of location fix, in degrees.
+        type: number
+        format: double
+        maximum: 180
+        minimum: -180
+    required:
+      - lat
+      - lon
+
   Order:
     type: "object"
     properties:
@@ -635,6 +668,7 @@ definitions:
         description: "User Status"
     xml:
       name: "User"
+
   Category:
     type: "object"
     properties:
@@ -671,6 +705,8 @@ definitions:
     - "name"
     - "photoUrls"
     properties:
+      userLocation" :
+        $ref : "#/definitions/Location"
       id:
         type: "integer"
         format: "int64"
