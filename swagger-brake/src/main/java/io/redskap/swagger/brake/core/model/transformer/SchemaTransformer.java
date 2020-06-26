@@ -11,6 +11,8 @@ import io.redskap.swagger.brake.core.model.schemastore.SchemaStore;
 import io.redskap.swagger.brake.core.model.schemastore.SchemaStoreProvider;
 import io.redskap.swagger.brake.core.model.service.TypeRefNameResolver;
 import io.swagger.v3.oas.models.media.ArraySchema;
+import io.swagger.v3.oas.models.media.ComposedSchema;
+import io.swagger.v3.parser.util.SchemaTypeUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
@@ -36,6 +38,14 @@ public class SchemaTransformer implements Transformer<io.swagger.v3.oas.models.m
         if (swSchema instanceof ArraySchema) {
             Schema schema = internalTransform(((ArraySchema) swSchema).getItems());
             return new Schema.Builder(swSchema.getType()).schema(schema).schemaAttributes(getSchemaAttributes(swSchema)).build();
+        } else if (swSchema instanceof ComposedSchema) {
+            List<SchemaAttribute> objectAttributes = ((ComposedSchema) swSchema).getAllOf()
+                .stream()
+                .map(this::transformSchema)
+                .map(Schema::getSchemaAttributes)
+                .flatMap(Collection::stream)
+                .collect(toList());
+            return new Schema.Builder(SchemaTypeUtil.OBJECT_TYPE).schemaAttributes(objectAttributes).build();
         } else {
             return transformSchema(swSchema);
         }
