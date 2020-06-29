@@ -39,16 +39,28 @@ public class SchemaTransformer implements Transformer<io.swagger.v3.oas.models.m
             Schema schema = internalTransform(((ArraySchema) swSchema).getItems());
             return new Schema.Builder(swSchema.getType()).schema(schema).schemaAttributes(getSchemaAttributes(swSchema)).build();
         } else if (swSchema instanceof ComposedSchema) {
-            List<SchemaAttribute> objectAttributes = ((ComposedSchema) swSchema).getAllOf()
+            return transformComposedSchema((ComposedSchema) swSchema);
+        } else {
+            return transformSchema(swSchema);
+        }
+    }
+
+    private Schema transformComposedSchema(ComposedSchema swSchema) {
+        if (CollectionUtils.isNotEmpty(swSchema.getAllOf())) {
+            List<SchemaAttribute> objectAttributes = swSchema.getAllOf()
                 .stream()
                 .map(this::transformSchema)
                 .map(Schema::getSchemaAttributes)
                 .flatMap(Collection::stream)
                 .collect(toList());
             return new Schema.Builder(SchemaTypeUtil.OBJECT_TYPE).schemaAttributes(objectAttributes).build();
-        } else {
-            return transformSchema(swSchema);
+        } else if (CollectionUtils.isNotEmpty(swSchema.getOneOf())) {
+            // TODO: Implement oneOf support
+        } else if (CollectionUtils.isNotEmpty(swSchema.getAnyOf())) {
+            // TODO: Implement anyOf support
         }
+        // TODO: Remove this when all composed schema types are supported
+        return new Schema.Builder(SchemaTypeUtil.OBJECT_TYPE).build();
     }
 
     private Schema transformSchema(io.swagger.v3.oas.models.media.Schema swSchema) {
