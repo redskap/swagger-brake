@@ -1,5 +1,10 @@
 package io.redskap.swagger.brake.core.model.transformer;
 
+import static java.util.stream.Collectors.toList;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+
+import java.util.*;
+
 import io.redskap.swagger.brake.core.model.Schema;
 import io.redskap.swagger.brake.core.model.SchemaAttribute;
 import io.redskap.swagger.brake.core.model.schemastore.SchemaStore;
@@ -11,12 +16,6 @@ import io.swagger.v3.parser.util.SchemaTypeUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
-
-import java.util.*;
-
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toSet;
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 @Component
 @RequiredArgsConstructor
@@ -41,11 +40,11 @@ public class SchemaTransformer implements Transformer<io.swagger.v3.oas.models.m
             return new Schema.Builder(swSchema.getType()).schema(schema).schemaAttributes(getSchemaAttributes(swSchema)).build();
         } else if (swSchema instanceof ComposedSchema) {
             final Collection<SchemaAttribute> objectAttributes = ((ComposedSchema) swSchema).getAllOf()
-                    .stream()
-                    .map(this::transformSchema)
-                    .map(Schema::getSchemaAttributes)
-                    .flatMap(Collection::stream)
-                    .collect(toSet());
+                .stream()
+                .map(this::transformSchema)
+                .map(Schema::getSchemaAttributes)
+                .flatMap(Collection::stream)
+                .collect(toSet());
             return new Schema.Builder(SchemaTypeUtil.OBJECT_TYPE).schemaAttributes(objectAttributes).build();
         } else {
             return transformSchema(swSchema);
@@ -77,13 +76,13 @@ public class SchemaTransformer implements Transformer<io.swagger.v3.oas.models.m
             return Collections.emptyList();
         }
         return properties.entrySet()
-                .stream()
-                .map(e -> {
-                    io.swagger.v3.oas.models.media.Schema newInternalSchema = e.getValue();
-                    Schema schema = internalTransform(newInternalSchema);
-                    return new SchemaAttribute(e.getKey(), schema);
-                })
-                .collect(toList());
+                    .stream()
+                    .map(e -> {
+                        io.swagger.v3.oas.models.media.Schema newInternalSchema = e.getValue();
+                        Schema schema = internalTransform(newInternalSchema);
+                        return new SchemaAttribute(e.getKey(), schema);
+                    })
+                    .collect(toList());
     }
 
     private io.swagger.v3.oas.models.media.Schema getSchemaForRef(String originalRefName) {
