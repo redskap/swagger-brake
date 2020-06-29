@@ -13,6 +13,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class JarScanner {
+    /**
+     * Scans a JAR file for a single entry based on the predicate given.
+     * @param jarFile the {@link File} object pointing to the JAR file.
+     * @param criteria the predicate that the entries will be matched against.
+     * @return An {@link Optional} {@link JarEntry} that matched the predicate given
+     * @throws IOException if an I/O error has occurred
+     */
     public Optional<JarEntry> find(File jarFile, Predicate<JarEntry> criteria) throws IOException {
         Optional<JarEntry> result = Optional.empty();
         try (JarFile jar = new JarFile(jarFile)) {

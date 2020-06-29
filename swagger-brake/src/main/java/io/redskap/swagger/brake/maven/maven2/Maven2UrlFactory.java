@@ -7,21 +7,39 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Maven2UrlFactory {
+    /**
+     * Constructs the latest SNAPSHOT metadata URL.
+     * @param options the {@link DownloadOptions}.
+     * @param latestVersion the latest version available in the repo.
+     * @return the URL string.
+     */
     public String createLatestArtifactSnapshotMetadataUrl(DownloadOptions options, String latestVersion) {
         String artifactBasePathUrl = createLatestArtifactBasePathUrl(options, options.getSnapshotRepoUrl());
         return format("%s/%s/maven-metadata.xml", artifactBasePathUrl, latestVersion);
     }
 
+    /**
+     * Constructs the latest release metadata URL.
+     * @param options the {@link DownloadOptions}.
+     * @return the URL string.
+     */
     public String createLatestArtifactVersionMetadataUrl(DownloadOptions options) {
         String repoUrl = getRepoUrl(options);
         String artifactBasePathUrl = createLatestArtifactBasePathUrl(options, repoUrl);
         return format("%s/maven-metadata.xml", artifactBasePathUrl);
     }
 
-    public String createLatestArtifactUrl(DownloadOptions options, String latestVersion, String latestSnapshotName) {
+    /**
+     * Constructs the latest JAR artifact URL.
+     * @param options the {@link DownloadOptions}.
+     * @param latestFilename the latest filename available.
+     * @param latestVersion the latest version of the JAR.
+     * @return the URL string.
+     */
+    public String createLatestArtifactUrl(DownloadOptions options, String latestFilename, String latestVersion) {
         String repoUrl = getRepoUrl(options);
         String artifactBasePathUrl = createLatestArtifactBasePathUrl(options, repoUrl);
-        return format("%s/%s/%s.jar", artifactBasePathUrl, latestVersion, latestSnapshotName);
+        return format("%s/%s/%s.jar", artifactBasePathUrl, latestVersion, latestFilename);
     }
 
     private String createLatestArtifactBasePathUrl(DownloadOptions options, String repoUrl) {

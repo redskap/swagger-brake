@@ -12,6 +12,11 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class FileWriter {
+    /**
+     * Writes the content to a file identified by filePath.
+     * @param filePath the path to the file.
+     * @param content the content to be written into the file.
+     */
     public void write(String filePath, String content) {
         try {
             log.debug("File path {}", filePath);

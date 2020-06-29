@@ -7,6 +7,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CheckerOptionsFactory {
+    /**
+     * Converts the {@link Options} instance into a {@link CheckerOptions} instance.
+     * @param options the {@link Options} to be converted.
+     * @return the {@link CheckerOptions} instance.
+     */
     public CheckerOptions create(Options options) {
         CheckerOptions checkerOptions = new CheckerOptions();
         checkerOptions.setDeprecatedApiDeletionAllowed(isDeprecatedApiDeletionAllowed(options));

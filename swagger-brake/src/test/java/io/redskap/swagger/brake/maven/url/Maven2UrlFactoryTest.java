@@ -58,7 +58,7 @@ public class Maven2UrlFactoryTest {
 
         String expected = "http://localhost:8081/artifactory/libs-snapshot-local/io/swagger/brake/swagger-brake-example/1.2.0-SNAPSHOT/swagger-brake-example-1.2.0-20181118.221307-1.jar";
         // when
-        String result = underTest.createLatestArtifactUrl(options, latestVersion, latestSnapshotName);
+        String result = underTest.createLatestArtifactUrl(options, latestSnapshotName, latestVersion);
         // then
         assertThat(result).isEqualTo(expected);
     }
@@ -95,7 +95,7 @@ public class Maven2UrlFactoryTest {
 
         String expected = "http://localhost:8081/artifactory/libs-release-local/io/swagger/brake/swagger-brake-example/1.2.0/swagger-brake-example-1.2.0.jar";
         // when
-        String result = underTest.createLatestArtifactUrl(options, latestVersion, latestArtifactName);
+        String result = underTest.createLatestArtifactUrl(options, latestArtifactName, latestVersion);
         // then
         assertThat(result).isEqualTo(expected);
     }

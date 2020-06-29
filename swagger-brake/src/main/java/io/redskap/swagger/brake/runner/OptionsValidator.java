@@ -13,10 +13,16 @@ import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
+/**
+ * The class responsible for validating an {@link Options} instance.
+ */
 @Component
 public class OptionsValidator {
     public final Map<String, Function<Options, String>> mavenConfigMap;
 
+    /**
+     * Constructs an {@link OptionsValidator} instance.
+     */
     public OptionsValidator() {
         mavenConfigMap = ImmutableMap.of(
             getMavenRepoUrlName(), Options::getMavenRepoUrl,
@@ -27,6 +33,11 @@ public class OptionsValidator {
         );
     }
 
+    /**
+     * Executes the validation against an {@link Options} instance.
+     * @param options the {@link Options} instance. Must be not null.
+     * @throws IllegalArgumentException in case any kind of validation error is detected.
+     */
     public void validate(Options options) {
         if (isBlank(options.getNewApiPath())) {
             throw new IllegalArgumentException(format("%s must be provided.", getNewApiPathName()));

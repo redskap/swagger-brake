@@ -11,6 +11,13 @@ import org.springframework.stereotype.Component;
 public class RepositoryRequestFactory {
     private final HttpRequestFactory requestFactory;
 
+    /**
+     * Creates an {@link HttpUriRequest} based on the parameters given. Either a Basic authorized one or
+     * without authorization.
+     * @param url the URL.
+     * @param options the {@link DownloadOptions}.
+     * @return the {@link HttpUriRequest}.
+     */
     public HttpUriRequest create(String url, DownloadOptions options) {
         try {
             if (options.isAuthenticationNeeded()) {

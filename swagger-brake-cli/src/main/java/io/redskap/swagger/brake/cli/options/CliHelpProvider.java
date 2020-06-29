@@ -15,6 +15,10 @@ import org.springframework.stereotype.Component;
 public class CliHelpProvider {
     private final Collection<CliOptionHandler> optionHandlers;
 
+    /**
+     * Returns the help String for the CLI interface.
+     * @return the help String.
+     */
     public String getHelp() {
         StringBuilder sb = new StringBuilder();
         sb.append(format("Usage: java -jar swagger-brake.jar %s=/home/user/something.yaml %s=/home/user/something_v2.yaml",

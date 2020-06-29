@@ -7,7 +7,7 @@ import io.redskap.swagger.brake.runner.Options;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class CompositeReporter implements Reporter {
+class CompositeReporter implements Reporter {
     private final Collection<Reporter> delegates;
 
     @Override

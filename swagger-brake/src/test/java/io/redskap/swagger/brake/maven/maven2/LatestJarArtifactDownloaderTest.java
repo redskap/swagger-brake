@@ -37,7 +37,7 @@ public class LatestJarArtifactDownloaderTest {
         DownloadOptions options = mock(DownloadOptions.class);
         HttpUriRequest request = mock(HttpUriRequest.class);
         File expected = mock(File.class);
-        given(urlFactory.createLatestArtifactUrl(options, latestVersion, latestSnapshotName)).willReturn(url);
+        given(urlFactory.createLatestArtifactUrl(options, latestSnapshotName, latestVersion)).willReturn(url);
         given(requestFactory.create(url, options)).willReturn(request);
         given(temporaryJarFileDownloader.download(request)).willReturn(expected);
         // when

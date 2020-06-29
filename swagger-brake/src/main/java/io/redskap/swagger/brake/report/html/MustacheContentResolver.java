@@ -11,6 +11,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MustacheContentResolver {
+    /**
+     * Resolves a mustache template into a String based on the parameter map.
+     * @param mustacheFile the path of the mustache template.
+     * @param paramMap the parameter map for the mustache template.
+     * @return the resolved content.
+     */
     public String resolve(String mustacheFile, Map<String, ?> paramMap) {
         try {
             MustacheFactory mf = new DefaultMustacheFactory();

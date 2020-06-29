@@ -6,6 +6,11 @@ import org.springframework.stereotype.Component;
 public class CheckerOptionsProvider {
     private CheckerOptions checkerOptions;
 
+    /**
+     * Sets the {@link CheckerOptions} instance for the current execution.
+     * @param options the {@link CheckerOptions} instance. Must be not null.
+     * @throws IllegalArgumentException if the provided {@link CheckerOptions} is null.
+     */
     public void set(CheckerOptions options) {
         if (options == null) {
             throw new IllegalArgumentException("options cannot be null");

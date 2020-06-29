@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class Checker {
+class Checker {
     private final Transformer<OpenAPI, Specification> transformer;
     private final BreakChecker breakChecker;
     private final CheckerOptionsProvider checkerOptionsProvider;

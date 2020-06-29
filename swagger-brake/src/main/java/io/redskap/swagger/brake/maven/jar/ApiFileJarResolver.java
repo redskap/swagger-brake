@@ -22,6 +22,12 @@ public class ApiFileJarResolver {
     private final JarScanner jarScanner;
     private final ApiFilenameCheckerFactory apiFilenameCheckerFactory;
 
+    /**
+     * Resolves the API file from a JAR identified by the parameter. If the resolution is successful,
+     * a temporary file will be created just for the purpose of the execution.
+     * @param parameter the {@link ApiFileResolverParameter} that controls the behavior.
+     * @return the {@link File} instance pointing to the Swagger file.
+     */
     public File resolve(ApiFileResolverParameter parameter) {
         try {
             File jarFile = parameter.getApiJar();

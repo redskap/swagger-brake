@@ -16,6 +16,11 @@ public enum RequestParameterInType {
         return name;
     }
 
+    /**
+     * Convers a string value into a {@link RequestParameterInType} instance.
+     * @param name the name of the enum.
+     * @return the {@link RequestParameterInType} instance.
+     */
     public static RequestParameterInType fromName(String name) {
         return Arrays.stream(RequestParameterInType.values())
             .filter(t -> name.equals(t.getName()))

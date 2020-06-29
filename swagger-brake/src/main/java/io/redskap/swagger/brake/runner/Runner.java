@@ -13,6 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
+/**
+ * The main entrypoint of Swagger Brake that can be used programmatically.
+ */
 @RequiredArgsConstructor
 @Component
 @Slf4j
@@ -24,6 +27,11 @@ public class Runner {
     private final CheckerOptionsFactory checkerOptionsFactory;
     private final OptionsValidator optionsValidator;
 
+    /**
+     * Runs Swagger Brake with the specified {@link Options}.
+     * @param options the options that should be used for the execution.
+     * @return a collection of breaking changes or an empty collection if no breaking change has been detected.
+     */
     public Collection<BreakingChange> run(Options options) {
         optionsValidator.validate(options);
         artifactDownloaderHandler.handle(options);

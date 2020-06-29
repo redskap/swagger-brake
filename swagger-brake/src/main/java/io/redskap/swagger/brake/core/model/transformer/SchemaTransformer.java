@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
+@SuppressWarnings("unchecked")
 public class SchemaTransformer implements Transformer<io.swagger.v3.oas.models.media.Schema, Schema> {
     private final TypeRefNameResolver typeRefNameResolver;
 

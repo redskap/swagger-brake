@@ -28,6 +28,10 @@ public class Schema {
         return Optional.ofNullable(schema);
     }
 
+    /**
+     * Returns all the enum attributes recursively within the schema.
+     * @return the enum attribute names.
+     */
     public Collection<String> getEnums() {
         Collection<SchemaAttribute> schemaAttrs = schemaAttributes;
         if (CollectionUtils.isEmpty(schemaAttrs)) {
@@ -59,6 +63,10 @@ public class Schema {
         return result;
     }
 
+    /**
+     * Returns all the types recursively in this schema.
+     * @return the types.
+     */
     public Map<String, String> getTypes() {
         Collection<SchemaAttribute> schemaAttrs = schemaAttributes;
         if (CollectionUtils.isEmpty(schemaAttrs)) {
@@ -87,6 +95,10 @@ public class Schema {
         return result;
     }
 
+    /**
+     * Returns all the attribute names recursively.
+     * @return the attribute names.
+     */
     public Collection<String> getAttributeNames() {
         Collection<SchemaAttribute> schemaAttrs = schemaAttributes;
         if (CollectionUtils.isEmpty(schemaAttrs)) {
@@ -142,6 +154,10 @@ public class Schema {
             return this;
         }
 
+        /**
+         * Builds a {@link Schema} instance.
+         * @return the constructed {@link Schema} instance.
+         */
         public Schema build() {
             Collection<SchemaAttribute> attributes = Collections.emptyList();
             if (schemaAttributes != null) {

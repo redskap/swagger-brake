@@ -13,6 +13,11 @@ import org.springframework.stereotype.Component;
 public class ReporterFactory {
     private final Collection<CheckableReporter> reporters;
 
+    /**
+     * Creates a {@link Reporter} instance based on the {@link Options} provided.
+     * @param options the {@link Options}.
+     * @return the {@link Reporter} instance.
+     */
     public Reporter create(Options options) {
         Collection<Reporter> reporters = options.getOutputFormats().stream().map(this::findReporters).flatMap(Collection::stream).collect(Collectors.toList());
         if (reporters.isEmpty()) {

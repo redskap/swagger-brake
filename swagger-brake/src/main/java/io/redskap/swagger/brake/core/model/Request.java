@@ -20,6 +20,13 @@ public class Request {
         return Optional.ofNullable(mediaTypes.get(mediaType));
     }
 
+    /**
+     * Checks if a specific media type is allowed by this {@link Request} instance. If the {@link MediaType#ALL} is
+     * present within the {@link Request}, it automatically considers the given media type as allowed.
+     * @param mediaType the {@link MediaType}
+     * @return true if the {@link MediaType} is present or if amongst the media types, {@link MediaType#ALL} is present.
+     *      false otherwise.
+     */
     public boolean isMediaTypeAllowed(MediaType mediaType) {
         Set<MediaType> availableMediaTypes = mediaTypes.keySet();
         if (availableMediaTypes.contains(MediaType.ALL)) {

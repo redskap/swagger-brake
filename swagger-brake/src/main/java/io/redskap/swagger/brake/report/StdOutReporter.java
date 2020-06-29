@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class StdOutReporter implements Reporter, CheckableReporter {
+class StdOutReporter implements Reporter, CheckableReporter {
     @Override
     public void report(Collection<BreakingChange> breakingChanges, Options options) {
         if (!breakingChanges.isEmpty()) {

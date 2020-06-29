@@ -12,6 +12,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class HttpRequestFactory {
+    /**
+     * Prepares an {@link HttpGet} object with the specified parameters including an Authorization header. <br><br>
+     * It converts the username and password parameters into a Basic authorization header.
+     * @param url the URL of the request.
+     * @param username the username for the API call.
+     * @param password the password for the API call.
+     * @return the {@link HttpGet} instance.
+     * @throws MalformedURLException if no protocol is specified, or an unknown protocol is found, or spec is null.
+     * @throws URISyntaxException if this URL is not formatted strictly according to to RFC2396 and cannot be converted to a URI.
+     */
     public HttpGet authenticatedGet(String url, String username, String password) throws MalformedURLException, URISyntaxException {
         HttpGet result = get(url);
         result.addHeader(HttpHeaders.AUTHORIZATION, getBasicAuthHeaderValue(username, password));

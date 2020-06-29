@@ -23,6 +23,10 @@ public class ArtifactDownloaderHandler {
     private final ApiFileJarResolver apiFileResolver;
     private final DownloadOptionsFactory downloadOptionsFactory;
 
+    /**
+     * Orchestrates the resolution and downloading the latest artifact based on the {@link Options} provided.
+     * @param options the {@link Options}.
+     */
     public void handle(Options options) {
         if (isLatestArtifactDownloadEnabled(options)) {
             try {

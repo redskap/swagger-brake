@@ -18,6 +18,10 @@ public class CliOptionsProvider {
     private final CliOptionsValidator cliOptionsValidator;
     private final Environment environment;
 
+    /**
+     * Constructs the {@link Options} instance based on the environment.
+     * @return the {@link Options} instance.
+     */
     public Options provide() {
         if (isHelpRequired()) {
             throw new CliHelpException(helpProvider.getHelp());

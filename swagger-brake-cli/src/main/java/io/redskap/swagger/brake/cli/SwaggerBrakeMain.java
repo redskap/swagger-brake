@@ -7,6 +7,10 @@ import org.springframework.core.env.SimpleCommandLinePropertySource;
 
 @SuppressFBWarnings("DM_EXIT")
 public class SwaggerBrakeMain {
+    /**
+     * The main entrypoint for the CLI interface.
+     * @param args the arguments
+     */
     public static void main(String[] args) {
         Cli cli = createCliInterface(args);
         int exitCode = cli.start();
@@ -15,6 +19,11 @@ public class SwaggerBrakeMain {
         }
     }
 
+    /**
+     * Constructs the CLI interface.
+     * @param args the arguments
+     * @return the CLI interface object
+     */
     public static Cli createCliInterface(String[] args) {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(CliConfiguration.class);
         ConfigurableEnvironment environment = context.getEnvironment();

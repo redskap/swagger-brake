@@ -11,6 +11,11 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class ApiFilenameCheckerFactory {
+    /**
+     * Creates an {@link ApiFileNameChecker} instance based on the provided configuredApiFilename argument.
+     * @param configuredApiFilename the filename that is used to construct a proper instance f {@link ApiFileNameChecker}
+     * @return the {@link ApiFileNameChecker}
+     */
     public ApiFileNameChecker create(String configuredApiFilename) {
         Collection<ApiFileNameChecker> checkers = new TreeSet<>(OrderComparator.INSTANCE);
         checkers.add(new SwaggerApiFileNameChecker());
