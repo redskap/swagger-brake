@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.toList;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 import java.util.*;
+import java.util.function.Function;
 
 import io.redskap.swagger.brake.core.model.Schema;
 import io.redskap.swagger.brake.core.model.SchemaAttribute;
@@ -47,21 +48,23 @@ public class SchemaTransformer implements Transformer<io.swagger.v3.oas.models.m
     }
 
     private Schema transformComposedSchema(ComposedSchema swSchema) {
+        Function<ComposedSchema, List<io.swagger.v3.oas.models.media.Schema>> schemaFunc;
         if (CollectionUtils.isNotEmpty(swSchema.getAllOf())) {
-            List<SchemaAttribute> objectAttributes = swSchema.getAllOf()
-                .stream()
-                .map(this::transformSchema)
-                .map(Schema::getSchemaAttributes)
-                .flatMap(Collection::stream)
-                .collect(toList());
-            return new Schema.Builder(SchemaTypeUtil.OBJECT_TYPE).schemaAttributes(objectAttributes).build();
+            schemaFunc = ComposedSchema::getAllOf;
         } else if (CollectionUtils.isNotEmpty(swSchema.getOneOf())) {
-            // TODO: Implement oneOf support
+            schemaFunc = ComposedSchema::getOneOf;
         } else if (CollectionUtils.isNotEmpty(swSchema.getAnyOf())) {
-            // TODO: Implement anyOf support
+            schemaFunc = ComposedSchema::getAnyOf;
+        } else {
+            throw new IllegalStateException("Composed schema is used that is not allOf, oneOf nor anyOf.");
         }
-        // TODO: Remove this when all composed schema types are supported
-        return new Schema.Builder(SchemaTypeUtil.OBJECT_TYPE).build();
+        List<SchemaAttribute> objectAttributes = schemaFunc.apply(swSchema)
+            .stream()
+            .map(this::transformSchema)
+            .map(Schema::getSchemaAttributes)
+            .flatMap(Collection::stream)
+            .collect(toList());
+        return new Schema.Builder(SchemaTypeUtil.OBJECT_TYPE).schemaAttributes(objectAttributes).build();
     }
 
     private Schema transformSchema(io.swagger.v3.oas.models.media.Schema swSchema) {
