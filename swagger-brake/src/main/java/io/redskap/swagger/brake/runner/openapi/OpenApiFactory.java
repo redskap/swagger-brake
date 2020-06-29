@@ -22,7 +22,7 @@ public class OpenApiFactory {
 
     private OpenAPI loadV3Api(String path) {
         ParseOptions parseOptions = new ParseOptions();
-     //   parseOptions.setResolve(true);
+        parseOptions.setResolve(true);
         parseOptions.setResolveFully(true);
         return new OpenAPIV3Parser().read(path, null, parseOptions);
     }
