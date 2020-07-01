@@ -9,8 +9,8 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import io.redskap.swagger.brake.core.model.Schema;
 import io.redskap.swagger.brake.core.model.SchemaAttribute;
-import io.redskap.swagger.brake.core.model.schemastore.SchemaStore;
-import io.redskap.swagger.brake.core.model.schemastore.SchemaStoreProvider;
+import io.redskap.swagger.brake.core.model.store.SchemaStore;
+import io.redskap.swagger.brake.core.model.store.StoreProvider;
 import io.redskap.swagger.brake.core.model.service.TypeRefNameResolver;
 import io.swagger.v3.oas.models.media.*;
 import org.junit.Before;
@@ -185,10 +185,10 @@ public class SchemaTransformerTest {
 
     private <T> T withSchemaStore(SchemaStore schemaStore, Supplier<T> f) {
         try {
-            SchemaStoreProvider.setSchemaStore(schemaStore);
+            StoreProvider.setSchemaStore(schemaStore);
             return f.get();
         } finally {
-            SchemaStoreProvider.clear();
+            StoreProvider.clear();
         }
     }
 }

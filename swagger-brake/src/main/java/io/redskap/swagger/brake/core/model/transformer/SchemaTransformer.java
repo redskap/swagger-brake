@@ -8,8 +8,8 @@ import java.util.*;
 
 import io.redskap.swagger.brake.core.model.Schema;
 import io.redskap.swagger.brake.core.model.SchemaAttribute;
-import io.redskap.swagger.brake.core.model.schemastore.SchemaStore;
-import io.redskap.swagger.brake.core.model.schemastore.SchemaStoreProvider;
+import io.redskap.swagger.brake.core.model.store.SchemaStore;
+import io.redskap.swagger.brake.core.model.store.StoreProvider;
 import io.redskap.swagger.brake.core.model.service.TypeRefNameResolver;
 import io.swagger.v3.oas.models.media.ArraySchema;
 import io.swagger.v3.oas.models.media.ComposedSchema;
@@ -106,7 +106,7 @@ public class SchemaTransformer implements Transformer<io.swagger.v3.oas.models.m
             return null;
         }
         String refName = typeRefNameResolver.resolve(originalRefName);
-        SchemaStore schemaStore = SchemaStoreProvider.provide();
+        SchemaStore schemaStore = StoreProvider.provideSchemaStore();
         if (schemaStore == null) {
             return null;
         }

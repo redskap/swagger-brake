@@ -1,4 +1,4 @@
-package io.redskap.swagger.brake.core.model.schemastore;
+package io.redskap.swagger.brake.core.model.store;
 
 import java.util.Map;
 import java.util.Optional;
