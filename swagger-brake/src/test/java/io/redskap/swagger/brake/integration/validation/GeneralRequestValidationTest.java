@@ -22,6 +22,21 @@ public class GeneralRequestValidationTest extends AbstractSwaggerBrakeIntTest {
     }
 
     @Test
+    /**
+     * Should not throw java.lang.IllegalStateException: Reference not found for successNoResponse
+     */
+    public void emptyResponseRefTest() {
+
+        // without io.redskap.swagger.brake.runner.openapi.OpenApiFactory.loadV3Api parseOptions.setResolve(true); it throws NPE
+        // 204 - empty - no body - response
+        // see https://swagger.io/docs/specification/describing-responses/  - Empty Response Body section
+        String oldApiPath = "request/generalrequest/petstore.yaml";
+        String newApiPath = oldApiPath;
+
+        execute(oldApiPath, newApiPath);
+    }
+
+    @Test
     public void avoidAllOfExWhenTheSamePropertyNameTest() {
 
         // with io.redskap.swagger.brake.runner.openapi.OpenApiFactory.loadV3Api parseOptions.setResolve(true); it throws additional ex.
