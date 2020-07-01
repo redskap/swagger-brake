@@ -1,10 +1,10 @@
 package io.redskap.swagger.brake.core.model.transformer;
 
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 import java.util.*;
-import java.util.function.Function;
 
 import io.redskap.swagger.brake.core.model.Schema;
 import io.redskap.swagger.brake.core.model.SchemaAttribute;
@@ -48,22 +48,22 @@ public class SchemaTransformer implements Transformer<io.swagger.v3.oas.models.m
     }
 
     private Schema transformComposedSchema(ComposedSchema swSchema) {
-        Function<ComposedSchema, List<io.swagger.v3.oas.models.media.Schema>> schemaFunc;
+        List<io.swagger.v3.oas.models.media.Schema> schemas;
         if (CollectionUtils.isNotEmpty(swSchema.getAllOf())) {
-            schemaFunc = ComposedSchema::getAllOf;
+            schemas = swSchema.getAllOf();
         } else if (CollectionUtils.isNotEmpty(swSchema.getOneOf())) {
-            schemaFunc = ComposedSchema::getOneOf;
+            schemas = swSchema.getOneOf();
         } else if (CollectionUtils.isNotEmpty(swSchema.getAnyOf())) {
-            schemaFunc = ComposedSchema::getAnyOf;
+            schemas = swSchema.getAnyOf();
         } else {
             throw new IllegalStateException("Composed schema is used that is not allOf, oneOf nor anyOf.");
         }
-        List<SchemaAttribute> objectAttributes = schemaFunc.apply(swSchema)
+        Collection<SchemaAttribute> objectAttributes = schemas
             .stream()
             .map(this::transformSchema)
             .map(Schema::getSchemaAttributes)
             .flatMap(Collection::stream)
-            .collect(toList());
+            .collect(toSet());
         return new Schema.Builder(SchemaTypeUtil.OBJECT_TYPE).schemaAttributes(objectAttributes).build();
     }
 

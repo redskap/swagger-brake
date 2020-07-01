@@ -20,8 +20,8 @@ import org.springframework.util.CollectionUtils;
 @RequiredArgsConstructor
 public class Schema {
     private final String type;
-    private final Collection<String> enumValues;
-    private final Collection<SchemaAttribute> schemaAttributes;
+    private final Set<String> enumValues;
+    private final Set<SchemaAttribute> schemaAttributes;
     private final Schema schema;
 
     public Optional<Schema> getSchema() {
@@ -35,7 +35,7 @@ public class Schema {
     public Collection<String> getEnums() {
         Collection<SchemaAttribute> schemaAttrs = schemaAttributes;
         if (CollectionUtils.isEmpty(schemaAttrs)) {
-            schemaAttrs = Optional.ofNullable(schema).map(Schema::getSchemaAttributes).orElse(Collections.emptyList());
+            schemaAttrs = Optional.ofNullable(schema).map(Schema::getSchemaAttributes).orElse(Collections.emptySet());
         }
         Collection<String> result = internalGetEnums(schemaAttrs, "");
         result.addAll(Optional.ofNullable(schema).map(Schema::getEnumValues).orElse(enumValues));
@@ -55,7 +55,7 @@ public class Schema {
             if (childSchema != null) {
                 Collection<SchemaAttribute> childSchemaAttributes = childSchema.getSchemaAttributes();
                 if (isEmpty(childSchemaAttributes)) {
-                    childSchemaAttributes = childSchema.getSchema().map(Schema::getSchemaAttributes).orElse(Collections.emptyList());
+                    childSchemaAttributes = childSchema.getSchema().map(Schema::getSchemaAttributes).orElse(Collections.emptySet());
                 }
                 result.addAll(internalGetEnums(childSchemaAttributes, generateLeveledName(schemaAttribute.getName(), levelName)));
             }
@@ -70,7 +70,7 @@ public class Schema {
     public Map<String, String> getTypes() {
         Collection<SchemaAttribute> schemaAttrs = schemaAttributes;
         if (CollectionUtils.isEmpty(schemaAttrs)) {
-            schemaAttrs = Optional.ofNullable(schema).map(Schema::getSchemaAttributes).orElse(Collections.emptyList());
+            schemaAttrs = Optional.ofNullable(schema).map(Schema::getSchemaAttributes).orElse(Collections.emptySet());
         }
         Map<String, String> types = internalGetTypes(schemaAttrs, "");
         types.put("", type);
@@ -87,7 +87,7 @@ public class Schema {
             if (childSchema != null) {
                 Collection<SchemaAttribute> childSchemaAttributes = childSchema.getSchemaAttributes();
                 if (isEmpty(childSchemaAttributes)) {
-                    childSchemaAttributes = childSchema.getSchema().map(Schema::getSchemaAttributes).orElse(Collections.emptyList());
+                    childSchemaAttributes = childSchema.getSchema().map(Schema::getSchemaAttributes).orElse(Collections.emptySet());
                 }
                 result.putAll(internalGetTypes(childSchemaAttributes, levelName));
             }
@@ -102,7 +102,7 @@ public class Schema {
     public Collection<String> getAttributeNames() {
         Collection<SchemaAttribute> schemaAttrs = schemaAttributes;
         if (CollectionUtils.isEmpty(schemaAttrs)) {
-            schemaAttrs = Optional.ofNullable(schema).map(Schema::getSchemaAttributes).orElse(Collections.emptyList());
+            schemaAttrs = Optional.ofNullable(schema).map(Schema::getSchemaAttributes).orElse(Collections.emptySet());
         }
         return internalGetAttributeNames(schemaAttrs, "");
     }
@@ -114,7 +114,7 @@ public class Schema {
             if (childSchema != null) {
                 Collection<SchemaAttribute> childSchemaAttributes = childSchema.getSchemaAttributes();
                 if (isEmpty(childSchemaAttributes)) {
-                    childSchemaAttributes = childSchema.getSchema().map(Schema::getSchemaAttributes).orElse(Collections.emptyList());
+                    childSchemaAttributes = childSchema.getSchema().map(Schema::getSchemaAttributes).orElse(Collections.emptySet());
                 }
                 result.addAll(internalGetAttributeNames(childSchemaAttributes, generateLeveledName(schemaAttribute.getName(), levelName)));
             }
@@ -130,7 +130,7 @@ public class Schema {
     }
 
     public static class Builder {
-        private String type;
+        private final String type;
         private Collection<String> enumValues;
         private Collection<SchemaAttribute> schemaAttributes;
         private Schema schema;
@@ -167,7 +167,7 @@ public class Schema {
             if (enumValues != null) {
                 enValues = enumValues;
             }
-            return new Schema(type, enValues, attributes, schema);
+            return new Schema(type, new TreeSet<>(enValues), new TreeSet<>(attributes), schema);
         }
     }
 }

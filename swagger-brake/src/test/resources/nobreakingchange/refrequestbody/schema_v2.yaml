@@ -12,8 +12,6 @@ paths:
       responses:
         '200':
           description: OK
-          responseSchema:
-            type: object
           content:
             application/json:
               schema:

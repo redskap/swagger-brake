@@ -24,7 +24,7 @@ public class OpenApiFactory {
             }
             return loadedApi;
         } catch (Exception e) {
-            throw new IllegalStateException("API cannot be loaded from path " + path);
+            throw new IllegalStateException("API cannot be loaded from path " + path, e);
         }
     }
 

@@ -18,6 +18,10 @@ paths:
               allOf:
                 - $ref: '#/components/schemas/Pet'
                 - $ref: '#/components/schemas/Dog'
+                - type: object
+                  properties:
+                    id:
+                      type: boolean
       tags:
         - pets
       responses:
@@ -28,6 +32,8 @@ components:
     Dog:
       type: object
       properties:
+        id:
+          type: integer
         bark:
           type: integer
         breed:
@@ -36,5 +42,7 @@ components:
     Pet:
       type: object
       properties:
+        id:
+          type: string
         name:
           type: string

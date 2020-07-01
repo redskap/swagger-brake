@@ -43,4 +43,14 @@ public class V3RequestBodyAnyOfIntTest extends AbstractSwaggerBrakeIntTest {
         assertThat(result).hasSize(1);
         assertThat(result).hasSameElementsAs(expected);
     }
+
+    @Test
+    public void testV3RequestBodyAnyOfSamePropertyNoBreakingChange() {
+        // given
+        String apiPath = "swaggers/v3/request/requestbody/anyof/nobreakingchange/sameattribute/petstore.yaml";
+        // when
+        Collection<BreakingChange> result = execute(apiPath, apiPath);
+        // then
+        assertThat(result).isEmpty();
+    }
 }

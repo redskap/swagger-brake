@@ -28,6 +28,8 @@ components:
     Dog:
       type: object
       properties:
+        id:
+          type: string
         breed:
           type: string
           enum: [Dingo, Husky, Retriever, Shepherd]
