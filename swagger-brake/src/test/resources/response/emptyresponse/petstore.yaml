@@ -51,9 +51,7 @@ paths:
           schema:
             $ref: "#/definitions/Order"
         204:
-          description: "succesful operation, no body"
-          schema:
-            $ref: "#/responses/successNoResponse"
+          $ref: "#/responses/successNoResponse"
         400:
           description: "Invalid ID supplied"
         404:

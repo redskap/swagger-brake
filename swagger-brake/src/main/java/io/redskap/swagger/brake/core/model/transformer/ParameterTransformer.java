@@ -2,11 +2,10 @@ package io.redskap.swagger.brake.core.model.transformer;
 
 import io.redskap.swagger.brake.core.model.RequestParameter;
 import io.redskap.swagger.brake.core.model.RequestParameterInType;
+import io.redskap.swagger.brake.core.model.service.RequestParameterInTypeResolver;
 import io.redskap.swagger.brake.core.model.service.TypeRefNameResolver;
 import io.redskap.swagger.brake.core.model.store.ParameterStore;
-import io.redskap.swagger.brake.core.model.store.SchemaStore;
 import io.redskap.swagger.brake.core.model.store.StoreProvider;
-import io.redskap.swagger.brake.core.model.service.RequestParameterInTypeResolver;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.parameters.Parameter;
 import lombok.RequiredArgsConstructor;

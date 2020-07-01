@@ -8,9 +8,9 @@ import java.util.*;
 
 import io.redskap.swagger.brake.core.model.Schema;
 import io.redskap.swagger.brake.core.model.SchemaAttribute;
+import io.redskap.swagger.brake.core.model.service.TypeRefNameResolver;
 import io.redskap.swagger.brake.core.model.store.SchemaStore;
 import io.redskap.swagger.brake.core.model.store.StoreProvider;
-import io.redskap.swagger.brake.core.model.service.TypeRefNameResolver;
 import io.swagger.v3.oas.models.media.ArraySchema;
 import io.swagger.v3.oas.models.media.ComposedSchema;
 import io.swagger.v3.parser.util.SchemaTypeUtil;
