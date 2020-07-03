@@ -13,8 +13,10 @@ public class MediaType {
     public static final MediaType ALL = new MediaType("*/*");
 
     private final MimeType mediaType;
+    private final String mimeType;
 
-    public MediaType(String mediaType) {
-        this.mediaType = MimeTypeUtils.parseMimeType(mediaType);
+    public MediaType(String mimeType) {
+        this.mimeType = mimeType;
+        this.mediaType = MimeTypeUtils.parseMimeType(mimeType);
     }
 }

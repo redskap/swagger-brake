@@ -50,6 +50,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/Order"
+        202:
+          description: "successful operation"
+          schema:
+            $ref: "#/responses/AnotherOrder"
         204:
           $ref: "#/responses/successNoResponse"
         400:
@@ -61,6 +65,14 @@ responses:
   successNoResponse:
     #see https://swagger.io/docs/specification/describing-responses/  - Empty Response Body section
     description: "204 - The request was successful. No response body will be returned."
+  AnotherOrder:
+    description: "something"
+    schema:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
 
 parameters:
   orderId:
@@ -72,6 +84,7 @@ parameters:
     maximum: 10.0
     minimum: 1.0
     format: "int64"
+
 definitions:
   Order:
     type: "object"
