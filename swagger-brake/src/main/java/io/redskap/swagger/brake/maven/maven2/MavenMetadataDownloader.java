@@ -2,9 +2,8 @@ package io.redskap.swagger.brake.maven.maven2;
 
 import java.io.IOException;
 import java.io.InputStream;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
 
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import io.redskap.swagger.brake.maven.model.MavenMetadata;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +17,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 class MavenMetadataDownloader {
     private final HttpClient httpClient;
+    private final XmlMapper xmlMapper;
 
     MavenMetadata download(HttpUriRequest httpRequest) {
         try {
@@ -25,13 +25,13 @@ class MavenMetadataDownloader {
             HttpResponse response = httpClient.execute(httpRequest);
             // TODO: content type check would be great here
             return getMetadata(response);
-        } catch (JAXBException | IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException("Cannot get metadata", e);
         }
     }
 
-    private MavenMetadata getMetadata(HttpResponse response) throws IOException, JAXBException {
+    private MavenMetadata getMetadata(HttpResponse response) throws IOException {
         InputStream content = response.getEntity().getContent();
-        return (MavenMetadata) JAXBContext.newInstance(MavenMetadata.class).createUnmarshaller().unmarshal(content);
+        return xmlMapper.readValue(content, MavenMetadata.class);
     }
 }

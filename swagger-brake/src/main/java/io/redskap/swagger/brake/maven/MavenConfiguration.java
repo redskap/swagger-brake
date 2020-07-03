@@ -1,5 +1,6 @@
 package io.redskap.swagger.brake.maven;
 
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import io.redskap.swagger.brake.maven.http.HttpClientErrorHandler;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -13,5 +14,10 @@ public class MavenConfiguration {
     @Bean
     public HttpClient httpClient() {
         return HttpClientBuilder.create().addInterceptorLast(new HttpClientErrorHandler()).build();
+    }
+
+    @Bean
+    public XmlMapper xmlMapper() {
+        return new XmlMapper();
     }
 }

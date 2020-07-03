@@ -1,12 +1,11 @@
 package io.redskap.swagger.brake.maven.model;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@XmlRootElement(name = "snapshot")
+@JacksonXmlRootElement(localName = "snapshot")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
