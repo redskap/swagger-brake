@@ -1,5 +1,6 @@
 package io.redskap.swagger.brake.maven;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import io.redskap.swagger.brake.maven.http.HttpClientErrorHandler;
 import org.apache.http.client.HttpClient;
@@ -18,6 +19,8 @@ public class MavenConfiguration {
 
     @Bean
     public XmlMapper xmlMapper() {
-        return new XmlMapper();
+        XmlMapper xmlMapper = new XmlMapper();
+        xmlMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        return xmlMapper;
     }
 }
