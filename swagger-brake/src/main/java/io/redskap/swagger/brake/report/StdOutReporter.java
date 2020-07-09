@@ -14,10 +14,10 @@ class StdOutReporter implements Reporter, CheckableReporter {
     @Override
     public void report(Collection<BreakingChange> breakingChanges, Options options) {
         if (!breakingChanges.isEmpty()) {
-            log.info("There were breaking API changes");
-            breakingChanges.stream().map(BreakingChange::getMessage).forEach(log::info);
+            System.err.println("There were breaking API changes");
+            breakingChanges.stream().map(BreakingChange::getMessage).forEach(System.err::println);
         } else {
-            log.info("No breaking API changes detected");
+            System.out.println("No breaking API changes detected");
         }
     }
 
