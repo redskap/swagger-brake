@@ -45,7 +45,7 @@ public class OptionsValidatorTest {
     }
 
     @Test
-    public void testValidateThrowsExceptionWhenMavenRepoUrlIsSetButSnapshotRepoIsNot() {
+    public void testValidateShouldNotThrowExceptionWhenMavenRepoUrlIsSetButSnapshotRepoIsNot() {
         // given
         Options options = new Options();
         options.setNewApiPath("something");
@@ -56,12 +56,11 @@ public class OptionsValidatorTest {
         // when
         Throwable result = Assertions.catchThrowable(() -> underTest.validate(options));
         // then
-        assertThat(result).isInstanceOf(IllegalArgumentException.class);
-        assertThat(result.getMessage()).contains("mavenSnapshotRepoUrl");
+        assertThat(result).isNull();
     }
 
     @Test
-    public void testValidateThrowsExceptionWhenMavenSnapshotRepoUrlIsSetButReleaseRepoIsNot() {
+    public void testValidateShouldNotThrowExceptionWhenMavenSnapshotRepoUrlIsSetButReleaseRepoIsNot() {
         // given
         Options options = new Options();
         options.setNewApiPath("something");
@@ -72,8 +71,7 @@ public class OptionsValidatorTest {
         // when
         Throwable result = Assertions.catchThrowable(() -> underTest.validate(options));
         // then
-        assertThat(result).isInstanceOf(IllegalArgumentException.class);
-        assertThat(result.getMessage()).contains("mavenRepoUrl");
+        assertThat(result).isNull();
     }
 
     @Test

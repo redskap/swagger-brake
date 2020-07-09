@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 import com.google.common.collect.ImmutableMap;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
@@ -51,10 +52,22 @@ public class OptionsValidator {
         if (isAnyMavenConfigurationSet(options)) {
             if (!isFullMavenConfigurationSet(options)) {
                 Collection<String> missingMavenCliOptions = findMissingMavenConfiguration(options);
-                String joinedMavenCliOptions = StringUtils.join(missingMavenCliOptions, ",");
-                throw new IllegalArgumentException(format("Partial Maven configuration detected, make sure you set %s as well.", joinedMavenCliOptions));
+                if (isAnyRepoSet(options)) {
+                    missingMavenCliOptions.remove(getMavenRepoUrlName());
+                    missingMavenCliOptions.remove(getMavenSnapshotRepoUrlName());
+                }
+                if (CollectionUtils.isNotEmpty(missingMavenCliOptions)) {
+                    String joinedMavenCliOptions = StringUtils.join(missingMavenCliOptions, ",");
+                    throw new IllegalArgumentException(format("Partial Maven configuration detected, make sure you set %s as well.", joinedMavenCliOptions));
+                }
             }
         }
+    }
+
+    private boolean isAnyRepoSet(Options options) {
+        String mavenRepoUrl = mavenConfigMap.get(getMavenRepoUrlName()).apply(options);
+        String mavenSnapshotRepoUrl = mavenConfigMap.get(getMavenSnapshotRepoUrlName()).apply(options);
+        return isNotBlank(mavenRepoUrl) || isNotBlank(mavenSnapshotRepoUrl);
     }
 
     private boolean isFullMavenConfigurationSet(Options options) {

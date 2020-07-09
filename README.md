@@ -76,9 +76,11 @@ the API definition file is packed into a JAR.
 
 Using the functionality requires the following parameters:
 - `--maven-repo-url`
-  - Specifies the release repository base URL. Example: `https://oss.jfrog.org/oss-release-local/`
+  - Specifies the release repository base URL. Might be optional in case `--maven-snapshot-repo-url` is provided.
+Example: `https://oss.jfrog.org/oss-release-local/`
 - `--maven-snapshot-repo-url`
-  - Specifies the snapshot repository base URL. Example: `https://oss.jfrog.org/oss-snapshot-local/`
+  - Specifies the snapshot repository base URL. Might be optional in case `--maven-repo-url` is provided.
+Example: `https://oss.jfrog.org/oss-snapshot-local/`
 - `--groupId`
   - The groupId of the artifact 
 - `--artifactId`

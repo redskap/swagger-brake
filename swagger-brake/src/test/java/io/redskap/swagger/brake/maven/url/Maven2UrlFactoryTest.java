@@ -15,7 +15,6 @@ public class Maven2UrlFactoryTest {
         DownloadOptions options = new DownloadOptions();
         options.setGroupId("io.swagger.brake");
         options.setArtifactId("swagger-brake-example");
-        options.setRepoUrl("http://localhost:8081/artifactory/libs-snapshot-local");
         options.setSnapshotRepoUrl("http://localhost:8081/artifactory/libs-snapshot-local");
         options.setCurrentArtifactVersion("1.2.0-SNAPSHOT");
         String latestVersion = "1.2.0-SNAPSHOT";
@@ -33,7 +32,6 @@ public class Maven2UrlFactoryTest {
         DownloadOptions options = new DownloadOptions();
         options.setGroupId("io.swagger.brake");
         options.setArtifactId("swagger-brake-example");
-        options.setRepoUrl("http://localhost:8081/artifactory/libs-snapshot-local");
         options.setSnapshotRepoUrl("http://localhost:8081/artifactory/libs-snapshot-local");
         options.setCurrentArtifactVersion("1.2.0-SNAPSHOT");
 
@@ -50,7 +48,6 @@ public class Maven2UrlFactoryTest {
         DownloadOptions options = new DownloadOptions();
         options.setGroupId("io.swagger.brake");
         options.setArtifactId("swagger-brake-example");
-        options.setRepoUrl("http://localhost:8081/artifactory/libs-snapshot-local");
         options.setSnapshotRepoUrl("http://localhost:8081/artifactory/libs-snapshot-local");
         options.setCurrentArtifactVersion("1.2.0-SNAPSHOT");
         String latestVersion = "1.2.0-SNAPSHOT";
@@ -71,7 +68,6 @@ public class Maven2UrlFactoryTest {
         options.setGroupId("io.swagger.brake");
         options.setArtifactId("swagger-brake-example");
         options.setRepoUrl("http://localhost:8081/artifactory/libs-release-local");
-        options.setSnapshotRepoUrl("http://localhost:8081/artifactory/libs-snapshot-local");
         options.setCurrentArtifactVersion("1.3.0");
 
         String expected = "http://localhost:8081/artifactory/libs-release-local/io/swagger/brake/swagger-brake-example/maven-metadata.xml";
@@ -88,7 +84,6 @@ public class Maven2UrlFactoryTest {
         options.setGroupId("io.swagger.brake");
         options.setArtifactId("swagger-brake-example");
         options.setRepoUrl("http://localhost:8081/artifactory/libs-release-local");
-        options.setSnapshotRepoUrl("http://localhost:8081/artifactory/libs-snapshot-local");
         options.setCurrentArtifactVersion("1.3.0");
         String latestVersion = "1.2.0";
         String latestArtifactName = "swagger-brake-example-1.2.0";
