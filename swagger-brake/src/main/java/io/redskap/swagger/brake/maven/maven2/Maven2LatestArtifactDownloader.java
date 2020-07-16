@@ -5,6 +5,7 @@ import java.io.File;
 import io.redskap.swagger.brake.maven.DownloadOptions;
 import io.redskap.swagger.brake.maven.LatestArtifactDownloader;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Component("maven2LatestArtifactDownloader")
@@ -16,9 +17,15 @@ class Maven2LatestArtifactDownloader implements LatestArtifactDownloader {
 
     @Override
     public File download(DownloadOptions options) {
-        String latestVersion = latestArtifactVersionResolver.resolve(options);
+        boolean isSnapshot;
+        if (StringUtils.isNotBlank(options.getCurrentArtifactVersion())) {
+            String latestVersion = latestArtifactVersionResolver.resolve(options);
+            isSnapshot = ArtifactVersionDecider.isSnapshot(latestVersion);
+        } else {
+
+        }
         String latestFilename;
-        if (ArtifactVersionDecider.isSnapshot(latestVersion)) {
+        if (isSnapshot) {
             latestFilename = latestArtifactNameResolver.resolveSnapshot(options, latestVersion);
         } else {
             latestFilename = latestArtifactNameResolver.resolveRelease(options, latestVersion);

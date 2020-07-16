@@ -91,6 +91,34 @@ public class OptionsValidatorTest {
     }
 
     @Test
+    public void testValidateDoesNotThrowExceptionWhenMavenConfigIsSetExceptCurrentArtifactVersionAndSnapshotRepo() {
+        // given
+        Options options = new Options();
+        options.setNewApiPath("something");
+        options.setMavenRepoUrl("localhost:8080/repo");
+        options.setGroupId("io.redskap");
+        options.setArtifactId("swagger-brake");
+        // when
+        Throwable result = Assertions.catchThrowable(() -> underTest.validate(options));
+        // then
+        assertThat(result).isNull();
+    }
+
+    @Test
+    public void testValidateDoesNotThrowExceptionWhenMavenConfigIsSetExceptCurrentArtifactVersionAndReleaseRepo() {
+        // given
+        Options options = new Options();
+        options.setNewApiPath("something");
+        options.setMavenSnapshotRepoUrl("localhost:8080/snapshot-repo");
+        options.setGroupId("io.redskap");
+        options.setArtifactId("swagger-brake");
+        // when
+        Throwable result = Assertions.catchThrowable(() -> underTest.validate(options));
+        // then
+        assertThat(result).isNull();
+    }
+
+    @Test
     public void testValidateThrowsExceptionWhenMavenConfigIsSetExceptGroupId() {
         // given
         Options options = new Options();

@@ -1,5 +1,6 @@
 package io.redskap.swagger.brake.runner.download;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 import java.io.File;
@@ -51,12 +52,18 @@ public class ArtifactDownloaderHandler {
     private boolean isLatestArtifactDownloadEnabled(Options options) {
         return isAnyRepoSet(options)
             && isNotBlank(options.getGroupId())
-            && isNotBlank(options.getArtifactId())
-            && isNotBlank(options.getCurrentArtifactVersion());
+            && isNotBlank(options.getArtifactId());
     }
 
     private boolean isAnyRepoSet(Options options) {
-        return isNotBlank(options.getMavenRepoUrl()) || isNotBlank(options.getMavenSnapshotRepoUrl());
+        boolean mavenRepoUrlSet = isNotBlank(options.getMavenRepoUrl());
+        boolean mavenSnapshotRepoUrlSet = isNotBlank(options.getMavenSnapshotRepoUrl());
+        boolean anyRepoSet = mavenRepoUrlSet || mavenSnapshotRepoUrlSet;
+        boolean allRepoSet = mavenRepoUrlSet && mavenSnapshotRepoUrlSet;
+        if (allRepoSet && isBlank(options.getCurrentArtifactVersion())) {
+            return false;
+        }
+        return anyRepoSet;
     }
 
     private boolean isLatestArtifactDownloadWronglyConfigured(Options options) {

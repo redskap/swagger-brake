@@ -69,13 +69,131 @@ public class RunnerIntTest {
     }
 
     @Test
-    public void testOptionValidationWorksWhenMavenConfigurationIsSetWithoutOneRepo() {
+    public void testOptionValidationWorksWhenMavenConfigurationIsSetWithoutReleaseRepo() {
         // given
         String oldApiPath = "oldApiPath";
         Options options = new Options();
         options.setNewApiPath("something");
         options.setMavenSnapshotRepoUrl("localhost:8080/repo");
         options.setCurrentArtifactVersion("1.0.0-SNAPSHOT");
+        options.setGroupId("io.redskap");
+        options.setArtifactId("swagger-brake");
+        DownloadOptions downloadOptions = mock(DownloadOptions.class);
+        given(downloadOptionsFactory.create(options)).willReturn(downloadOptions);
+        LatestArtifactDownloader latestArtifactDownloader = mock(LatestArtifactDownloader.class);
+        given(downloaderFactory.create(options)).willReturn(latestArtifactDownloader);
+        File apiJar = mock(File.class);
+        given(latestArtifactDownloader.download(downloadOptions)).willReturn(apiJar);
+        File swaggerFile = mock(File.class);
+        given(apiFileResolver.resolve(any(ApiFileResolverParameter.class))).willReturn(swaggerFile);
+        given(swaggerFile.getAbsolutePath()).willReturn(oldApiPath);
+        OpenAPI oldApi = mock(OpenAPI.class);
+        OpenAPI newApi = mock(OpenAPI.class);
+        given(openApiFactory.fromFile(oldApiPath)).willReturn(oldApi);
+        given(openApiFactory.fromFile(options.getNewApiPath())).willReturn(newApi);
+        given(checker.check(eq(oldApi), eq(newApi), any(CheckerOptions.class))).willReturn(Collections.emptyList());
+        Reporter reporter = mock(Reporter.class);
+        given(reporterFactory.create(options)).willReturn(reporter);
+        // when
+        Collection<BreakingChange> result = underTest.run(options);
+        // then
+        assertThat(result).isEmpty();
+        verify(downloadOptionsFactory).create(options);
+        verify(downloaderFactory).create(options);
+        verify(latestArtifactDownloader).download(downloadOptions);
+        verify(apiFileResolver).resolve(any(ApiFileResolverParameter.class));
+        verify(openApiFactory).fromFile(oldApiPath);
+        verify(openApiFactory).fromFile(options.getNewApiPath());
+        verify(checker).check(eq(oldApi), eq(newApi), any(CheckerOptions.class));
+        verify(reporter).report(anyList(), eq(options));
+    }
+
+    @Test
+    public void testOptionValidationWorksWhenMavenConfigurationIsSetWithoutReleaseRepoAndVersion() {
+        // given
+        String oldApiPath = "oldApiPath";
+        Options options = new Options();
+        options.setNewApiPath("something");
+        options.setMavenSnapshotRepoUrl("localhost:8080/repo");
+        options.setGroupId("io.redskap");
+        options.setArtifactId("swagger-brake");
+        DownloadOptions downloadOptions = mock(DownloadOptions.class);
+        given(downloadOptionsFactory.create(options)).willReturn(downloadOptions);
+        LatestArtifactDownloader latestArtifactDownloader = mock(LatestArtifactDownloader.class);
+        given(downloaderFactory.create(options)).willReturn(latestArtifactDownloader);
+        File apiJar = mock(File.class);
+        given(latestArtifactDownloader.download(downloadOptions)).willReturn(apiJar);
+        File swaggerFile = mock(File.class);
+        given(apiFileResolver.resolve(any(ApiFileResolverParameter.class))).willReturn(swaggerFile);
+        given(swaggerFile.getAbsolutePath()).willReturn(oldApiPath);
+        OpenAPI oldApi = mock(OpenAPI.class);
+        OpenAPI newApi = mock(OpenAPI.class);
+        given(openApiFactory.fromFile(oldApiPath)).willReturn(oldApi);
+        given(openApiFactory.fromFile(options.getNewApiPath())).willReturn(newApi);
+        given(checker.check(eq(oldApi), eq(newApi), any(CheckerOptions.class))).willReturn(Collections.emptyList());
+        Reporter reporter = mock(Reporter.class);
+        given(reporterFactory.create(options)).willReturn(reporter);
+        // when
+        Collection<BreakingChange> result = underTest.run(options);
+        // then
+        assertThat(result).isEmpty();
+        verify(downloadOptionsFactory).create(options);
+        verify(downloaderFactory).create(options);
+        verify(latestArtifactDownloader).download(downloadOptions);
+        verify(apiFileResolver).resolve(any(ApiFileResolverParameter.class));
+        verify(openApiFactory).fromFile(oldApiPath);
+        verify(openApiFactory).fromFile(options.getNewApiPath());
+        verify(checker).check(eq(oldApi), eq(newApi), any(CheckerOptions.class));
+        verify(reporter).report(anyList(), eq(options));
+    }
+
+    @Test
+    public void testOptionValidationWorksWhenMavenConfigurationIsSetWithoutSnapshotRepo() {
+        // given
+        String oldApiPath = "oldApiPath";
+        Options options = new Options();
+        options.setNewApiPath("something");
+        options.setMavenRepoUrl("localhost:8080/repo");
+        options.setCurrentArtifactVersion("1.0.0");
+        options.setGroupId("io.redskap");
+        options.setArtifactId("swagger-brake");
+        DownloadOptions downloadOptions = mock(DownloadOptions.class);
+        given(downloadOptionsFactory.create(options)).willReturn(downloadOptions);
+        LatestArtifactDownloader latestArtifactDownloader = mock(LatestArtifactDownloader.class);
+        given(downloaderFactory.create(options)).willReturn(latestArtifactDownloader);
+        File apiJar = mock(File.class);
+        given(latestArtifactDownloader.download(downloadOptions)).willReturn(apiJar);
+        File swaggerFile = mock(File.class);
+        given(apiFileResolver.resolve(any(ApiFileResolverParameter.class))).willReturn(swaggerFile);
+        given(swaggerFile.getAbsolutePath()).willReturn(oldApiPath);
+        OpenAPI oldApi = mock(OpenAPI.class);
+        OpenAPI newApi = mock(OpenAPI.class);
+        given(openApiFactory.fromFile(oldApiPath)).willReturn(oldApi);
+        given(openApiFactory.fromFile(options.getNewApiPath())).willReturn(newApi);
+        given(checker.check(eq(oldApi), eq(newApi), any(CheckerOptions.class))).willReturn(Collections.emptyList());
+        Reporter reporter = mock(Reporter.class);
+        given(reporterFactory.create(options)).willReturn(reporter);
+        // when
+        Collection<BreakingChange> result = underTest.run(options);
+        // then
+        assertThat(result).isEmpty();
+        verify(downloadOptionsFactory).create(options);
+        verify(downloaderFactory).create(options);
+        verify(latestArtifactDownloader).download(downloadOptions);
+        verify(apiFileResolver).resolve(any(ApiFileResolverParameter.class));
+        verify(openApiFactory).fromFile(oldApiPath);
+        verify(openApiFactory).fromFile(options.getNewApiPath());
+        verify(checker).check(eq(oldApi), eq(newApi), any(CheckerOptions.class));
+        verify(reporter).report(anyList(), eq(options));
+    }
+
+    @Test
+    public void testOptionValidationWorksWhenMavenConfigurationIsSetWithoutSnapshotRepoAndVersion() {
+        // given
+        String oldApiPath = "oldApiPath";
+        Options options = new Options();
+        options.setNewApiPath("something");
+        options.setMavenRepoUrl("localhost:8080/repo");
         options.setGroupId("io.redskap");
         options.setArtifactId("swagger-brake");
         DownloadOptions downloadOptions = mock(DownloadOptions.class);

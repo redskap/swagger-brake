@@ -55,6 +55,9 @@ public class OptionsValidator {
                 if (isAnyRepoSet(options)) {
                     missingMavenCliOptions.remove(getMavenRepoUrlName());
                     missingMavenCliOptions.remove(getMavenSnapshotRepoUrlName());
+                    if (!isAllRepoSet(options)) {
+                        missingMavenCliOptions.remove(getCurrentArtifactVersionName());
+                    }
                 }
                 if (CollectionUtils.isNotEmpty(missingMavenCliOptions)) {
                     String joinedMavenCliOptions = StringUtils.join(missingMavenCliOptions, ",");
@@ -62,6 +65,12 @@ public class OptionsValidator {
                 }
             }
         }
+    }
+
+    private boolean isAllRepoSet(Options options) {
+        String mavenRepoUrl = mavenConfigMap.get(getMavenRepoUrlName()).apply(options);
+        String mavenSnapshotRepoUrl = mavenConfigMap.get(getMavenSnapshotRepoUrlName()).apply(options);
+        return isNotBlank(mavenRepoUrl) && isNotBlank(mavenSnapshotRepoUrl);
     }
 
     private boolean isAnyRepoSet(Options options) {

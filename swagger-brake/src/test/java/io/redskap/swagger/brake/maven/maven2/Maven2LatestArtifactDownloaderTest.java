@@ -60,4 +60,19 @@ public class Maven2LatestArtifactDownloaderTest {
         // then
         assertThat(result).isEqualTo(expectedFile);
     }
+
+    @Test
+    public void testDownloadWorksCorrectlyForReleaseWhenOnlyReleaseRepoIsSet() {
+        // given
+        String latestArtifactName = "b";
+        File expectedFile = mock(File.class);
+        DownloadOptions downloadOptions = mock(DownloadOptions.class);
+
+        given(latestArtifactNameResolver.resolveRelease(downloadOptions, latestVersion)).willReturn(latestArtifactName);
+        given(latestJarArtifactDownloader.download(downloadOptions, latestArtifactName, latestVersion)).willReturn(expectedFile);
+        // when
+        File result = underTest.download(downloadOptions);
+        // then
+        assertThat(result).isEqualTo(expectedFile);
+    }
 }
