@@ -5,7 +5,12 @@ import io.redskap.swagger.brake.runner.Options;
 import org.springframework.stereotype.Component;
 
 @Component
-class DownloadOptionsFactory {
+public class DownloadOptionsFactory {
+    /**
+     * Creates a specific artifact download related option parameter.
+     * @param options the {@link Options} instance to start from.
+     * @return the {@link DownloadOptions} instance.
+     */
     public DownloadOptions create(Options options) {
         DownloadOptions result = new DownloadOptions();
         result.setRepoUrl(options.getMavenRepoUrl());

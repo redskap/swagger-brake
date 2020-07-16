@@ -49,16 +49,18 @@ public class ArtifactDownloaderHandler {
     }
 
     private boolean isLatestArtifactDownloadEnabled(Options options) {
-        return isNotBlank(options.getMavenRepoUrl())
-            && isNotBlank(options.getMavenSnapshotRepoUrl())
+        return isAnyRepoSet(options)
             && isNotBlank(options.getGroupId())
             && isNotBlank(options.getArtifactId())
             && isNotBlank(options.getCurrentArtifactVersion());
     }
 
+    private boolean isAnyRepoSet(Options options) {
+        return isNotBlank(options.getMavenRepoUrl()) || isNotBlank(options.getMavenSnapshotRepoUrl());
+    }
+
     private boolean isLatestArtifactDownloadWronglyConfigured(Options options) {
-        return isNotBlank(options.getMavenRepoUrl())
-            || isNotBlank(options.getMavenSnapshotRepoUrl())
+        return !isAnyRepoSet(options)
             || isNotBlank(options.getGroupId())
             || isNotBlank(options.getArtifactId())
             || isNotBlank(options.getCurrentArtifactVersion());

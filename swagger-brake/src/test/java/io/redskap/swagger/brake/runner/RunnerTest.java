@@ -1,11 +1,8 @@
 package io.redskap.swagger.brake.runner;
 
 import io.redskap.swagger.brake.core.BreakChecker;
-import io.redskap.swagger.brake.core.model.Specification;
-import io.redskap.swagger.brake.core.model.transformer.Transformer;
 import io.redskap.swagger.brake.report.ReporterFactory;
 import io.redskap.swagger.brake.runner.download.ArtifactDownloaderHandler;
-import io.swagger.v3.oas.models.OpenAPI;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -14,9 +11,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RunnerTest {
-    @Mock
-    private Transformer<OpenAPI, Specification> transformer;
-
     @Mock
     private BreakChecker breakChecker;
 

@@ -20,12 +20,12 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class Runner {
-    private final ReporterFactory reporterFactory;
+    private final OptionsValidator optionsValidator;
     private final ArtifactDownloaderHandler artifactDownloaderHandler;
     private final OpenApiFactory openApiFactory;
-    private final Checker checker;
     private final CheckerOptionsFactory checkerOptionsFactory;
-    private final OptionsValidator optionsValidator;
+    private final Checker checker;
+    private final ReporterFactory reporterFactory;
 
     /**
      * Runs Swagger Brake with the specified {@link Options}.
