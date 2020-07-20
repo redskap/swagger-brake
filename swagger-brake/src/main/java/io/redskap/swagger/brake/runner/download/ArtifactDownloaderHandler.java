@@ -30,6 +30,7 @@ public class ArtifactDownloaderHandler {
     public void handle(Options options) {
         if (isLatestArtifactDownloadEnabled(options)) {
             try {
+                log.debug("Latest artifact will be downloaded");
                 String groupId = options.getGroupId();
                 String artifactId = options.getArtifactId();
                 log.info("Downloading latest artifact with groupId '{}' artifactId '{}'", groupId, artifactId);
@@ -45,6 +46,8 @@ public class ArtifactDownloaderHandler {
             }
         } else if (isLatestArtifactDownloadWronglyConfigured(options)) {
             log.warn("Seems like latest artifact resolution is intended to be used but missing some of the parameters");
+        } else {
+            log.debug("Latest artifact resolution will be skipped due to configuration settings");
         }
     }
 
@@ -60,7 +63,7 @@ public class ArtifactDownloaderHandler {
     }
 
     private boolean isLatestArtifactDownloadWronglyConfigured(Options options) {
-        return !isAnyRepoSet(options)
+        return isAnyRepoSet(options)
             || isNotBlank(options.getGroupId())
             || isNotBlank(options.getArtifactId())
             || isNotBlank(options.getCurrentArtifactVersion());

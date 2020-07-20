@@ -7,8 +7,8 @@ import io.redskap.swagger.brake.runner.Options;
 import io.redskap.swagger.brake.runner.OutputFormat;
 import org.junit.Test;
 
-public class OutputFormatHandlerTest {
-    private OutputFormatHandler underTest = new OutputFormatHandler();
+public class OutputFormatsHandlerTest {
+    private OutputFormatsHandler underTest = new OutputFormatsHandler();
 
     @Test
     public void testHandleShouldSetFormatToStandardOutWhenPropertyValueIsNull() {

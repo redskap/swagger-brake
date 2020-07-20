@@ -30,7 +30,7 @@ public class CliOptionsProvider {
         for (CliOptionHandler handler : handlers) {
             CliOption handledOption = handler.getHandledCliOption();
             String propertyValue = environment.getProperty(handledOption.asName());
-            log.debug("Handling command line argument {} with value of {}", handledOption, propertyValue);
+            log.debug("Handling command line argument {} with value of {}", handledOption.asCliOption(), propertyValue);
             handler.handle(propertyValue, options);
         }
         cliOptionsValidator.validate(options);

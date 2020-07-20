@@ -14,6 +14,9 @@ incompatible API change unintentionally.
 
 The available releases can be found [here](https://github.com/redskap/swagger-brake/releases)
 
+The master branch represents the ongoing development of the tool. For the
+release versions, you can check out the corresponding tags.
+
 On top of the CLI, there are Maven and Gradle plugins also available for 
 easier integration into any existing pipeline.
 
@@ -47,13 +50,13 @@ Three types are supported:
 - JSON
 - HTML
 
-It can be configured via the `--output-format` argument. The values can be `STDOUT`,`JSON`,`HTML`.
+It can be configured via the `--output-formats` argument. The values can be `STDOUT`,`JSON`,`HTML`.
 For file types (e.g. `JSON`,`HTML`) it's necessary to set the `--output-path` argument as well, where
 to save the results.
 
 Multiple reporters can be set up at the same time by separating the types with commas:
 ```bash
---output-format=JSON,HTML
+--output-formats=JSON,HTML
 ```
 
 ## API deprecation handling

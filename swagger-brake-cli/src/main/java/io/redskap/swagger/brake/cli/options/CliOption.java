@@ -9,7 +9,7 @@ public enum CliOption {
     HELP("help"),
     VERBOSE("verbose"),
 
-    OUTPUT_FORMAT("output-format"),
+    OUTPUT_FORMATS("output-formats"),
     OUTPUT_PATH("output-path"),
 
     MAVEN_REPO_URL("maven-repo-url"),

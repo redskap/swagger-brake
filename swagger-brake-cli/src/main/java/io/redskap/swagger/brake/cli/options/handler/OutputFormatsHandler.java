@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class OutputFormatHandler implements CliOptionHandler {
+public class OutputFormatsHandler implements CliOptionHandler {
     @Override
     public void handle(String optionValue, Options options) {
         Set<OutputFormat> formats = ImmutableSet.of(OutputFormat.STDOUT);
@@ -37,12 +37,12 @@ public class OutputFormatHandler implements CliOptionHandler {
 
     @Override
     public CliOption getHandledCliOption() {
-        return CliOption.OUTPUT_FORMAT;
+        return CliOption.OUTPUT_FORMATS;
     }
 
     @Override
     public String getHelpMessage() {
         List<String> values = Arrays.stream(OutputFormat.values()).map(Enum::name).map(String::toLowerCase).collect(toList());
-        return format("Specifies the output format. Possible values are: %s", StringUtils.join(values, ", "));
+        return format("Specifies the output formats as a list separated by commas. Possible values are: %s", StringUtils.join(values, ", "));
     }
 }
