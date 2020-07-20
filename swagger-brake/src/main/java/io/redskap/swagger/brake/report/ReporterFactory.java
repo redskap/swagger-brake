@@ -19,7 +19,7 @@ public class ReporterFactory {
      * @return the {@link Reporter} instance.
      */
     public Reporter create(Options options) {
-        Collection<Reporter> reporters = options.getOutputFormats().stream().map(this::findReporters).flatMap(Collection::stream).collect(Collectors.toList());
+        Collection<Reporter> reporters = options.getOutputFormats().stream().map(this::findReporters).flatMap(Collection::stream).collect(Collectors.toSet());
         if (reporters.isEmpty()) {
             throw new IllegalStateException("No suitable reporters could be loaded");
         }

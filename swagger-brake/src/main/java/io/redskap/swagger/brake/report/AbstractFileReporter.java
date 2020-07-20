@@ -9,6 +9,7 @@ import io.redskap.swagger.brake.report.file.FileWriter;
 import io.redskap.swagger.brake.runner.Options;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -18,6 +19,10 @@ public abstract class AbstractFileReporter implements Reporter {
 
     @Override
     public void report(Collection<BreakingChange> breakingChanges, Options options) {
+        if (StringUtils.isBlank(options.getOutputFilePath())) {
+            log.warn("No file reporting has been done since output file path is not set");
+            return;
+        }
         String json = toFileContent(breakingChanges);
         try {
             directoryCreator.create(options.getOutputFilePath());
