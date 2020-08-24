@@ -111,6 +111,8 @@ Example command:
 $ java -jar swagger-brake.jar --new-api=/home/user/petstore_v2.yaml --maven-repo-url=https://oss.jfrog.org/oss-snapshot-local --maven-snapshot-repo-url=https://oss.jfrog.org/oss-snapshot-local --groupId=com.example --artifactId=petstore-api --current-artifact-version=1.0.0-SNAPSHOT --api-filename=something.yaml
 ```
 
+Note: if you provide both `--old-api` and Maven parameters, `--old-api` will take precedence. 
+
 #### Secured Maven repository
 It's also possible that the repository is secured with username and password. The following
 2 parameters can be used to provide the credentials to access the repository:

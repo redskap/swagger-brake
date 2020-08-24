@@ -108,4 +108,21 @@ public class ArtifactDownloaderHandlerTest {
         underTest.handle(options);
         // then nothing happens
     }
+
+    @Test
+    public void testHandleShouldIgnoreMavenSettingsWhenOldApiIsProvided() {
+        // given
+        Options options = new Options();
+        options.setNewApiPath("newApi");
+        options.setOldApiPath("oldApi");
+        options.setMavenRepoUrl("mavenRepoUrl");
+        options.setGroupId("groupId");
+        options.setArtifactId("artifactId");
+        options.setCurrentArtifactVersion("currentVersion");
+
+        // when
+        underTest.handle(options);
+        // then
+        verifyNoMoreInteractions(downloaderFactory, swaggerFileResolver);
+    }
 }
