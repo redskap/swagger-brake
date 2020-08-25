@@ -138,21 +138,16 @@ public class OptionsValidatorTest {
     }
 
     @Test
-    public void testValidateThrowsExceptionWhenOldApiPathAndMavenIsConfigured() {
+    public void testValidateDoesNotThrowsExceptionWhenOldApiPathAndMavenIsConfigured() {
         // given
         Options options = new Options();
         options.setOldApiPath("somethingelse");
         options.setNewApiPath("something");
-        options.setMavenRepoUrl("localhost:8080/repo");
-        options.setMavenSnapshotRepoUrl("localhost:8080/snapshot-repo");
         options.setCurrentArtifactVersion("1.0.0-SNAPSHOT");
         options.setGroupId("io.redskap");
         options.setArtifactId("swagger-brake");
         // when
-        Throwable result = Assertions.catchThrowable(() -> underTest.validate(options));
-        // then
-        assertThat(result).isInstanceOf(IllegalArgumentException.class);
-        assertThat(result.getMessage()).contains("oldApiPath");
-        assertThat(result.getMessage()).containsIgnoringCase("maven");
+        underTest.validate(options);
+        // then no exception
     }
 }
