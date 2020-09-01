@@ -2,6 +2,7 @@ package io.redskap.swagger.brake.maven.maven2;
 
 import io.redskap.swagger.brake.maven.DownloadOptions;
 import io.redskap.swagger.brake.maven.model.MavenMetadata;
+import io.redskap.swagger.brake.maven.model.MavenVersioning;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,8 @@ class LatestArtifactVersionResolver {
     String resolve(DownloadOptions options) {
         String metadataUrl = urlFactory.createLatestArtifactVersionMetadataUrl(options);
         MavenMetadata mavenMetadata = metadataDownloader.download(requestFactory.create(metadataUrl, options));
-        return mavenMetadata.getVersioning().getLatest();
+        MavenVersioning versioning = mavenMetadata.getVersioning();
+        
+        return versioning.getRelease() != null ? versioning.getRelease() : versioning.getLatest();
     }
 }
