@@ -2,6 +2,7 @@ package io.redskap.swagger.brake.core.model.transformer;
 
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 import java.util.*;
@@ -76,8 +77,11 @@ public class SchemaTransformer implements Transformer<io.swagger.v3.oas.models.m
             SeenRefHolder.remove(ref);
             return schema;
         }
-
-        Schema.Builder schemaBuilder = new Schema.Builder(swSchema.getType());
+        String schemaType = swSchema.getType();
+        if (isNotBlank(ref) && SeenRefHolder.isSeen(ref) && isBlank(schemaType)) {
+            return null;
+        }
+        Schema.Builder schemaBuilder = new Schema.Builder(schemaType);
         schemaBuilder.schemaAttributes(getSchemaAttributes(swSchema));
         List<String> enumValues = swSchema.getEnum();
         if (CollectionUtils.isNotEmpty(enumValues)) {

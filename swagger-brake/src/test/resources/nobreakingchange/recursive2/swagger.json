@@ -1,0 +1,58 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "test case",
+    "description": "test case",
+    "version": "unspecified"
+  },
+  "basePath": "/v2",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "paths": {
+    "/foo": {
+      "get": {
+        "operationId": "getFoo",
+        "responses": {
+          "200": {
+            "description": "getFoo description",
+            "schema": {
+              "$ref": "#/definitions/Foo"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Foo": {
+      "description": "Foo",
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "object",
+          "properties": {
+            "condition": {
+              "$ref": "#/definitions/Foo"
+            }
+          }
+        },
+        "bar": {
+          "type": "object",
+          "properties": {
+            "baz": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

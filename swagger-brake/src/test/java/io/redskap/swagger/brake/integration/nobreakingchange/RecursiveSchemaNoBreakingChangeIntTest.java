@@ -22,5 +22,16 @@ public class RecursiveSchemaNoBreakingChangeIntTest extends AbstractSwaggerBrake
         // then
         assertThat(result).isEmpty();
     }
+
+    @Test
+    public void testNoBreakingChangeWorksCorrectly2() {
+        // given
+        String oldApiPath = "nobreakingchange/recursive2/swagger.json";
+        String newApiPath = "nobreakingchange/recursive2/swagger.json";
+        // when
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
+        // then
+        assertThat(result).isEmpty();
+    }
 }
 
