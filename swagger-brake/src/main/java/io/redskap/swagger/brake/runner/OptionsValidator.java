@@ -43,13 +43,10 @@ public class OptionsValidator {
         if (isBlank(options.getNewApiPath())) {
             throw new IllegalArgumentException(format("%s must be provided.", getNewApiPathName()));
         }
-        if (isNotBlank(options.getOldApiPath()) && isAnyMavenConfigurationSet(options)) {
-            throw new IllegalArgumentException(format("Maven configuration is detected along with %s. Please use only one of them.", getOldApiPathName()));
-        }
         if (isBlank(options.getOldApiPath()) && !isAnyMavenConfigurationSet(options)) {
             throw new IllegalArgumentException(format("Either %s must be provided or a Maven configuration.", getOldApiPathName()));
         }
-        if (isAnyMavenConfigurationSet(options)) {
+        if (isBlank(options.getOldApiPath()) && isAnyMavenConfigurationSet(options)) {
             if (!isFullMavenConfigurationSet(options)) {
                 Collection<String> missingMavenCliOptions = findMissingMavenConfiguration(options);
                 if (isAnyRepoSet(options)) {

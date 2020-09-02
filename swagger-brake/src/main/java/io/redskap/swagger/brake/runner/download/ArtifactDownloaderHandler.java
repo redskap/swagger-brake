@@ -28,7 +28,9 @@ public class ArtifactDownloaderHandler {
      * @param options the {@link Options}.
      */
     public void handle(Options options) {
-        if (isLatestArtifactDownloadEnabled(options)) {
+        if (isOldApiParamSet(options)) {
+            log.debug("Latest artifact resolution will be skipped due to configuration settings");
+        } else if (isLatestArtifactDownloadEnabled(options)) {
             try {
                 log.debug("Latest artifact will be downloaded");
                 String groupId = options.getGroupId();
@@ -46,9 +48,11 @@ public class ArtifactDownloaderHandler {
             }
         } else if (isLatestArtifactDownloadWronglyConfigured(options)) {
             log.warn("Seems like latest artifact resolution is intended to be used but missing some of the parameters");
-        } else {
-            log.debug("Latest artifact resolution will be skipped due to configuration settings");
         }
+    }
+
+    private boolean isOldApiParamSet(Options options) {
+        return isNotBlank(options.getOldApiPath());
     }
 
     private boolean isLatestArtifactDownloadEnabled(Options options) {
