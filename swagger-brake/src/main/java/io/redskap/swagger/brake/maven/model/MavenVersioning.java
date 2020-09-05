@@ -11,5 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class MavenVersioning {
     private String latest;
+    private String release;
     private MavenSnapshot snapshot;
 }
