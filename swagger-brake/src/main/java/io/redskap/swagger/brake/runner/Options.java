@@ -25,4 +25,5 @@ public class Options {
 
     private String apiFilename;
     private String betaApiExtensionName;
+    private Set<String> excludedPaths = Collections.emptySet();
 }

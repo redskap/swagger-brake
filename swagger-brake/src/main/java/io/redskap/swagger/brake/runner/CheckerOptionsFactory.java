@@ -16,6 +16,7 @@ public class CheckerOptionsFactory {
         CheckerOptions checkerOptions = new CheckerOptions();
         checkerOptions.setDeprecatedApiDeletionAllowed(isDeprecatedApiDeletionAllowed(options));
         checkerOptions.setBetaApiExtensionName(getBetaApiExtensionName(checkerOptions.getBetaApiExtensionName(), options));
+        checkerOptions.setExcludedPaths(options.getExcludedPaths());
         return checkerOptions;
     }
 

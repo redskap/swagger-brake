@@ -173,6 +173,21 @@ Example command:
 $ java -jar swagger-brake.jar --old-api=/home/user/something.yaml --new-api=/home/user/something_v2.yaml --beta-api-extension-name=x-custom-beta-attributes
 ```
 
+### Excluding specific paths from the scan
+There might be a need to exclude specific APIs from the scan completely. 
+
+There's a parameter `--excluded-paths` where you can provide a list of paths you want to be excluded
+from the check. The paths can be separated by commas.
+
+The exclusion works based on prefix-matching, so in case you'd like to exclude all paths that
+starts with `/auth` for example, you can pass it as a parameter.
+
+Example command:
+
+```bash
+$ java -jar swagger-brake.jar --old-api=/home/user/something.yaml --new-api=/home/user/something_v2.yaml --excluded-paths=/auth 
+```
+
 ## Building
 The application is using Gradle as a build system and building it can be done 
 by executing the following command:

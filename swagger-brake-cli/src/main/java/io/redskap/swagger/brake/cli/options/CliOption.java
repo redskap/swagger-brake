@@ -23,7 +23,8 @@ public enum CliOption {
     DEPRECATED_API_DELETION_ALLOWED("deprecated-api-deletion-allowed"),
 
     API_FILENAME("api-filename"),
-    BETA_API_EXTENSION_NAME("beta-api-extension-name");
+    BETA_API_EXTENSION_NAME("beta-api-extension-name"),
+    EXCLUDED_PATHS("excluded-paths");
 
 
     private final String cliOptionName;
