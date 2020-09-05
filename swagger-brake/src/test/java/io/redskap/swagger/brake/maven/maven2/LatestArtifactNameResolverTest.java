@@ -38,7 +38,7 @@ public class LatestArtifactNameResolverTest {
         String latestBuildNumber = "2";
         String expected = "swagger-brake-example-1.2.0-20181118.221312-2";
         MavenMetadata mavenMetadata = new MavenMetadata("groupId", artifactId,
-            new MavenVersioning(expected, new MavenSnapshot(latestTimestamp, latestBuildNumber)));
+            new MavenVersioning(expected, null, new MavenSnapshot(latestTimestamp, latestBuildNumber)));
 
         String metadataUrl = "url";
         DownloadOptions options = mock(DownloadOptions.class);
