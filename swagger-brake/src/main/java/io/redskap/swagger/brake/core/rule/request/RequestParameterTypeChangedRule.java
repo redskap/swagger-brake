@@ -7,18 +7,23 @@ import io.redskap.swagger.brake.core.model.RequestParameter;
 import io.redskap.swagger.brake.core.model.Schema;
 import io.redskap.swagger.brake.core.model.Specification;
 import io.redskap.swagger.brake.core.rule.BreakingChangeRule;
+import io.redskap.swagger.brake.core.rule.PathSkipper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class RequestParameterTypeChangedRule implements BreakingChangeRule<RequestParameterTypeChangedBreakingChange> {
+    private final PathSkipper pathSkipper;
+
     @Override
     public Collection<RequestParameterTypeChangedBreakingChange> checkRule(Specification oldApi, Specification newApi) {
         Set<RequestParameterTypeChangedBreakingChange> breakingChanges = new HashSet<>();
         for (Path path : oldApi.getPaths()) {
-            if (path.isBetaApi()) {
+            if (pathSkipper.shouldSkip(path)) {
                 log.debug("Skipping {} as it's marked as a beta API", path);
                 continue;
             }

@@ -8,6 +8,7 @@ import io.redskap.swagger.brake.core.CheckerOptionsProvider;
 import io.redskap.swagger.brake.core.model.Path;
 import io.redskap.swagger.brake.core.model.Specification;
 import io.redskap.swagger.brake.core.rule.BreakingChangeRule;
+import io.redskap.swagger.brake.core.rule.PathSkipper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @RequiredArgsConstructor
 public class PathDeletedRule implements BreakingChangeRule<PathDeletedBreakingChange> {
+    private final PathSkipper pathSkipper;
     private final CheckerOptionsProvider checkerOptionsProvider;
 
     @Override
@@ -24,7 +26,7 @@ public class PathDeletedRule implements BreakingChangeRule<PathDeletedBreakingCh
         CheckerOptions checkerOptions = checkerOptionsProvider.get();
         Collection<PathDeletedBreakingChange> breakingChanges = new ArrayList<>();
         for (Path p : oldApi.getPaths()) {
-            if (p.isBetaApi()) {
+            if (pathSkipper.shouldSkip(p)) {
                 log.debug("Skipping {} as it's marked as a beta API", p);
                 continue;
             }

@@ -9,16 +9,21 @@ import io.redskap.swagger.brake.core.model.Path;
 import io.redskap.swagger.brake.core.model.RequestParameter;
 import io.redskap.swagger.brake.core.model.Specification;
 import io.redskap.swagger.brake.core.rule.BreakingChangeRule;
+import io.redskap.swagger.brake.core.rule.PathSkipper;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class RequestParameterDeletedRule implements BreakingChangeRule<RequestParameterDeletedBreakingChange> {
+    private final PathSkipper pathSkipper;
+
     @Override
     public Collection<RequestParameterDeletedBreakingChange> checkRule(Specification oldApi, Specification newApi) {
         Set<RequestParameterDeletedBreakingChange> breakingChanges = new HashSet<>();
         for (Path path : oldApi.getPaths()) {
-            if (path.isBetaApi()) {
+            if (pathSkipper.shouldSkip(path)) {
                 continue;
             }
             Optional<Path> newApiPath = newApi.getPath(path);

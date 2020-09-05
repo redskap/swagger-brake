@@ -4,17 +4,22 @@ import java.util.*;
 
 import io.redskap.swagger.brake.core.model.*;
 import io.redskap.swagger.brake.core.rule.BreakingChangeRule;
+import io.redskap.swagger.brake.core.rule.PathSkipper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class RequestTypeEnumValueDeletedRule implements BreakingChangeRule<RequestTypeEnumValueDeletedBreakingChange> {
+    private final PathSkipper pathSkipper;
+
     @Override
     public Collection<RequestTypeEnumValueDeletedBreakingChange> checkRule(Specification oldApi, Specification newApi) {
         Set<RequestTypeEnumValueDeletedBreakingChange> breakingChanges = new HashSet<>();
         for (Path path : oldApi.getPaths()) {
-            if (path.isBetaApi()) {
+            if (pathSkipper.shouldSkip(path)) {
                 log.debug("Skipping {} as it's marked as a beta API", path);
                 continue;
             }
