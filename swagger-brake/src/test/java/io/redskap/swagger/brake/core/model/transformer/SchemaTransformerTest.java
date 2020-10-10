@@ -49,10 +49,10 @@ public class SchemaTransformerTest {
         composedSchema.setAllOf(ImmutableList.of(petRef, dogRef));
 
         Schema expectedSchema = new Schema.Builder("object").schemaAttributes(ImmutableList.of(
-            new SchemaAttribute("id", new Schema.Builder("integer").build()),
-            new SchemaAttribute("name", new Schema.Builder("string").build()),
-            new SchemaAttribute("bark", new Schema.Builder("string").build()),
-            new SchemaAttribute("breed", new Schema.Builder("string").build())
+            new SchemaAttribute("id", new Schema.Builder("integer").build(), false),
+            new SchemaAttribute("name", new Schema.Builder("string").build(), false),
+            new SchemaAttribute("bark", new Schema.Builder("string").build(), false),
+            new SchemaAttribute("breed", new Schema.Builder("string").build(), false)
         )).build();
         // when
         Schema result = withSchemaStore(schemaStore, () -> underTest.transform(composedSchema));
@@ -85,9 +85,9 @@ public class SchemaTransformerTest {
         composedSchema.setAllOf(ImmutableList.of(petRef, dogRef));
 
         Schema expectedSchema = new Schema.Builder("object").schemaAttributes(ImmutableList.of(
-            new SchemaAttribute("id", new Schema.Builder("integer").build()),
-            new SchemaAttribute("name", new Schema.Builder("string").build()),
-            new SchemaAttribute("breed", new Schema.Builder("string").build())
+            new SchemaAttribute("id", new Schema.Builder("integer").build(), false),
+            new SchemaAttribute("name", new Schema.Builder("string").build(), false),
+            new SchemaAttribute("breed", new Schema.Builder("string").build(), false)
         )).build();
         // when
         Schema result = withSchemaStore(schemaStore, () -> underTest.transform(composedSchema));
@@ -128,10 +128,10 @@ public class SchemaTransformerTest {
         composedSchema.setAllOf(ImmutableList.of(petRef, dogRef, catRef));
 
         Schema expectedSchema = new Schema.Builder("object").schemaAttributes(ImmutableList.of(
-            new SchemaAttribute("id", new Schema.Builder("integer").build()),
-            new SchemaAttribute("name", new Schema.Builder("string").build()),
-            new SchemaAttribute("breed", new Schema.Builder("string").build()),
-            new SchemaAttribute("meow", new Schema.Builder("string").build())
+            new SchemaAttribute("id", new Schema.Builder("integer").build(), false),
+            new SchemaAttribute("name", new Schema.Builder("string").build(), false),
+            new SchemaAttribute("breed", new Schema.Builder("string").build(), false),
+            new SchemaAttribute("meow", new Schema.Builder("string").build(), false)
         )).build();
         // when
         Schema result = withSchemaStore(schemaStore, () -> underTest.transform(composedSchema));
@@ -172,10 +172,10 @@ public class SchemaTransformerTest {
         composedSchema.setAllOf(ImmutableList.of(petRef, dogRef, catRef));
 
         Schema expectedSchema = new Schema.Builder("object").schemaAttributes(ImmutableList.of(
-            new SchemaAttribute("id", new Schema.Builder("integer").build()),
-            new SchemaAttribute("name", new Schema.Builder("string").build()),
-            new SchemaAttribute("breed", new Schema.Builder("string").build()),
-            new SchemaAttribute("meow", new Schema.Builder("string").build())
+            new SchemaAttribute("id", new Schema.Builder("integer").build(), false),
+            new SchemaAttribute("name", new Schema.Builder("string").build(), false),
+            new SchemaAttribute("breed", new Schema.Builder("string").build(), false),
+            new SchemaAttribute("meow", new Schema.Builder("string").build(), false)
         )).build();
         // when
         Schema result = withSchemaStore(schemaStore, () -> underTest.transform(composedSchema));

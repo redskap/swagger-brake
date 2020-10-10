@@ -12,6 +12,7 @@ import lombok.ToString;
 public class SchemaAttribute implements Comparable<SchemaAttribute> {
     private final String name;
     private final Schema schema;
+    private final boolean required;
 
     public String getType() {
         return schema.getType();

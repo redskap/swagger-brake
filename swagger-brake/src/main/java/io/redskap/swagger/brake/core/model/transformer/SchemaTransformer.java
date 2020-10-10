@@ -95,12 +95,18 @@ public class SchemaTransformer implements Transformer<io.swagger.v3.oas.models.m
         if (properties == null) {
             return Collections.emptyList();
         }
+        Set<String> requiredAttributes = new HashSet<>();
+        if (CollectionUtils.isNotEmpty(swSchema.getRequired())) {
+            requiredAttributes.addAll(swSchema.getRequired());
+        }
         return properties.entrySet()
                     .stream()
                     .map(e -> {
                         io.swagger.v3.oas.models.media.Schema newInternalSchema = e.getValue();
                         Schema schema = internalTransform(newInternalSchema);
-                        return new SchemaAttribute(e.getKey(), schema);
+                        String attributeName = e.getKey();
+                        boolean required = requiredAttributes.contains(attributeName);
+                        return new SchemaAttribute(attributeName, schema, required);
                     })
                     .collect(toList());
     }

@@ -1,17 +1,20 @@
 package io.redskap.swagger.brake.core.model;
 
 import static java.lang.String.format;
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.*;
 import static org.apache.commons.collections4.CollectionUtils.isEmpty;
 
 import java.util.*;
+import java.util.function.Function;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.util.CollectionUtils;
 
 @Getter
@@ -96,6 +99,22 @@ public class Schema {
     }
 
     /**
+     * Returns all attribute names that are required.
+     * @return all attribute names that are required.
+     */
+    public Set<String> getRequiredAttributeNames() {
+        Collection<SchemaAttribute> schemaAttrs = schemaAttributes;
+        if (CollectionUtils.isEmpty(schemaAttrs)) {
+            schemaAttrs = Optional.ofNullable(schema).map(Schema::getSchemaAttributes).orElse(Collections.emptySet());
+        }
+        return internalGetAttributeData(schemaAttrs, "", SchemaAttribute::isRequired)
+            .stream()
+            .filter(p -> BooleanUtils.isTrue(p.getRight()))
+            .map(Pair::getLeft)
+            .collect(toSet());
+    }
+
+    /**
      * Returns all the attribute names recursively.
      * @return the attribute names.
      */
@@ -104,11 +123,15 @@ public class Schema {
         if (CollectionUtils.isEmpty(schemaAttrs)) {
             schemaAttrs = Optional.ofNullable(schema).map(Schema::getSchemaAttributes).orElse(Collections.emptySet());
         }
-        return internalGetAttributeNames(schemaAttrs, "");
+        return internalGetAttributeData(schemaAttrs, "", identity())
+            .stream()
+            .map(Pair::getLeft)
+            .collect(toList());
     }
 
-    private Collection<String> internalGetAttributeNames(Collection<SchemaAttribute> schemaAttributes, String levelName) {
-        List<String> result = schemaAttributes.stream().map(SchemaAttribute::getName).map(name -> generateLeveledName(name, levelName)).collect(toList());
+    private <T> Collection<Pair<String, T>> internalGetAttributeData(Collection<SchemaAttribute> schemaAttributes, String levelName, Function<SchemaAttribute, T> mappingFunc) {
+//        List<String> result = schemaAttributes.stream().map(SchemaAttribute::getName).map(name -> generateLeveledName(name, levelName)).collect(toList());
+        List<Pair<String, T>> result = schemaAttributes.stream().map(sA -> Pair.of(generateLeveledName(sA.getName(), levelName), mappingFunc.apply(sA))).collect(toList());
         for (SchemaAttribute schemaAttribute : schemaAttributes) {
             Schema childSchema = schemaAttribute.getSchema();
             if (childSchema != null) {
@@ -116,7 +139,7 @@ public class Schema {
                 if (isEmpty(childSchemaAttributes)) {
                     childSchemaAttributes = childSchema.getSchema().map(Schema::getSchemaAttributes).orElse(Collections.emptySet());
                 }
-                result.addAll(internalGetAttributeNames(childSchemaAttributes, generateLeveledName(schemaAttribute.getName(), levelName)));
+                result.addAll(internalGetAttributeData(childSchemaAttributes, generateLeveledName(schemaAttribute.getName(), levelName), mappingFunc));
             }
         }
         return result;

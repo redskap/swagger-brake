@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 import io.redskap.swagger.brake.core.BreakingChange;
 import io.redskap.swagger.brake.core.model.HttpMethod;
@@ -27,6 +28,20 @@ public class RequestParameterRequiredIntTest extends AbstractSwaggerBrakeIntTest
         Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
         // then
         assertThat(result).hasSize(2);
+        assertThat(result).hasSameElementsAs(expected);
+    }
+
+    @Test
+    public void testRequestParameterRequiredWorksForPostObjects() {
+        // given
+        String oldApiPath = "request/parameterrequired/post-object/swagger-old.json";
+        String newApiPath = "request/parameterrequired/post-object/swagger-new.json";
+        RequestParameterRequiredBreakingChange bc1 = new RequestParameterRequiredBreakingChange("/pet", HttpMethod.POST, "name");
+        Collection<BreakingChange> expected = Collections.singletonList(bc1);
+        // when
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
+        // then
+        assertThat(result).hasSize(1);
         assertThat(result).hasSameElementsAs(expected);
     }
 }

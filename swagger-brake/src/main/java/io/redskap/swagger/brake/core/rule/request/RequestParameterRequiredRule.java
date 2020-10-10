@@ -1,13 +1,8 @@
 package io.redskap.swagger.brake.core.rule.request;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
-import io.redskap.swagger.brake.core.model.Path;
-import io.redskap.swagger.brake.core.model.RequestParameter;
-import io.redskap.swagger.brake.core.model.Specification;
+import io.redskap.swagger.brake.core.model.*;
 import io.redskap.swagger.brake.core.rule.BreakingChangeRule;
 import io.redskap.swagger.brake.core.rule.PathSkipper;
 import lombok.RequiredArgsConstructor;
@@ -32,18 +27,52 @@ public class RequestParameterRequiredRule implements BreakingChangeRule<RequestP
             Optional<Path> newApiPath = newApi.getPath(path);
             if (newApiPath.isPresent()) {
                 Path newPath = newApiPath.get();
-                if (CollectionUtils.isNotEmpty(path.getRequestParameters())) {
-                    breakingChanges.addAll(checkOldNonRequiredParameters(path, newPath));
-                }
-                if (CollectionUtils.isNotEmpty(newPath.getRequestParameters())) {
-                    breakingChanges.addAll(checkNewRequiredParameters(path, newPath));
+                breakingChanges.addAll(checkQueryParameters(path, newPath));
+                breakingChanges.addAll(checkRequestBody(path, newPath));
+            }
+        }
+        return breakingChanges;
+    }
+
+    private Set<RequestParameterRequiredBreakingChange> checkRequestBody(Path path, Path newPath) {
+        Set<RequestParameterRequiredBreakingChange> breakingChanges = new HashSet<>();
+        if (path.getRequestBody().isPresent() && newPath.getRequestBody().isPresent()) {
+            Request requestBody = path.getRequestBody().get();
+            Request newRequestBody = newPath.getRequestBody().get();
+            for (Map.Entry<MediaType, Schema> entry : requestBody.getMediaTypes().entrySet()) {
+                MediaType mediaType = entry.getKey();
+                Schema schema = entry.getValue();
+                Optional<Schema> optionalNewSchema = newRequestBody.getSchemaByMediaType(mediaType);
+                if (optionalNewSchema.isPresent()) {
+                    Schema newSchema = optionalNewSchema.get();
+                    Set<String> oldRequiredAttributeNames = schema.getRequiredAttributeNames();
+                    Set<String> remainingRequiredAttributeNames = newSchema.getRequiredAttributeNames();
+                    for (String oldRequiredAttributeName : oldRequiredAttributeNames) {
+                        remainingRequiredAttributeNames.remove(oldRequiredAttributeName);
+                    }
+                    if (remainingRequiredAttributeNames.size() > 0) {
+                        for (String remainingRequiredAttr : remainingRequiredAttributeNames) {
+                            breakingChanges.add(new RequestParameterRequiredBreakingChange(path.getPath(), path.getMethod(), remainingRequiredAttr));
+                        }
+                    }
                 }
             }
         }
         return breakingChanges;
     }
 
-    private Collection<RequestParameterRequiredBreakingChange> checkNewRequiredParameters(Path path, Path newPath) {
+    private Set<RequestParameterRequiredBreakingChange> checkQueryParameters(Path path, Path newPath) {
+        Set<RequestParameterRequiredBreakingChange> breakingChanges = new HashSet<>();
+        if (CollectionUtils.isNotEmpty(path.getRequestParameters())) {
+            breakingChanges.addAll(checkOldNonRequiredQueryParameters(path, newPath));
+        }
+        if (CollectionUtils.isNotEmpty(newPath.getRequestParameters())) {
+            breakingChanges.addAll(checkNewRequiredQueryParameters(path, newPath));
+        }
+        return breakingChanges;
+    }
+
+    private Collection<RequestParameterRequiredBreakingChange> checkNewRequiredQueryParameters(Path path, Path newPath) {
         Set<RequestParameterRequiredBreakingChange> breakingChanges = new HashSet<>();
         for (RequestParameter newRequestParameter : newPath.getRequestParameters()) {
             Optional<RequestParameter> oldRequestParameter = path.getRequestParameterByName(newRequestParameter.getName());
@@ -56,7 +85,7 @@ public class RequestParameterRequiredRule implements BreakingChangeRule<RequestP
         return breakingChanges;
     }
 
-    private Collection<RequestParameterRequiredBreakingChange> checkOldNonRequiredParameters(Path path, Path newPath) {
+    private Collection<RequestParameterRequiredBreakingChange> checkOldNonRequiredQueryParameters(Path path, Path newPath) {
         Set<RequestParameterRequiredBreakingChange> breakingChanges = new HashSet<>();
         for (RequestParameter requestParameter : path.getRequestParameters()) {
             Optional<RequestParameter> newRequestParam = newPath.getRequestParameterByName(requestParameter.getName());
