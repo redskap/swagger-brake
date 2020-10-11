@@ -1,4 +1,4 @@
-package io.redskap.swagger.brake.integration.response;
+package io.redskap.swagger.brake.integration.v2.response;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,7 +15,7 @@ public class EmptyResponseIntTest extends AbstractSwaggerBrakeIntTest {
     @Test
     public void testEmptyResponseWorks() {
         // given
-        String apiPath = "response/emptyresponse/petstore.yaml";
+        String apiPath = "swaggers/v2/response/emptyresponse/petstore.yaml";
 
         // when
         Collection<BreakingChange> result = execute(apiPath, apiPath);

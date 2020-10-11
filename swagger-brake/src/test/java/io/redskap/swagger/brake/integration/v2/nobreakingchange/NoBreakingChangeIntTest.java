@@ -1,4 +1,4 @@
-package io.redskap.swagger.brake.integration.nobreakingchange;
+package io.redskap.swagger.brake.integration.v2.nobreakingchange;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -11,12 +11,12 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-public class RecursiveSchemaNoBreakingChangeIntTest extends AbstractSwaggerBrakeIntTest {
+public class NoBreakingChangeIntTest extends AbstractSwaggerBrakeIntTest {
     @Test
     public void testNoBreakingChangeWorksCorrectly() {
         // given
-        String oldApiPath = "nobreakingchange/recursive/schema.json";
-        String newApiPath = "nobreakingchange/recursive/schema_v2.json";
+        String oldApiPath = "swaggers/v2/nobreakingchange/petstore.yaml";
+        String newApiPath = "swaggers/v2/nobreakingchange/petstore_v2.yaml";
         // when
         Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
         // then
@@ -24,14 +24,13 @@ public class RecursiveSchemaNoBreakingChangeIntTest extends AbstractSwaggerBrake
     }
 
     @Test
-    public void testNoBreakingChangeWorksCorrectly2() {
+    public void testNoBreakingChangeWhenSameApiUsedWorksCorrectly() {
         // given
-        String oldApiPath = "nobreakingchange/recursive2/swagger.json";
-        String newApiPath = "nobreakingchange/recursive2/swagger.json";
+        String oldApiPath = "swaggers/v2/nobreakingchange/petstore.yaml";
+        String newApiPath = "swaggers/v2/nobreakingchange/petstore.yaml";
         // when
         Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
         // then
         assertThat(result).isEmpty();
     }
 }
-

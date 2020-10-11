@@ -1,4 +1,4 @@
-package io.redskap.swagger.brake.integration.request;
+package io.redskap.swagger.brake.integration.v2.nobreakingchange;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -11,14 +11,14 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-public class RequestParameterRefResolutionIntTest extends AbstractSwaggerBrakeIntTest {
+public class RefRequestBodyNoBreakingIntTest extends AbstractSwaggerBrakeIntTest {
     @Test
-    public void testRequestParameterRefResolutionWorks() {
+    public void testNoBreakingChangeWorksCorrectly() {
         // given
-        String apiPath = "request/refresolution/petstore.yaml";
-
+        String oldApiPath = "swaggers/v2/nobreakingchange/refrequestbody/schema.yaml";
+        String newApiPath = "swaggers/v2/nobreakingchange/refrequestbody/schema_v2.yaml";
         // when
-        Collection<BreakingChange> result = execute(apiPath, apiPath);
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
         // then
         assertThat(result).isEmpty();
     }

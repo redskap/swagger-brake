@@ -1,4 +1,4 @@
-package io.redskap.swagger.brake.integration.response;
+package io.redskap.swagger.brake.integration.v2.response;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,8 +19,8 @@ public class ResponseTypeAttributeRemovedIntTest extends AbstractSwaggerBrakeInt
     @Test
     public void testResponseTypeChangeIsBreakingChangeWhenExistingAttributeRemoved() {
         // given
-        String oldApiPath = "response/attributeremoved/petstore.yaml";
-        String newApiPath = "response/attributeremoved/petstore_v2.yaml";
+        String oldApiPath = "swaggers/v2/response/attributeremoved/petstore.yaml";
+        String newApiPath = "swaggers/v2/response/attributeremoved/petstore_v2.yaml";
         ResponseTypeAttributeRemovedBreakingChange bc1 = new ResponseTypeAttributeRemovedBreakingChange("/pet/findByStatus", HttpMethod.GET, "200", "category");
         ResponseTypeAttributeRemovedBreakingChange bc2 = new ResponseTypeAttributeRemovedBreakingChange("/pet/findByStatus", HttpMethod.GET, "200", "category.id");
         ResponseTypeAttributeRemovedBreakingChange bc3 = new ResponseTypeAttributeRemovedBreakingChange("/pet/findByStatus", HttpMethod.GET, "200", "category.name");
@@ -47,8 +47,8 @@ public class ResponseTypeAttributeRemovedIntTest extends AbstractSwaggerBrakeInt
     @Test
     public void testResponseTypeChangeIsBreakingChangeWhenExistingDeepAttributeRemoved() {
         // given
-        String oldApiPath = "response/deepattributeremoved/petstore.yaml";
-        String newApiPath = "response/deepattributeremoved/petstore_v2.yaml";
+        String oldApiPath = "swaggers/v2/response/deepattributeremoved/petstore.yaml";
+        String newApiPath = "swaggers/v2/response/deepattributeremoved/petstore_v2.yaml";
         ResponseTypeAttributeRemovedBreakingChange bc1 = new ResponseTypeAttributeRemovedBreakingChange("/pet/findByStatus", HttpMethod.GET, "200", "category.name");
         ResponseTypeAttributeRemovedBreakingChange bc2 = new ResponseTypeAttributeRemovedBreakingChange("/pet/{petId}", HttpMethod.GET, "200", "category.name");
         ResponseTypeAttributeRemovedBreakingChange bc3 = new ResponseTypeAttributeRemovedBreakingChange("/pet/findByTags", HttpMethod.GET, "200", "category.name");
@@ -65,8 +65,8 @@ public class ResponseTypeAttributeRemovedIntTest extends AbstractSwaggerBrakeInt
     @Test
     public void testResponseTypeChangeIsNotBreakingChangeWhenDifferentTypeIsUsedButSameAttributes() {
         // given
-        String oldApiPath = "response/differenttypesameattributes/petstore.yaml";
-        String newApiPath = "response/differenttypesameattributes/petstore_v2.yaml";
+        String oldApiPath = "swaggers/v2/response/differenttypesameattributes/petstore.yaml";
+        String newApiPath = "swaggers/v2/response/differenttypesameattributes/petstore_v2.yaml";
         // when
         Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
         // then
@@ -76,8 +76,8 @@ public class ResponseTypeAttributeRemovedIntTest extends AbstractSwaggerBrakeInt
     @Test
     public void testResponseTypeChangeIsBreakingChangeWhenDifferentTypeIsUsedWithDifferentAttributes() {
         // given
-        String oldApiPath = "response/differenttypesdifferentattributes/petstore.yaml";
-        String newApiPath = "response/differenttypesdifferentattributes/petstore_v2.yaml";
+        String oldApiPath = "swaggers/v2/response/differenttypesdifferentattributes/petstore.yaml";
+        String newApiPath = "swaggers/v2/response/differenttypesdifferentattributes/petstore_v2.yaml";
         ResponseTypeAttributeRemovedBreakingChange bc1 = new ResponseTypeAttributeRemovedBreakingChange("/pet/findByStatus", HttpMethod.GET, "200", "category");
         ResponseTypeAttributeRemovedBreakingChange bc2 = new ResponseTypeAttributeRemovedBreakingChange("/pet/findByStatus", HttpMethod.GET, "200", "category.id");
         ResponseTypeAttributeRemovedBreakingChange bc3 = new ResponseTypeAttributeRemovedBreakingChange("/pet/findByStatus", HttpMethod.GET, "200", "category.name");

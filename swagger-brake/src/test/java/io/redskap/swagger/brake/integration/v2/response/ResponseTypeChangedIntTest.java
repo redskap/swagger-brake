@@ -1,4 +1,4 @@
-package io.redskap.swagger.brake.integration.response;
+package io.redskap.swagger.brake.integration.v2.response;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,8 +18,8 @@ public class ResponseTypeChangedIntTest extends AbstractSwaggerBrakeIntTest {
     @Test
     public void testResponseTypeChangeIsBreakingChangeWhenExistingAttributeRemoved() {
         // given
-        String oldApiPath = "response/typechanged/petstore.yaml";
-        String newApiPath = "response/typechanged/petstore_v2.yaml";
+        String oldApiPath = "swaggers/v2/response/typechanged/petstore.yaml";
+        String newApiPath = "swaggers/v2/response/typechanged/petstore_v2.yaml";
         ResponseTypeChangedBreakingChange bc1 = new ResponseTypeChangedBreakingChange("/pet/findByStatus", HttpMethod.GET, "200", "","array", "object");
         ResponseTypeChangedBreakingChange bc2 = new ResponseTypeChangedBreakingChange("/pet/findByTags", HttpMethod.GET, "200", "", "array", "string");
         Collection<BreakingChange> expected = Arrays.asList(bc1, bc2);

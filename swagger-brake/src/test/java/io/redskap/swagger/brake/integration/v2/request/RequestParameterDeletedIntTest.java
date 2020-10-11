@@ -1,4 +1,4 @@
-package io.redskap.swagger.brake.integration.response;
+package io.redskap.swagger.brake.integration.v2.request;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -7,20 +7,20 @@ import java.util.Collections;
 
 import io.redskap.swagger.brake.core.BreakingChange;
 import io.redskap.swagger.brake.core.model.HttpMethod;
-import io.redskap.swagger.brake.core.rule.response.ResponseDeletedBreakingChange;
+import io.redskap.swagger.brake.core.rule.request.RequestParameterDeletedBreakingChange;
 import io.redskap.swagger.brake.integration.AbstractSwaggerBrakeIntTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-public class ResponseDeletedIntTest extends AbstractSwaggerBrakeIntTest {
+public class RequestParameterDeletedIntTest extends AbstractSwaggerBrakeIntTest {
     @Test
-    public void testResponseTypeChangeIsBreakingChangeWhenExistingAttributeRemoved() {
+    public void testRequestParameterDeletedWorksCorrectly() {
         // given
-        String oldApiPath = "response/deleted/petstore.yaml";
-        String newApiPath = "response/deleted/petstore_v2.yaml";
-        ResponseDeletedBreakingChange bc = new ResponseDeletedBreakingChange("/pet", HttpMethod.PUT, "404");
+        String oldApiPath = "swaggers/v2/request/parameterdeleted/petstore.yaml";
+        String newApiPath = "swaggers/v2/request/parameterdeleted/petstore_v2.yaml";
+        RequestParameterDeletedBreakingChange bc = new RequestParameterDeletedBreakingChange("/pet/findByStatus", HttpMethod.GET, "status");
         Collection<BreakingChange> expected = Collections.singleton(bc);
         // when
         Collection<BreakingChange> result = execute(oldApiPath, newApiPath);

@@ -1,4 +1,4 @@
-package io.redskap.swagger.brake.integration.request;
+package io.redskap.swagger.brake.integration.v2.request;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,8 +19,8 @@ public class RequestParameterInTypeChangedIntTest extends AbstractSwaggerBrakeIn
     @Test
     public void testRequestParameterInTypeChangedWorksCorrectly() {
         // given
-        String oldApiPath = "request/parameterintypechanged/petstore.yaml";
-        String newApiPath = "request/parameterintypechanged/petstore_v2.yaml";
+        String oldApiPath = "swaggers/v2/request/parameterintypechanged/petstore.yaml";
+        String newApiPath = "swaggers/v2/request/parameterintypechanged/petstore_v2.yaml";
         RequestParameterInTypeChangedBreakingChange bc = new RequestParameterInTypeChangedBreakingChange("/pet/findByStatus", HttpMethod.GET, "status", "query", "header");
         Collection<BreakingChange> expected = Collections.singleton(bc);
         // when
@@ -33,8 +33,8 @@ public class RequestParameterInTypeChangedIntTest extends AbstractSwaggerBrakeIn
     @Test
     public void testBreakingChangeWhenFormDataRequestParamIsChangedToHeader() {
         // given
-        String oldApiPath = "request/parameterintypechanged/formData_swagger.json";
-        String newApiPath = "request/parameterintypechanged/formData_swagger_v2.json";
+        String oldApiPath = "swaggers/v2/request/parameterintypechanged/formData_swagger.json";
+        String newApiPath = "swaggers/v2/request/parameterintypechanged/formData_swagger_v2.json";
         RequestTypeAttributeRemovedBreakingChange bc = new RequestTypeAttributeRemovedBreakingChange("/file/external", HttpMethod.POST, "access_token");
         Collection<BreakingChange> expected = Collections.singleton(bc);
         // when

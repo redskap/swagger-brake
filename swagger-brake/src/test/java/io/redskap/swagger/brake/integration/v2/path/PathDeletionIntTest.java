@@ -1,4 +1,4 @@
-package io.redskap.swagger.brake.integration.path;
+package io.redskap.swagger.brake.integration.v2.path;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,8 +19,8 @@ public class PathDeletionIntTest extends AbstractSwaggerBrakeIntTest {
     @Test
     public void testPathDeletionWorksCorrectly() {
         // given
-        String oldApiPath = "path/deleted/petstore.yaml";
-        String newApiPath = "path/deleted/petstore_v2.yaml";
+        String oldApiPath = "swaggers/v2/path/deleted/petstore.yaml";
+        String newApiPath = "swaggers/v2/path/deleted/petstore_v2.yaml";
         PathDeletedBreakingChange bc = new PathDeletedBreakingChange("/pet/findByStatus", HttpMethod.GET);
         Collection<BreakingChange> expected = Collections.singleton(bc);
         // when
@@ -33,8 +33,8 @@ public class PathDeletionIntTest extends AbstractSwaggerBrakeIntTest {
     @Test
     public void testPathDeletionDoesntTriggerWhenDeprecated() {
         // given
-        String oldApiPath = "path/deleted/deprecated/petstore.yaml";
-        String newApiPath = "path/deleted/deprecated/petstore_v2.yaml";
+        String oldApiPath = "swaggers/v2/path/deleted/deprecated/petstore.yaml";
+        String newApiPath = "swaggers/v2/path/deleted/deprecated/petstore_v2.yaml";
         // when
         Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
         // then
@@ -44,8 +44,8 @@ public class PathDeletionIntTest extends AbstractSwaggerBrakeIntTest {
     @Test
     public void testPathDeletionTriggeredWhenDeprecatedAndDeprecationIsNotAllowed() {
         // given
-        String oldApiPath = "path/deleted/deprecated/petstore.yaml";
-        String newApiPath = "path/deleted/deprecated/petstore_v2.yaml";
+        String oldApiPath = "swaggers/v2/path/deleted/deprecated/petstore.yaml";
+        String newApiPath = "swaggers/v2/path/deleted/deprecated/petstore_v2.yaml";
         Options options = new Options();
         options.setOldApiPath(oldApiPath);
         options.setNewApiPath(newApiPath);

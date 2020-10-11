@@ -1,4 +1,4 @@
-package io.redskap.swagger.brake.integration.request;
+package io.redskap.swagger.brake.integration.v2.request;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,8 +18,8 @@ public class RequestTypeChangedIntTest extends AbstractSwaggerBrakeIntTest {
     @Test
     public void testRequestTypeChangeIsBreakingChange() {
         // given
-        String oldApiPath = "request/attributetypechanged/petstore.yaml";
-        String newApiPath = "request/attributetypechanged/petstore_v2.yaml";
+        String oldApiPath = "swaggers/v2/request/attributetypechanged/petstore.yaml";
+        String newApiPath = "swaggers/v2/request/attributetypechanged/petstore_v2.yaml";
         RequestTypeChangedBreakingChange bc1 = new RequestTypeChangedBreakingChange("/pet", HttpMethod.PUT, "id", "integer", "string");
         RequestTypeChangedBreakingChange bc2 = new RequestTypeChangedBreakingChange("/pet", HttpMethod.POST, "id", "integer", "string");
         Collection<BreakingChange> expected = Arrays.asList(bc1, bc2);

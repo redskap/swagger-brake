@@ -1,4 +1,4 @@
-package io.redskap.swagger.brake.integration.request;
+package io.redskap.swagger.brake.integration.v2.response;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,12 +15,12 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-public class RequestTypeEnumValueDeletedIntTest extends AbstractSwaggerBrakeIntTest {
+public class ResponseTypeEnumValueDeletedIntTest extends AbstractSwaggerBrakeIntTest {
     @Test
-    public void testRequestTypeEnumValueDeletedWorksCorrectly() {
+    public void testResponseTypeEnumValueDeletedWorksCorrectly() {
         // given
-        String oldApiPath = "request/typeenumvaluedeleted/petstore.yaml";
-        String newApiPath = "request/typeenumvaluedeleted/petstore_v2.yaml";
+        String oldApiPath = "swaggers/v2/response/typeenumvaluedeleted/petstore.yaml";
+        String newApiPath = "swaggers/v2/response/typeenumvaluedeleted/petstore_v2.yaml";
         RequestTypeEnumValueDeletedBreakingChange bc1 = new RequestTypeEnumValueDeletedBreakingChange("/store/order", HttpMethod.POST, "status.approved");
         ResponseTypeEnumValueDeletedBreakingChange bc2 = new ResponseTypeEnumValueDeletedBreakingChange("/store/order", HttpMethod.POST, "status.approved");
         ResponseTypeEnumValueDeletedBreakingChange bc3 = new ResponseTypeEnumValueDeletedBreakingChange("/store/order/{orderId}", HttpMethod.GET, "status.approved");

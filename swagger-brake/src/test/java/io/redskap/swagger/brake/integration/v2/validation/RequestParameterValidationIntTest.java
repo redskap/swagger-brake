@@ -1,4 +1,4 @@
-package io.redskap.swagger.brake.integration.validation;
+package io.redskap.swagger.brake.integration.v2.validation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -13,8 +13,8 @@ public class RequestParameterValidationIntTest extends AbstractSwaggerBrakeIntTe
     @Test
     public void testValidationErrorHappensWhenHeaderUsesSchema() {
         // given
-        String oldApiPath = "validation/requestparam/header_swagger.json";
-        String newApiPath = "validation/requestparam/header_swagger.json";
+        String oldApiPath = "swaggers/v2/validation/requestparam/header_swagger.json";
+        String newApiPath = "swaggers/v2/validation/requestparam/header_swagger.json";
         // when
         Throwable exception = catchThrowable(() -> execute(oldApiPath, newApiPath));
         // then
@@ -26,8 +26,8 @@ public class RequestParameterValidationIntTest extends AbstractSwaggerBrakeIntTe
     @Test
     public void testValidationErrorHappensWhenQueryUsesSchema() {
         // given
-        String oldApiPath = "validation/requestparam/query_swagger.json";
-        String newApiPath = "validation/requestparam/query_swagger.json";
+        String oldApiPath = "swaggers/v2/validation/requestparam/query_swagger.json";
+        String newApiPath = "swaggers/v2/validation/requestparam/query_swagger.json";
         // when
         Throwable exception = catchThrowable(() -> execute(oldApiPath, newApiPath));
         // then
@@ -39,8 +39,8 @@ public class RequestParameterValidationIntTest extends AbstractSwaggerBrakeIntTe
     @Test
     public void testValidationErrorHappensWhenPathUsesSchema() {
         // given
-        String oldApiPath = "validation/requestparam/path_swagger.json";
-        String newApiPath = "validation/requestparam/path_swagger.json";
+        String oldApiPath = "swaggers/v2/validation/requestparam/path_swagger.json";
+        String newApiPath = "swaggers/v2/validation/requestparam/path_swagger.json";
         // when
         Throwable exception = catchThrowable(() -> execute(oldApiPath, newApiPath));
         // then

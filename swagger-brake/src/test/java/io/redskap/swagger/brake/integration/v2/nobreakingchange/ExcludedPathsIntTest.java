@@ -1,4 +1,4 @@
-package io.redskap.swagger.brake.integration.nobreakingchange;
+package io.redskap.swagger.brake.integration.v2.nobreakingchange;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,8 +17,8 @@ public class ExcludedPathsIntTest extends AbstractSwaggerBrakeIntTest {
     @Test
     public void testExcludedPathsWorksCorrectlyForExactMatch() {
         // given
-        String oldApiPath = "request/parameterdeleted/petstore.yaml";
-        String newApiPath = "request/parameterdeleted/petstore_v2.yaml";
+        String oldApiPath = "swaggers/v2/request/parameterdeleted/petstore.yaml";
+        String newApiPath = "swaggers/v2/request/parameterdeleted/petstore_v2.yaml";
         Options options = new Options();
         options.setOldApiPath(oldApiPath);
         options.setNewApiPath(newApiPath);
@@ -32,8 +32,8 @@ public class ExcludedPathsIntTest extends AbstractSwaggerBrakeIntTest {
     @Test
     public void testExcludedPathsWorksCorrectlyForStartingMatch() {
         // given
-        String oldApiPath = "request/parameterdeleted/petstore.yaml";
-        String newApiPath = "request/parameterdeleted/petstore_v2.yaml";
+        String oldApiPath = "swaggers/v2/request/parameterdeleted/petstore.yaml";
+        String newApiPath = "swaggers/v2/request/parameterdeleted/petstore_v2.yaml";
         Options options = new Options();
         options.setOldApiPath(oldApiPath);
         options.setNewApiPath(newApiPath);
