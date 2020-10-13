@@ -196,4 +196,184 @@ public class RequestParameterConstraintChangeIntTest extends AbstractSwaggerBrak
         assertThat(result).hasSize(1);
         assertThat(result).hasSameElementsAs(expected);
     }
+
+    @Test
+    public void testRequestTypeConstraintChangeIsBreakingChangeWhenMaximumChangesForDouble() {
+        // given
+        String oldApiPath = "swaggers/v2/request/datatypeconstraint/number/double/maximum/swagger-old.json";
+        String newApiPath = "swaggers/v2/request/datatypeconstraint/number/double/maximum/swagger-new.json";
+        RequestParameterConstraintChangedBreakingChange bc1 = new RequestParameterConstraintChangedBreakingChange("/store/order/{orderId}",
+            HttpMethod.GET, "orderId", new RequestParameterConstraintChange("maximum", new BigDecimal("10.0"), new BigDecimal("5.0")));
+        Collection<BreakingChange> expected = Collections.singletonList(bc1);
+        // when
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
+        // then
+        assertThat(result).hasSize(1);
+        assertThat(result).hasSameElementsAs(expected);
+    }
+
+    @Test
+    public void testRequestTypeConstraintChangeIsBreakingChangeWhenMaximumChangesForFloat() {
+        // given
+        String oldApiPath = "swaggers/v2/request/datatypeconstraint/number/float/maximum/swagger-old.json";
+        String newApiPath = "swaggers/v2/request/datatypeconstraint/number/float/maximum/swagger-new.json";
+        RequestParameterConstraintChangedBreakingChange bc1 = new RequestParameterConstraintChangedBreakingChange("/store/order/{orderId}",
+            HttpMethod.GET, "orderId", new RequestParameterConstraintChange("maximum", new BigDecimal("10.0"), new BigDecimal("5.0")));
+        Collection<BreakingChange> expected = Collections.singletonList(bc1);
+        // when
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
+        // then
+        assertThat(result).hasSize(1);
+        assertThat(result).hasSameElementsAs(expected);
+    }
+
+    @Test
+    public void testRequestTypeConstraintChangeIsBreakingChangeWhenMaximumChangesForNumberBase() {
+        // given
+        String oldApiPath = "swaggers/v2/request/datatypeconstraint/number/base/maximum/swagger-old.json";
+        String newApiPath = "swaggers/v2/request/datatypeconstraint/number/base/maximum/swagger-new.json";
+        RequestParameterConstraintChangedBreakingChange bc1 = new RequestParameterConstraintChangedBreakingChange("/store/order/{orderId}",
+            HttpMethod.GET, "orderId", new RequestParameterConstraintChange("maximum", new BigDecimal(10), new BigDecimal(5)));
+        Collection<BreakingChange> expected = Collections.singletonList(bc1);
+        // when
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
+        // then
+        assertThat(result).hasSize(1);
+        assertThat(result).hasSameElementsAs(expected);
+    }
+
+    @Test
+    public void testRequestTypeConstraintChangeIsBreakingChangeWhenMaximumIntroducedForDouble() {
+        // given
+        String oldApiPath = "swaggers/v2/request/datatypeconstraint/number/double/newmaximum/swagger-old.json";
+        String newApiPath = "swaggers/v2/request/datatypeconstraint/number/double/newmaximum/swagger-new.json";
+        RequestParameterConstraintChangedBreakingChange bc1 = new RequestParameterConstraintChangedBreakingChange("/store/order/{orderId}",
+            HttpMethod.GET, "orderId", new RequestParameterConstraintChange("maximum", null, new BigDecimal("10.0")));
+        Collection<BreakingChange> expected = Collections.singletonList(bc1);
+        // when
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
+        // then
+        assertThat(result).hasSize(1);
+        assertThat(result).hasSameElementsAs(expected);
+    }
+
+    @Test
+    public void testRequestTypeConstraintChangeIsBreakingChangeWhenMaximumIntroducedForFloat() {
+        // given
+        String oldApiPath = "swaggers/v2/request/datatypeconstraint/number/float/newmaximum/swagger-old.json";
+        String newApiPath = "swaggers/v2/request/datatypeconstraint/number/float/newmaximum/swagger-new.json";
+        RequestParameterConstraintChangedBreakingChange bc1 = new RequestParameterConstraintChangedBreakingChange("/store/order/{orderId}",
+            HttpMethod.GET, "orderId", new RequestParameterConstraintChange("maximum", null, new BigDecimal("10.0")));
+        Collection<BreakingChange> expected = Collections.singletonList(bc1);
+        // when
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
+        // then
+        assertThat(result).hasSize(1);
+        assertThat(result).hasSameElementsAs(expected);
+    }
+
+    @Test
+    public void testRequestTypeConstraintChangeIsBreakingChangeWhenMaximumIntroducedForNumberBase() {
+        // given
+        String oldApiPath = "swaggers/v2/request/datatypeconstraint/number/base/newmaximum/swagger-old.json";
+        String newApiPath = "swaggers/v2/request/datatypeconstraint/number/base/newmaximum/swagger-new.json";
+        RequestParameterConstraintChangedBreakingChange bc1 = new RequestParameterConstraintChangedBreakingChange("/store/order/{orderId}",
+            HttpMethod.GET, "orderId", new RequestParameterConstraintChange("maximum", null, new BigDecimal(10)));
+        Collection<BreakingChange> expected = Collections.singletonList(bc1);
+        // when
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
+        // then
+        assertThat(result).hasSize(1);
+        assertThat(result).hasSameElementsAs(expected);
+    }
+
+    @Test
+    public void testRequestTypeConstraintChangeIsBreakingChangeWhenMinimumChangesForDouble() {
+        // given
+        String oldApiPath = "swaggers/v2/request/datatypeconstraint/number/double/minimum/swagger-old.json";
+        String newApiPath = "swaggers/v2/request/datatypeconstraint/number/double/minimum/swagger-new.json";
+        RequestParameterConstraintChangedBreakingChange bc1 = new RequestParameterConstraintChangedBreakingChange("/store/order/{orderId}",
+            HttpMethod.GET, "orderId", new RequestParameterConstraintChange("minimum", new BigDecimal("1.0"), new BigDecimal("3.0")));
+        Collection<BreakingChange> expected = Collections.singletonList(bc1);
+        // when
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
+        // then
+        assertThat(result).hasSize(1);
+        assertThat(result).hasSameElementsAs(expected);
+    }
+
+    @Test
+    public void testRequestTypeConstraintChangeIsBreakingChangeWhenMinimumChangesForFloat() {
+        // given
+        String oldApiPath = "swaggers/v2/request/datatypeconstraint/number/float/minimum/swagger-old.json";
+        String newApiPath = "swaggers/v2/request/datatypeconstraint/number/float/minimum/swagger-new.json";
+        RequestParameterConstraintChangedBreakingChange bc1 = new RequestParameterConstraintChangedBreakingChange("/store/order/{orderId}",
+            HttpMethod.GET, "orderId", new RequestParameterConstraintChange("minimum", new BigDecimal("1.0"), new BigDecimal("3.0")));
+        Collection<BreakingChange> expected = Collections.singletonList(bc1);
+        // when
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
+        // then
+        assertThat(result).hasSize(1);
+        assertThat(result).hasSameElementsAs(expected);
+    }
+
+    @Test
+    public void testRequestTypeConstraintChangeIsBreakingChangeWhenMinimumChangesForNumberBase() {
+        // given
+        String oldApiPath = "swaggers/v2/request/datatypeconstraint/number/base/minimum/swagger-old.json";
+        String newApiPath = "swaggers/v2/request/datatypeconstraint/number/base/minimum/swagger-new.json";
+        RequestParameterConstraintChangedBreakingChange bc1 = new RequestParameterConstraintChangedBreakingChange("/store/order/{orderId}",
+            HttpMethod.GET, "orderId", new RequestParameterConstraintChange("minimum", new BigDecimal(1), new BigDecimal(3)));
+        Collection<BreakingChange> expected = Collections.singletonList(bc1);
+        // when
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
+        // then
+        assertThat(result).hasSize(1);
+        assertThat(result).hasSameElementsAs(expected);
+    }
+
+    @Test
+    public void testRequestTypeConstraintChangeIsBreakingChangeWhenMinimumIntroducedForDouble() {
+        // given
+        String oldApiPath = "swaggers/v2/request/datatypeconstraint/number/double/newminimum/swagger-old.json";
+        String newApiPath = "swaggers/v2/request/datatypeconstraint/number/double/newminimum/swagger-new.json";
+        RequestParameterConstraintChangedBreakingChange bc1 = new RequestParameterConstraintChangedBreakingChange("/store/order/{orderId}",
+            HttpMethod.GET, "orderId", new RequestParameterConstraintChange("minimum", null, new BigDecimal("3.0")));
+        Collection<BreakingChange> expected = Collections.singletonList(bc1);
+        // when
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
+        // then
+        assertThat(result).hasSize(1);
+        assertThat(result).hasSameElementsAs(expected);
+    }
+
+    @Test
+    public void testRequestTypeConstraintChangeIsBreakingChangeWhenMinimumIntroducedForFloat() {
+        // given
+        String oldApiPath = "swaggers/v2/request/datatypeconstraint/number/float/newminimum/swagger-old.json";
+        String newApiPath = "swaggers/v2/request/datatypeconstraint/number/float/newminimum/swagger-new.json";
+        RequestParameterConstraintChangedBreakingChange bc1 = new RequestParameterConstraintChangedBreakingChange("/store/order/{orderId}",
+            HttpMethod.GET, "orderId", new RequestParameterConstraintChange("minimum", null, new BigDecimal("3.0")));
+        Collection<BreakingChange> expected = Collections.singletonList(bc1);
+        // when
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
+        // then
+        assertThat(result).hasSize(1);
+        assertThat(result).hasSameElementsAs(expected);
+    }
+
+    @Test
+    public void testRequestTypeConstraintChangeIsBreakingChangeWhenMinimumIntroducedForNumberBase() {
+        // given
+        String oldApiPath = "swaggers/v2/request/datatypeconstraint/number/base/newminimum/swagger-old.json";
+        String newApiPath = "swaggers/v2/request/datatypeconstraint/number/base/newminimum/swagger-new.json";
+        RequestParameterConstraintChangedBreakingChange bc1 = new RequestParameterConstraintChangedBreakingChange("/store/order/{orderId}",
+            HttpMethod.GET, "orderId", new RequestParameterConstraintChange("minimum", null, new BigDecimal(3)));
+        Collection<BreakingChange> expected = Collections.singletonList(bc1);
+        // when
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
+        // then
+        assertThat(result).hasSize(1);
+        assertThat(result).hasSameElementsAs(expected);
+    }
 }
