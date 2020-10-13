@@ -6,8 +6,8 @@ import java.util.Optional;
 import java.util.Set;
 
 import io.redskap.swagger.brake.core.model.Path;
-import io.redskap.swagger.brake.core.model.RequestParameter;
 import io.redskap.swagger.brake.core.model.Specification;
+import io.redskap.swagger.brake.core.model.parameter.RequestParameter;
 import io.redskap.swagger.brake.core.rule.BreakingChangeRule;
 import io.redskap.swagger.brake.core.rule.PathSkipper;
 import lombok.RequiredArgsConstructor;

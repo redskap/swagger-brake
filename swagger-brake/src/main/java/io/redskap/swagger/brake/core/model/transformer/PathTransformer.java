@@ -4,7 +4,11 @@ import static java.util.stream.Collectors.toList;
 
 import java.util.Collection;
 
-import io.redskap.swagger.brake.core.model.*;
+import io.redskap.swagger.brake.core.model.HttpMethod;
+import io.redskap.swagger.brake.core.model.Path;
+import io.redskap.swagger.brake.core.model.Request;
+import io.redskap.swagger.brake.core.model.Response;
+import io.redskap.swagger.brake.core.model.parameter.RequestParameter;
 import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.Paths;
 import lombok.RequiredArgsConstructor;

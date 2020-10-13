@@ -3,6 +3,7 @@ package io.redskap.swagger.brake.core.model;
 import java.util.Collection;
 import java.util.Optional;
 
+import io.redskap.swagger.brake.core.model.parameter.RequestParameter;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

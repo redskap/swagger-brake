@@ -3,6 +3,7 @@ package io.redskap.swagger.brake.core.rule.request;
 import java.util.*;
 
 import io.redskap.swagger.brake.core.model.*;
+import io.redskap.swagger.brake.core.model.parameter.RequestParameter;
 import io.redskap.swagger.brake.core.rule.BreakingChangeRule;
 import io.redskap.swagger.brake.core.rule.PathSkipper;
 import lombok.RequiredArgsConstructor;

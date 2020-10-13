@@ -4,8 +4,8 @@ import java.util.Collection;
 
 import io.redskap.swagger.brake.core.model.HttpMethod;
 import io.redskap.swagger.brake.core.model.Request;
-import io.redskap.swagger.brake.core.model.RequestParameter;
 import io.redskap.swagger.brake.core.model.Response;
+import io.redskap.swagger.brake.core.model.parameter.RequestParameter;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

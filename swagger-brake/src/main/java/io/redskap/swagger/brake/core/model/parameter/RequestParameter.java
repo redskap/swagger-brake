@@ -1,0 +1,32 @@
+package io.redskap.swagger.brake.core.model.parameter;
+
+import java.util.Optional;
+
+import io.redskap.swagger.brake.core.model.RequestParameterInType;
+import io.redskap.swagger.brake.core.model.Schema;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+
+@Getter
+@EqualsAndHashCode
+@ToString
+@AllArgsConstructor
+@SuperBuilder
+public class RequestParameter {
+    private final RequestParameterInType inType;
+    private final String name;
+    private final boolean required;
+    private final Schema schema;
+    private final RequestParameterType requestParameterType;
+
+    public RequestParameter(RequestParameterInType inType, String name, boolean required, RequestParameterType requestParameterType) {
+        this(inType, name, required, null, requestParameterType);
+    }
+
+    public Optional<Schema> getSchema() {
+        return Optional.ofNullable(schema);
+    }
+}
