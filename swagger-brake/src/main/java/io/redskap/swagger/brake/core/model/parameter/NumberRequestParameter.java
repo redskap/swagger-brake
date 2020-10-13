@@ -43,10 +43,10 @@ public class NumberRequestParameter extends RequestParameter {
     }
 
     /**
-     * Determines if the object is integer typed or not.
-     * @return whether the object is integer typed
+     * Determines if the object is number typed or not.
+     * @return whether the object is number typed
      */
-    public boolean isIntegerTyped() {
-        return RequestParameterType.getIntegerTypes().contains(getRequestParameterType());
+    public boolean isNumberTyped() {
+        return RequestParameterType.getNumberTypes().contains(getRequestParameterType());
     }
 }

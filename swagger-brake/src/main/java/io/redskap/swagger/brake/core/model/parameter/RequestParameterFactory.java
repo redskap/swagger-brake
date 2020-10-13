@@ -41,7 +41,7 @@ public class RequestParameterFactory {
             String format = swSchema.getFormat();
             RequestParameterType requestParameterType = RequestParameterType.from(type, format);
             io.redskap.swagger.brake.core.model.Schema transformedSchema = schemaTransformer.transform(swSchema);
-            if (RequestParameterType.getIntegerTypes().contains(requestParameterType)) {
+            if (RequestParameterType.getNumberTypes().contains(requestParameterType)) {
                 BigDecimal maximum = swSchema.getMaximum();
                 Boolean exclusiveMaximum = swSchema.getExclusiveMaximum();
                 BigDecimal minimum = swSchema.getMinimum();

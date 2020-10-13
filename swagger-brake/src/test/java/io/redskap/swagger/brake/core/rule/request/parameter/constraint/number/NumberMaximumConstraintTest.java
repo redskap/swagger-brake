@@ -348,6 +348,108 @@ public class NumberMaximumConstraintTest {
     }
 
     @Test
+    public void testValidateConstraintsShouldReportConstraintChangeWhenMaximumValueSetGetsLimitedForNumber() {
+        // given
+        NumberRequestParameter oldRequestParameter = new NumberRequestParameter(
+            RequestParameterInType.PATH,
+            "testAttribute",
+            true,
+            null,
+            RequestParameterType.NUMBER,
+            BigDecimal.TEN,
+            BigDecimal.ZERO,
+            false,
+            true
+        );
+        NumberRequestParameter newRequestParameter = new NumberRequestParameter(
+            RequestParameterInType.PATH,
+            "testAttribute",
+            true,
+            null,
+            RequestParameterType.NUMBER,
+            BigDecimal.ONE,
+            BigDecimal.ZERO,
+            false,
+            true
+        );
+        RequestParameterConstraintChange expected = new RequestParameterConstraintChange(
+            "maximum", BigDecimal.TEN, BigDecimal.ONE
+        );
+        // when
+        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        // then
+        assertThat(result).get().isEqualTo(expected);
+    }
+
+    @Test
+    public void testValidateConstraintsShouldReportConstraintChangeWhenMaximumValueSetGetsLimitedForFloat() {
+        // given
+        NumberRequestParameter oldRequestParameter = new NumberRequestParameter(
+            RequestParameterInType.PATH,
+            "testAttribute",
+            true,
+            null,
+            RequestParameterType.FLOAT,
+            BigDecimal.TEN.add(new BigDecimal("0.5")),
+            BigDecimal.ZERO,
+            false,
+            true
+        );
+        NumberRequestParameter newRequestParameter = new NumberRequestParameter(
+            RequestParameterInType.PATH,
+            "testAttribute",
+            true,
+            null,
+            RequestParameterType.FLOAT,
+            BigDecimal.ONE.add(new BigDecimal("0.5")),
+            BigDecimal.ZERO,
+            false,
+            true
+        );
+        RequestParameterConstraintChange expected = new RequestParameterConstraintChange(
+            "maximum", BigDecimal.TEN.add(new BigDecimal("0.5")), BigDecimal.ONE.add(new BigDecimal("0.5"))
+        );
+        // when
+        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        // then
+        assertThat(result).get().isEqualTo(expected);
+    }
+
+    @Test
+    public void testValidateConstraintsShouldReportConstraintChangeWhenMaximumValueSetGetsLimitedForDouble() {
+        // given
+        NumberRequestParameter oldRequestParameter = new NumberRequestParameter(
+            RequestParameterInType.PATH,
+            "testAttribute",
+            true,
+            null,
+            RequestParameterType.DOUBLE,
+            BigDecimal.TEN.add(new BigDecimal("0.5")),
+            BigDecimal.ZERO,
+            false,
+            true
+        );
+        NumberRequestParameter newRequestParameter = new NumberRequestParameter(
+            RequestParameterInType.PATH,
+            "testAttribute",
+            true,
+            null,
+            RequestParameterType.DOUBLE,
+            BigDecimal.ONE.add(new BigDecimal("0.5")),
+            BigDecimal.ZERO,
+            false,
+            true
+        );
+        RequestParameterConstraintChange expected = new RequestParameterConstraintChange(
+            "maximum", BigDecimal.TEN.add(new BigDecimal("0.5")), BigDecimal.ONE.add(new BigDecimal("0.5"))
+        );
+        // when
+        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        // then
+        assertThat(result).get().isEqualTo(expected);
+    }
+
+    @Test
     public void testValidateConstraintsShouldReportConstraintChangeWhenMaximumValueGetsSet() {
         // given
         NumberRequestParameter oldRequestParameter = new NumberRequestParameter(

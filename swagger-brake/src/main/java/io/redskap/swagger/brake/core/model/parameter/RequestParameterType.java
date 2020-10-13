@@ -12,6 +12,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum RequestParameterType {
     GENERIC(null, null),
+    NUMBER("number", null),
+    FLOAT("number", "float"),
+    DOUBLE("number", "double"),
     INTEGER("integer", null),
     INT_32("integer", "int32"),
     INT_64("integer", "int64");
@@ -33,10 +36,10 @@ public enum RequestParameterType {
     }
 
     /**
-     * Returns all integer types.
-     * @return all integer types
+     * Returns all number types.
+     * @return all number types
      */
-    public static Collection<RequestParameterType> getIntegerTypes() {
-        return ImmutableList.of(INTEGER, INT_32, INT_64);
+    public static Collection<RequestParameterType> getNumberTypes() {
+        return ImmutableList.of(NUMBER, FLOAT, DOUBLE, INTEGER, INT_32, INT_64);
     }
 }

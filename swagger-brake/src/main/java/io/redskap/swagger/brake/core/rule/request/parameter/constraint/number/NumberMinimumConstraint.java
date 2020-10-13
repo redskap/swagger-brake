@@ -19,7 +19,7 @@ class NumberMinimumConstraint implements RequestParameterConstraint<NumberReques
     public Optional<RequestParameterConstraintChange> validateConstraints(NumberRequestParameter oldRequestParameter, NumberRequestParameter newRequestParameter) {
         RequestParameterConstraintChange result = null;
         if (oldRequestParameter != null && newRequestParameter != null) {
-            if (oldRequestParameter.isIntegerTyped() && newRequestParameter.isIntegerTyped()) {
+            if (oldRequestParameter.isNumberTyped() && newRequestParameter.isNumberTyped()) {
                 BigDecimal oldMinimum = oldRequestParameter.getMinimum();
                 BigDecimal newMinimum = newRequestParameter.getMinimum();
                 if (oldMinimum == null && newMinimum != null) {

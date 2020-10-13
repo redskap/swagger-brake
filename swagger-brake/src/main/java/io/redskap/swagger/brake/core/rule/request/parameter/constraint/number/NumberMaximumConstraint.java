@@ -19,7 +19,7 @@ class NumberMaximumConstraint implements RequestParameterConstraint<NumberReques
     public Optional<RequestParameterConstraintChange> validateConstraints(NumberRequestParameter oldRequestParameter, NumberRequestParameter newRequestParameter) {
         RequestParameterConstraintChange result = null;
         if (oldRequestParameter != null && newRequestParameter != null) {
-            if (oldRequestParameter.isIntegerTyped() && newRequestParameter.isIntegerTyped()) {
+            if (oldRequestParameter.isNumberTyped() && newRequestParameter.isNumberTyped()) {
                 BigDecimal oldMaximum = oldRequestParameter.getMaximum();
                 BigDecimal newMaximum = newRequestParameter.getMaximum();
                 if (oldMaximum == null && newMaximum != null) {
