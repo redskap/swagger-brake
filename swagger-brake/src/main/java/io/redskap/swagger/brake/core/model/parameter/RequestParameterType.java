@@ -17,7 +17,8 @@ public enum RequestParameterType {
     DOUBLE("number", "double"),
     INTEGER("integer", null),
     INT_32("integer", "int32"),
-    INT_64("integer", "int64");
+    INT_64("integer", "int64"),
+    STRING("string", null);
 
     private String type;
     private String format;
@@ -41,5 +42,9 @@ public enum RequestParameterType {
      */
     public static Collection<RequestParameterType> getNumberTypes() {
         return ImmutableList.of(NUMBER, FLOAT, DOUBLE, INTEGER, INT_32, INT_64);
+    }
+
+    public static Collection<RequestParameterType> getStringTypes() {
+        return ImmutableList.of(STRING);
     }
 }

@@ -7,13 +7,12 @@ import io.redskap.swagger.brake.core.model.parameter.NumberRequestParameter;
 import io.redskap.swagger.brake.core.rule.request.parameter.constraint.RequestParameterConstraint;
 import io.redskap.swagger.brake.core.rule.request.parameter.constraint.RequestParameterConstraintChange;
 import io.redskap.swagger.brake.core.util.BigDecimalComparator;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
 class NumberMaximumConstraint implements RequestParameterConstraint<NumberRequestParameter> {
     public static final String MAXIMUM_ATTRIBUTE_NAME = "maximum";
+    public static final String EXCLUSIVE_MAXIMUM_ATTRIBUTE_NAME = "exclusiveMaximum";
 
     @Override
     public Optional<RequestParameterConstraintChange> validateConstraints(NumberRequestParameter oldRequestParameter, NumberRequestParameter newRequestParameter) {
@@ -40,7 +39,7 @@ class NumberMaximumConstraint implements RequestParameterConstraint<NumberReques
                         BigDecimal oldMaxWithExclusivity = oldMaximum.subtract(oldExclusiveMaximum ? BigDecimal.ONE : BigDecimal.ZERO);
                         BigDecimal newMaxWithExclusivity = newMaximum.subtract(newExclusiveMaximum ? BigDecimal.ONE : BigDecimal.ZERO);
                         if (BigDecimalComparator.isLessThan(newMaxWithExclusivity, oldMaxWithExclusivity)) {
-                            result = new RequestParameterConstraintChange("exclusiveMaximum",
+                            result = new RequestParameterConstraintChange(EXCLUSIVE_MAXIMUM_ATTRIBUTE_NAME,
                                 oldExclusiveMaximum,
                                 newExclusiveMaximum
                             );

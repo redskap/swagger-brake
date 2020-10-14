@@ -7,13 +7,12 @@ import io.redskap.swagger.brake.core.model.parameter.NumberRequestParameter;
 import io.redskap.swagger.brake.core.rule.request.parameter.constraint.RequestParameterConstraint;
 import io.redskap.swagger.brake.core.rule.request.parameter.constraint.RequestParameterConstraintChange;
 import io.redskap.swagger.brake.core.util.BigDecimalComparator;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
 class NumberMinimumConstraint implements RequestParameterConstraint<NumberRequestParameter> {
     public static final String MINIMUM_ATTRIBUTE_NAME = "minimum";
+    public static final String EXCLUSIVE_MINIMUM_ATTRIBUTE_NAME = "exclusiveMinimum";
 
     @Override
     public Optional<RequestParameterConstraintChange> validateConstraints(NumberRequestParameter oldRequestParameter, NumberRequestParameter newRequestParameter) {
@@ -40,7 +39,7 @@ class NumberMinimumConstraint implements RequestParameterConstraint<NumberReques
                         BigDecimal oldMaxWithExclusivity = oldMinimum.add(oldExclusiveMinimum ? BigDecimal.ONE : BigDecimal.ZERO);
                         BigDecimal newMaxWithExclusivity = newMinimum.add(newExclusiveMinimum ? BigDecimal.ONE : BigDecimal.ZERO);
                         if (BigDecimalComparator.isGreaterThan(newMaxWithExclusivity, oldMaxWithExclusivity)) {
-                            result = new RequestParameterConstraintChange("exclusiveMinimum",
+                            result = new RequestParameterConstraintChange(EXCLUSIVE_MINIMUM_ATTRIBUTE_NAME,
                                 oldExclusiveMinimum,
                                 newExclusiveMinimum
                             );

@@ -57,6 +57,18 @@ public class RequestParameterFactory {
                     .minimum(minimum)
                     .exclusiveMinimum(BooleanUtils.toBoolean(exclusiveMinimum))
                     .build();
+            } else if (RequestParameterType.getStringTypes().contains(requestParameterType)) {
+                Integer maxLength = swSchema.getMaxLength();
+                Integer minLength = swSchema.getMinLength();
+                return StringRequestParameter.builder()
+                    .inType(inType)
+                    .name(name)
+                    .required(required)
+                    .requestParameterType(requestParameterType)
+                    .schema(transformedSchema)
+                    .maxLength(maxLength)
+                    .minLength(minLength)
+                    .build();
             } else {
                 return RequestParameter.builder()
                     .inType(inType)
