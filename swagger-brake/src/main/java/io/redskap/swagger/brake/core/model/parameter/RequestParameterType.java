@@ -3,6 +3,7 @@ package io.redskap.swagger.brake.core.model.parameter;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
+import java.util.Optional;
 
 import com.google.common.collect.ImmutableList;
 import lombok.AllArgsConstructor;
@@ -30,10 +31,14 @@ public enum RequestParameterType {
      * @return the actual enum type or GENERIC if there's none
      */
     public static RequestParameterType from(String type, String format) {
+        return forTypeAndFormat(type, format)
+            .orElse(forTypeAndFormat(type, null).orElse(GENERIC));
+    }
+
+    private static Optional<RequestParameterType> forTypeAndFormat(String type, String format) {
         return Arrays.stream(RequestParameterType.values())
             .filter(e -> Objects.equals(e.getType(), type) && Objects.equals(e.getFormat(), format))
-            .findAny()
-            .orElse(GENERIC);
+            .findAny();
     }
 
     /**

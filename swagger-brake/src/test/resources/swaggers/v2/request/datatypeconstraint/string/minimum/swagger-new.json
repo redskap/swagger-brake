@@ -53,6 +53,7 @@
             "description": "ID of pet that needs to be fetched",
             "required": true,
             "type": "string",
+            "format": "date",
             "maxLength": 10,
             "minLength": 2
           },
