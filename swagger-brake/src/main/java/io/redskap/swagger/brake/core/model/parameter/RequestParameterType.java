@@ -19,7 +19,8 @@ public enum RequestParameterType {
     INTEGER("integer", null),
     INT_32("integer", "int32"),
     INT_64("integer", "int64"),
-    STRING("string", null);
+    STRING("string", null),
+    ARRAY("array", null);
 
     private String type;
     private String format;
@@ -49,7 +50,19 @@ public enum RequestParameterType {
         return ImmutableList.of(NUMBER, FLOAT, DOUBLE, INTEGER, INT_32, INT_64);
     }
 
+    /**
+     * Returns all string types.
+     * @return Returns all string types
+     */
     public static Collection<RequestParameterType> getStringTypes() {
         return ImmutableList.of(STRING);
+    }
+
+    /**
+     * Returns all array types.
+     * @return Returns all array types
+     */
+    public static Collection<RequestParameterType> getArrayTypes() {
+        return ImmutableList.of(ARRAY);
     }
 }

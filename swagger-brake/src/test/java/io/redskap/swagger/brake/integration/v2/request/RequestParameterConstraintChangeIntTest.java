@@ -436,4 +436,80 @@ public class RequestParameterConstraintChangeIntTest extends AbstractSwaggerBrak
         assertThat(result).hasSize(1);
         assertThat(result).hasSameElementsAs(expected);
     }
+
+
+    @Test
+    public void testRequestTypeConstraintChangeIsBreakingChangeWhenMinItemsIntroducedForArray() {
+        // given
+        String oldApiPath = "swaggers/v2/request/datatypeconstraint/array/newminimum/swagger-old.json";
+        String newApiPath = "swaggers/v2/request/datatypeconstraint/array/newminimum/swagger-new.json";
+        RequestParameterConstraintChangedBreakingChange bc1 = new RequestParameterConstraintChangedBreakingChange("/store/order/{orderId}",
+            HttpMethod.GET, "orderId", new RequestParameterConstraintChange("minItems", null, 1));
+        Collection<BreakingChange> expected = Collections.singletonList(bc1);
+        // when
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
+        // then
+        assertThat(result).hasSize(1);
+        assertThat(result).hasSameElementsAs(expected);
+    }
+
+    @Test
+    public void testRequestTypeConstraintChangeIsBreakingChangeWhenMaxItemsIntroducedForArray() {
+        // given
+        String oldApiPath = "swaggers/v2/request/datatypeconstraint/array/newmaximum/swagger-old.json";
+        String newApiPath = "swaggers/v2/request/datatypeconstraint/array/newmaximum/swagger-new.json";
+        RequestParameterConstraintChangedBreakingChange bc1 = new RequestParameterConstraintChangedBreakingChange("/store/order/{orderId}",
+            HttpMethod.GET, "orderId", new RequestParameterConstraintChange("maxItems", null, 10));
+        Collection<BreakingChange> expected = Collections.singletonList(bc1);
+        // when
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
+        // then
+        assertThat(result).hasSize(1);
+        assertThat(result).hasSameElementsAs(expected);
+    }
+
+    @Test
+    public void testRequestTypeConstraintChangeIsBreakingChangeWhenMaxItemsGetsChangedForArray() {
+        // given
+        String oldApiPath = "swaggers/v2/request/datatypeconstraint/array/maximum/swagger-old.json";
+        String newApiPath = "swaggers/v2/request/datatypeconstraint/array/maximum/swagger-new.json";
+        RequestParameterConstraintChangedBreakingChange bc1 = new RequestParameterConstraintChangedBreakingChange("/store/order/{orderId}",
+            HttpMethod.GET, "orderId", new RequestParameterConstraintChange("maxItems", 10, 5));
+        Collection<BreakingChange> expected = Collections.singletonList(bc1);
+        // when
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
+        // then
+        assertThat(result).hasSize(1);
+        assertThat(result).hasSameElementsAs(expected);
+    }
+
+    @Test
+    public void testRequestTypeConstraintChangeIsBreakingChangeWhenMinItemsGetsChangedForArray() {
+        // given
+        String oldApiPath = "swaggers/v2/request/datatypeconstraint/array/minimum/swagger-old.json";
+        String newApiPath = "swaggers/v2/request/datatypeconstraint/array/minimum/swagger-new.json";
+        RequestParameterConstraintChangedBreakingChange bc1 = new RequestParameterConstraintChangedBreakingChange("/store/order/{orderId}",
+            HttpMethod.GET, "orderId", new RequestParameterConstraintChange("minItems", 1, 2));
+        Collection<BreakingChange> expected = Collections.singletonList(bc1);
+        // when
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
+        // then
+        assertThat(result).hasSize(1);
+        assertThat(result).hasSameElementsAs(expected);
+    }
+
+    @Test
+    public void testRequestTypeConstraintChangeIsBreakingChangeWhenUniqueItemsGetsChangedForArray() {
+        // given
+        String oldApiPath = "swaggers/v2/request/datatypeconstraint/array/uniqueitems/swagger-old.json";
+        String newApiPath = "swaggers/v2/request/datatypeconstraint/array/uniqueitems/swagger-new.json";
+        RequestParameterConstraintChangedBreakingChange bc1 = new RequestParameterConstraintChangedBreakingChange("/store/order/{orderId}",
+            HttpMethod.GET, "orderId", new RequestParameterConstraintChange("uniqueItems", false, true));
+        Collection<BreakingChange> expected = Collections.singletonList(bc1);
+        // when
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
+        // then
+        assertThat(result).hasSize(1);
+        assertThat(result).hasSameElementsAs(expected);
+    }
 }

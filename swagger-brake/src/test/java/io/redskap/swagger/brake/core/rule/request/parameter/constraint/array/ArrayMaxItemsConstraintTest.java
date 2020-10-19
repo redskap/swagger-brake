@@ -1,30 +1,31 @@
-package io.redskap.swagger.brake.core.rule.request.parameter.constraint.string;
+package io.redskap.swagger.brake.core.rule.request.parameter.constraint.array;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Optional;
 
 import io.redskap.swagger.brake.core.model.RequestParameterInType;
+import io.redskap.swagger.brake.core.model.parameter.ArrayRequestParameter;
 import io.redskap.swagger.brake.core.model.parameter.RequestParameterType;
-import io.redskap.swagger.brake.core.model.parameter.StringRequestParameter;
 import io.redskap.swagger.brake.core.rule.request.parameter.constraint.RequestParameterConstraintChange;
 import org.junit.Test;
 
-public class StringMinLengthConstraintTest {
-    private StringMinLengthConstraint underTest = new StringMinLengthConstraint();
+public class ArrayMaxItemsConstraintTest {
+    private ArrayMaxItemsConstraint underTest = new ArrayMaxItemsConstraint();
 
     @Test
     public void testValidateConstraintsShouldReturnEmptyOptionalWhenNullOldRequestParamIsGiven() {
         // given
-        StringRequestParameter oldRequestParameter = null;
-        StringRequestParameter newRequestParameter = new StringRequestParameter(
+        ArrayRequestParameter oldRequestParameter = null;
+        ArrayRequestParameter newRequestParameter = new ArrayRequestParameter(
             RequestParameterInType.PATH,
             "testAttribute",
             true,
             null,
-            RequestParameterType.STRING,
+            RequestParameterType.ARRAY,
             1,
-            1
+            1,
+            false
         );
         // when
         Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
@@ -35,16 +36,17 @@ public class StringMinLengthConstraintTest {
     @Test
     public void testValidateConstraintsShouldReturnEmptyOptionalWhenNullNewRequestParamIsGiven() {
         // given
-        StringRequestParameter oldRequestParameter = new StringRequestParameter(
+        ArrayRequestParameter oldRequestParameter = new ArrayRequestParameter(
             RequestParameterInType.PATH,
             "testAttribute",
             true,
             null,
-            RequestParameterType.STRING,
+            RequestParameterType.ARRAY,
             1,
-            1
+            1,
+            false
         );
-        StringRequestParameter newRequestParameter = null;
+        ArrayRequestParameter newRequestParameter = null;
         // when
         Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
@@ -52,25 +54,27 @@ public class StringMinLengthConstraintTest {
     }
 
     @Test
-    public void testValidateConstraintsShouldReturnEmptyOptionalWhenRequestParameterIsNotStringTyped() {
+    public void testValidateConstraintsShouldReturnEmptyOptionalWhenRequestParameterIsNotArrayTyped() {
         // given
-        StringRequestParameter oldRequestParameter = new StringRequestParameter(
+        ArrayRequestParameter oldRequestParameter = new ArrayRequestParameter(
             RequestParameterInType.PATH,
             "testAttribute",
             true,
             null,
             RequestParameterType.GENERIC,
             1,
-            1
+            1,
+            false
         );
-        StringRequestParameter newRequestParameter = new StringRequestParameter(
+        ArrayRequestParameter newRequestParameter = new ArrayRequestParameter(
             RequestParameterInType.PATH,
             "testAttribute",
             true,
             null,
             RequestParameterType.GENERIC,
             1,
-            1
+            1,
+            false
         );
         // when
         Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
@@ -79,25 +83,27 @@ public class StringMinLengthConstraintTest {
     }
 
     @Test
-    public void testValidateConstraintsShouldReturnEmptyOptionalWhenMinLengthIsExtended() {
+    public void testValidateConstraintsShouldReturnEmptyOptionalWhenMaxItemsIsExtended() {
         // given
-        StringRequestParameter oldRequestParameter = new StringRequestParameter(
+        ArrayRequestParameter oldRequestParameter = new ArrayRequestParameter(
             RequestParameterInType.PATH,
             "testAttribute",
             true,
             null,
-            RequestParameterType.STRING,
+            RequestParameterType.ARRAY,
             1,
-            1
+            1,
+            false
         );
-        StringRequestParameter newRequestParameter = new StringRequestParameter(
+        ArrayRequestParameter newRequestParameter = new ArrayRequestParameter(
             RequestParameterInType.PATH,
             "testAttribute",
             true,
             null,
-            RequestParameterType.STRING,
+            RequestParameterType.ARRAY,
+            2,
             1,
-            0
+            false
         );
         // when
         Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
@@ -106,25 +112,27 @@ public class StringMinLengthConstraintTest {
     }
 
     @Test
-    public void testValidateConstraintsShouldReturnEmptyOptionalWhenMinLengthIsRemoved() {
+    public void testValidateConstraintsShouldReturnEmptyOptionalWhenMaxItemsIsRemoved() {
         // given
-        StringRequestParameter oldRequestParameter = new StringRequestParameter(
+        ArrayRequestParameter oldRequestParameter = new ArrayRequestParameter(
             RequestParameterInType.PATH,
             "testAttribute",
             true,
             null,
-            RequestParameterType.STRING,
+            RequestParameterType.ARRAY,
             1,
-            1
+            1,
+            false
         );
-        StringRequestParameter newRequestParameter = new StringRequestParameter(
+        ArrayRequestParameter newRequestParameter = new ArrayRequestParameter(
             RequestParameterInType.PATH,
             "testAttribute",
             true,
             null,
-            RequestParameterType.STRING,
+            RequestParameterType.ARRAY,
+            null,
             1,
-            null
+            false
         );
         // when
         Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
@@ -133,28 +141,30 @@ public class StringMinLengthConstraintTest {
     }
 
     @Test
-    public void testValidateConstraintsShouldReportConstraintChangeWhenMinLengthGetsLimited() {
+    public void testValidateConstraintsShouldReportConstraintChangeWhenMaxItemsGetsLimited() {
         // given
-        StringRequestParameter oldRequestParameter = new StringRequestParameter(
+        ArrayRequestParameter oldRequestParameter = new ArrayRequestParameter(
             RequestParameterInType.PATH,
             "testAttribute",
             true,
             null,
-            RequestParameterType.STRING,
-            5,
-            1
+            RequestParameterType.ARRAY,
+            2,
+            1,
+            false
         );
-        StringRequestParameter newRequestParameter = new StringRequestParameter(
+        ArrayRequestParameter newRequestParameter = new ArrayRequestParameter(
             RequestParameterInType.PATH,
             "testAttribute",
             true,
             null,
-            RequestParameterType.STRING,
-            5,
-            2
+            RequestParameterType.ARRAY,
+            1,
+            1,
+            false
         );
         RequestParameterConstraintChange expected = new RequestParameterConstraintChange(
-            "minLength", 1, 2
+            "maxItems", 2, 1
         );
         // when
         Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
@@ -163,28 +173,30 @@ public class StringMinLengthConstraintTest {
     }
 
     @Test
-    public void testValidateConstraintsShouldReportConstraintChangeWhenMinLengthGetsSet() {
+    public void testValidateConstraintsShouldReportConstraintChangeWhenMaxItemsGetsSet() {
         // given
-        StringRequestParameter oldRequestParameter = new StringRequestParameter(
+        ArrayRequestParameter oldRequestParameter = new ArrayRequestParameter(
             RequestParameterInType.PATH,
             "testAttribute",
             true,
             null,
-            RequestParameterType.STRING,
+            RequestParameterType.ARRAY,
+            null,
             1,
-            null
+            false
         );
-        StringRequestParameter newRequestParameter = new StringRequestParameter(
+        ArrayRequestParameter newRequestParameter = new ArrayRequestParameter(
             RequestParameterInType.PATH,
             "testAttribute",
             true,
             null,
-            RequestParameterType.STRING,
+            RequestParameterType.ARRAY,
             1,
-            1
+            1,
+            false
         );
         RequestParameterConstraintChange expected = new RequestParameterConstraintChange(
-            "minLength", null, 1
+            "maxItems", null, 1
         );
         // when
         Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);

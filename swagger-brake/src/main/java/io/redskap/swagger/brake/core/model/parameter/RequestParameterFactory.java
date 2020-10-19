@@ -69,6 +69,21 @@ public class RequestParameterFactory {
                     .maxLength(maxLength)
                     .minLength(minLength)
                     .build();
+            } else if (RequestParameterType.getArrayTypes().contains(requestParameterType)) {
+                Integer maxItems = swSchema.getMaxItems();
+                Integer minItems = swSchema.getMinItems();
+                Boolean uniqueItems = swSchema.getUniqueItems();
+                return ArrayRequestParameter.builder()
+                    .inType(inType)
+                    .name(name)
+                    .required(required)
+                    .requestParameterType(requestParameterType)
+                    .schema(transformedSchema)
+                    .maxItems(maxItems)
+                    .minItems(minItems)
+                    .uniqueItems(uniqueItems)
+                    .build();
+
             } else {
                 return RequestParameter.builder()
                     .inType(inType)

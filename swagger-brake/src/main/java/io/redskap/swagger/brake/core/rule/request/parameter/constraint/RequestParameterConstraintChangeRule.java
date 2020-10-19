@@ -47,8 +47,10 @@ public class RequestParameterConstraintChangeRule implements BreakingChangeRule<
 
     private <T extends RequestParameter> Collection<RequestParameterConstraintChangedBreakingChange> applyConstraints(Path path, T requestParameter, T newRequestParameter) {
         Class<T> classType = (Class<T>) requestParameter.getClass();
+        Class<T> newClassType = (Class<T>) newRequestParameter.getClass();
         List<RequestParameterConstraintChangedBreakingChange> bcs = requestParameterConstraints.stream()
             .filter(c -> c.handledRequestParameter().equals(classType))
+            .filter(c -> c.handledRequestParameter().equals(newClassType))
             .map(c -> ((RequestParameterConstraint<T>) c).validateConstraints(requestParameter, newRequestParameter))
             .filter(Optional::isPresent)
             .map(Optional::get)
