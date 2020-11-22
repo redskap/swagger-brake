@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Command-line interface | Swagger Brake</title>
+    <meta name="generator" content="VuePress 1.7.1">
+    
+    <meta name="description" content="">
+    <meta name="theme-color" content="#3eaf7c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <link rel="preload" href="/swagger-brake/assets/css/0.styles.62c63662.css" as="style"><link rel="preload" href="/swagger-brake/assets/js/app.fc3bb8b8.js" as="script"><link rel="preload" href="/swagger-brake/assets/js/2.b51b5d8f.js" as="script"><link rel="preload" href="/swagger-brake/assets/js/8.a50ecd9b.js" as="script"><link rel="prefetch" href="/swagger-brake/assets/js/10.4a1886e6.js"><link rel="prefetch" href="/swagger-brake/assets/js/11.927ef9a3.js"><link rel="prefetch" href="/swagger-brake/assets/js/12.e54d813e.js"><link rel="prefetch" href="/swagger-brake/assets/js/13.746b7233.js"><link rel="prefetch" href="/swagger-brake/assets/js/14.1c7b55f2.js"><link rel="prefetch" href="/swagger-brake/assets/js/15.700af232.js"><link rel="prefetch" href="/swagger-brake/assets/js/3.6c8dd952.js"><link rel="prefetch" href="/swagger-brake/assets/js/4.09fd2c39.js"><link rel="prefetch" href="/swagger-brake/assets/js/5.fc791712.js"><link rel="prefetch" href="/swagger-brake/assets/js/6.ffe6f60a.js"><link rel="prefetch" href="/swagger-brake/assets/js/7.19c47e1d.js"><link rel="prefetch" href="/swagger-brake/assets/js/9.4e21c0c0.js">
+    <link rel="stylesheet" href="/swagger-brake/assets/css/0.styles.62c63662.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/swagger-brake/" class="home-link router-link-active"><!----> <span class="site-name">Swagger Brake</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/swagger-brake/guide/" class="nav-link router-link-active">
+  Guide
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/swagger-brake/guide/" class="nav-link router-link-active">
+  Guide
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>Guide</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/swagger-brake/guide/" aria-current="page" class="sidebar-link">Introduction</a></li><li><a href="/swagger-brake/guide/cli-interface.html" aria-current="page" class="active sidebar-link">Command-line interface</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/swagger-brake/guide/cli-interface.html#basics" class="sidebar-link">Basics</a></li><li class="sidebar-sub-header"><a href="/swagger-brake/guide/cli-interface.html#customizing-reporting" class="sidebar-link">Customizing reporting</a></li></ul></li><li><a href="/swagger-brake/guide/maven-plugin.html" class="sidebar-link">Maven Plugin</a></li><li><a href="/swagger-brake/guide/gradle-plugin.html" class="sidebar-link">Gradle Plugin</a></li><li><a href="/swagger-brake/guide/rules.html" class="sidebar-link">Rules</a></li><li><a href="/swagger-brake/guide/constraints.html" class="sidebar-link">Constraints</a></li><li><a href="/swagger-brake/guide/troubleshooting.html" class="sidebar-link">Troubleshooting</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="command-line-interface"><a href="#command-line-interface" class="header-anchor">#</a> Command-line interface</h1> <h2 id="basics"><a href="#basics" class="header-anchor">#</a> Basics</h2> <p>The idea of the command-line interface is to provide a way to integrate swagger-brake into
+any type of system, pipeline. There are several configuration parameters available that you
+could use to customize the behavior of swagger-brake.</p> <p>The most basic usage is to compare 2 Swagger files.</p> <div class="language-bash extra-class"><pre class="language-bash"><code>$ java -jar swagger-brake.jar --old-api<span class="token operator">=</span>swagger.json --new-api<span class="token operator">=</span>swagger.json
+Loading old API from swagger.json
+Loading new API from swagger.json
+Successfully loaded APIs
+Starting the check <span class="token keyword">for</span> breaking API changes
+Check is finished
+No breaking API changes detected
+</code></pre></div><h2 id="customizing-reporting"><a href="#customizing-reporting" class="header-anchor">#</a> Customizing reporting</h2> <p>By default, swagger-brake uses a console reporter, meaning the check result will be
+simply printed out to the console. For other use-cases, like when you want to store the
+report result in Jenkins and show it as an HTML, you can configure the tool to generate
+other types of reports too.</p> <p>At this moment, the following report types are supported (these are the exact values to be
+passed):</p> <ul><li><code>STDOUT</code> (default)</li> <li><code>JSON</code></li> <li><code>HTML</code></li></ul> <p>To configure a custom reporting, the CLI accepts the <code>--output-formats</code> argument. The parameter
+accepts a comma separated list of reporting formats, in case you want to use multiple reporters.</p> <p>For file typed reporters like JSON or HTML, you must also pass the <code>--output-path</code> argument
+denoting the location where the reports should be saved.</p> <p>An example configuration could look the following:</p> <div class="language-bash extra-class"><pre class="language-bash"><code>$ java -jar swagger-brake.jar --old-api<span class="token operator">=</span>swagger.json --new-api<span class="token operator">=</span>swagger2.json --output-formats<span class="token operator">=</span>STDOUT,JSON,HTML
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/swagger-brake/guide/" class="prev router-link-active">
+        Introduction
+      </a></span> <span class="next"><a href="/swagger-brake/guide/maven-plugin.html">
+        Maven Plugin
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/swagger-brake/assets/js/app.fc3bb8b8.js" defer></script><script src="/swagger-brake/assets/js/2.b51b5d8f.js" defer></script><script src="/swagger-brake/assets/js/8.a50ecd9b.js" defer></script>
+  </body>
+</html>
