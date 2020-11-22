@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Configuration | Swagger Brake</title>
+    <meta name="generator" content="VuePress 1.7.1">
+    
+    <meta name="description" content="">
+    <meta name="theme-color" content="#3eaf7c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <link rel="preload" href="/swagger-brake/assets/css/0.styles.62c63662.css" as="style"><link rel="preload" href="/swagger-brake/assets/js/app.60741cd9.js" as="script"><link rel="preload" href="/swagger-brake/assets/js/2.b51b5d8f.js" as="script"><link rel="preload" href="/swagger-brake/assets/js/8.ea11753c.js" as="script"><link rel="prefetch" href="/swagger-brake/assets/js/10.5cc2672a.js"><link rel="prefetch" href="/swagger-brake/assets/js/11.c7d04f1b.js"><link rel="prefetch" href="/swagger-brake/assets/js/12.222fddc7.js"><link rel="prefetch" href="/swagger-brake/assets/js/13.d3ce1955.js"><link rel="prefetch" href="/swagger-brake/assets/js/14.5eec10bd.js"><link rel="prefetch" href="/swagger-brake/assets/js/15.e4a775be.js"><link rel="prefetch" href="/swagger-brake/assets/js/16.88d5cfbf.js"><link rel="prefetch" href="/swagger-brake/assets/js/3.0277475e.js"><link rel="prefetch" href="/swagger-brake/assets/js/4.09fd2c39.js"><link rel="prefetch" href="/swagger-brake/assets/js/5.fc791712.js"><link rel="prefetch" href="/swagger-brake/assets/js/6.ffe6f60a.js"><link rel="prefetch" href="/swagger-brake/assets/js/7.fab1964b.js"><link rel="prefetch" href="/swagger-brake/assets/js/9.840166ec.js">
+    <link rel="stylesheet" href="/swagger-brake/assets/css/0.styles.62c63662.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/swagger-brake/" class="home-link router-link-active"><!----> <span class="site-name">Swagger Brake</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/swagger-brake/introduction/" class="nav-link">
+  Introduction
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/swagger-brake/introduction/" class="nav-link">
+  Introduction
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/swagger-brake/introduction/" class="sidebar-link">Introduction</a></li><li><a href="/swagger-brake/configuration/" aria-current="page" class="active sidebar-link">Configuration</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/swagger-brake/configuration/#customizing-reporting" class="sidebar-link">Customizing reporting</a></li><li class="sidebar-sub-header"><a href="/swagger-brake/configuration/#deprecating-apis" class="sidebar-link">Deprecating APIs</a></li><li class="sidebar-sub-header"><a href="/swagger-brake/configuration/#latest-maven-artifact-resolution" class="sidebar-link">Latest Maven artifact resolution</a></li></ul></li><li><a href="/swagger-brake/cli/" class="sidebar-link">Command-line interface</a></li><li><a href="/swagger-brake/maven/" class="sidebar-link">Maven Plugin</a></li><li><a href="/swagger-brake/gradle/" class="sidebar-link">Gradle Plugin</a></li><li><a href="/swagger-brake/rules/" class="sidebar-link">Rules</a></li><li><a href="/swagger-brake/constraints/" class="sidebar-link">Constraints</a></li><li><a href="/swagger-brake/troubleshooting/" class="sidebar-link">Troubleshooting</a></li><li><a href="/swagger-brake/embedding/" class="sidebar-link">Embedding swagger-brake</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="configuration"><a href="#configuration" class="header-anchor">#</a> Configuration</h1> <h2 id="customizing-reporting"><a href="#customizing-reporting" class="header-anchor">#</a> Customizing reporting</h2> <p>By default, swagger-brake uses only a console reporter, meaning the check result will be
+simply printed out to the console. For other use-cases, like when you want to store the
+report result in Jenkins and show it as an HTML, you can configure the tool to generate
+other types of reports too.</p> <p>At this moment, the following report types are supported (these are the exact values to be
+passed):</p> <ul><li><code>STDOUT</code> (default)</li> <li><code>JSON</code></li> <li><code>HTML</code></li></ul> <p>CLI configuration <a href="/swagger-brake/cli/#customizing-reporting">here</a>.</p> <p>Maven configuration <a href="/swagger-brake/maven/#customizing-reporting">here</a>.</p> <p>Gradle configuration <a href="/swagger-brake/gradle/#customizing-reporting">here</a>.</p> <p>An example JSON report looks the following:</p> <div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">{</span>
+  <span class="token property">&quot;pathDeletedBreakingChange&quot;</span> <span class="token operator">:</span> <span class="token punctuation">[</span> <span class="token punctuation">{</span>
+    <span class="token property">&quot;path&quot;</span> <span class="token operator">:</span> <span class="token string">&quot;/pet&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;method&quot;</span> <span class="token operator">:</span> <span class="token string">&quot;POST&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;message&quot;</span> <span class="token operator">:</span> <span class="token string">&quot;Path /pet POST has been deleted&quot;</span>
+  <span class="token punctuation">}</span> <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>In case of no breaking changes, the JSON report will be an empty JSON.</p> <div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">{</span> <span class="token punctuation">}</span>
+</code></pre></div><h2 id="deprecating-apis"><a href="#deprecating-apis" class="header-anchor">#</a> Deprecating APIs</h2> <p>As an API evolves and time passes, some APIs might simply become unused and old.
+In that case, there's no point keeping the API, in fact you rather just get rid of it.
+Since swagger-brake reports an API removal as a breaking change, somehow we need to
+mark these APIs, so it's not going to be considered as a breaking change anymore.</p> <p>The <a href="https://swagger.io/specification/#fixed-fields-8" target="_blank" rel="noopener noreferrer">OpenAPI specification<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>
+defines the <code>deprecated</code> attribute for marking an API deprecated,
+so that it's possible to delete a deprecated API without reporting breaking changes.</p> <p>The default behavior is that deprecated APIs can be deleted without any issue.</p> <p>However it's possible to override this behavior, so that a deprecated API deletion will also
+be considered as a breaking change.</p> <p>CLI configuration <a href="/swagger-brake/cli/#deprecating-apis">here</a>.</p> <p>Maven configuration <a href="/swagger-brake/maven/#deprecating-apis">here</a>.</p> <p>Gradle configuration <a href="/swagger-brake/gradle/#deprecating-apis">here</a>.</p> <p>Example <code>swagger1.json</code>:</p> <div class="language-yaml extra-class"><pre class="language-yaml"><code><span class="token punctuation">---</span>
+<span class="token key atrule">swagger</span><span class="token punctuation">:</span> <span class="token string">&quot;2.0&quot;</span>
+<span class="token key atrule">info</span><span class="token punctuation">:</span>
+  <span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">&quot;1.0.0&quot;</span>
+  <span class="token key atrule">title</span><span class="token punctuation">:</span> <span class="token string">&quot;Swagger Petstore&quot;</span>
+<span class="token key atrule">basePath</span><span class="token punctuation">:</span> <span class="token string">&quot;/v2&quot;</span>
+<span class="token key atrule">paths</span><span class="token punctuation">:</span>
+  <span class="token key atrule">/pet/findByStatus</span><span class="token punctuation">:</span>
+    <span class="token key atrule">get</span><span class="token punctuation">:</span>
+      <span class="token key atrule">deprecated</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+      <span class="token key atrule">summary</span><span class="token punctuation">:</span> <span class="token string">&quot;Finds Pets by status&quot;</span>
+      <span class="token key atrule">operationId</span><span class="token punctuation">:</span> <span class="token string">&quot;findPetsByStatus&quot;</span>
+      <span class="token key atrule">produces</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token string">&quot;application/json&quot;</span>
+      <span class="token key atrule">responses</span><span class="token punctuation">:</span>
+        <span class="token key atrule">200</span><span class="token punctuation">:</span>
+          <span class="token key atrule">description</span><span class="token punctuation">:</span> <span class="token string">&quot;successful operation&quot;</span>
+  <span class="token key atrule">/pet/findByTags</span><span class="token punctuation">:</span>
+    <span class="token key atrule">get</span><span class="token punctuation">:</span>
+      <span class="token key atrule">summary</span><span class="token punctuation">:</span> <span class="token string">&quot;Finds Pets by tags&quot;</span>
+      <span class="token key atrule">operationId</span><span class="token punctuation">:</span> <span class="token string">&quot;findPetsByTags&quot;</span>
+      <span class="token key atrule">produces</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token string">&quot;application/json&quot;</span>
+      <span class="token key atrule">responses</span><span class="token punctuation">:</span>
+        <span class="token key atrule">200</span><span class="token punctuation">:</span>
+          <span class="token key atrule">description</span><span class="token punctuation">:</span> <span class="token string">&quot;successful operation&quot;</span>
+<span class="token key atrule">definitions</span><span class="token punctuation">:</span>
+  <span class="token key atrule">Pet</span><span class="token punctuation">:</span>
+    <span class="token key atrule">type</span><span class="token punctuation">:</span> <span class="token string">&quot;object&quot;</span>
+    <span class="token key atrule">properties</span><span class="token punctuation">:</span>
+      <span class="token key atrule">id</span><span class="token punctuation">:</span>
+        <span class="token key atrule">type</span><span class="token punctuation">:</span> <span class="token string">&quot;integer&quot;</span>
+        <span class="token key atrule">format</span><span class="token punctuation">:</span> <span class="token string">&quot;int64&quot;</span>
+</code></pre></div><p>Example <code>swagger2.json</code>:</p> <div class="language-yaml extra-class"><pre class="language-yaml"><code><span class="token punctuation">---</span>
+<span class="token key atrule">swagger</span><span class="token punctuation">:</span> <span class="token string">&quot;2.0&quot;</span>
+<span class="token key atrule">info</span><span class="token punctuation">:</span>
+  <span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">&quot;1.0.0&quot;</span>
+  <span class="token key atrule">title</span><span class="token punctuation">:</span> <span class="token string">&quot;Swagger Petstore&quot;</span>
+<span class="token key atrule">basePath</span><span class="token punctuation">:</span> <span class="token string">&quot;/v2&quot;</span>
+<span class="token key atrule">paths</span><span class="token punctuation">:</span>
+  <span class="token key atrule">/pet/findByTags</span><span class="token punctuation">:</span>
+    <span class="token key atrule">get</span><span class="token punctuation">:</span>
+      <span class="token key atrule">summary</span><span class="token punctuation">:</span> <span class="token string">&quot;Finds Pets by tags&quot;</span>
+      <span class="token key atrule">operationId</span><span class="token punctuation">:</span> <span class="token string">&quot;findPetsByTags&quot;</span>
+      <span class="token key atrule">produces</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token string">&quot;application/json&quot;</span>
+      <span class="token key atrule">responses</span><span class="token punctuation">:</span>
+        <span class="token key atrule">200</span><span class="token punctuation">:</span>
+          <span class="token key atrule">description</span><span class="token punctuation">:</span> <span class="token string">&quot;successful operation&quot;</span>
+<span class="token key atrule">definitions</span><span class="token punctuation">:</span>
+  <span class="token key atrule">Pet</span><span class="token punctuation">:</span>
+    <span class="token key atrule">type</span><span class="token punctuation">:</span> <span class="token string">&quot;object&quot;</span>
+    <span class="token key atrule">properties</span><span class="token punctuation">:</span>
+      <span class="token key atrule">id</span><span class="token punctuation">:</span>
+        <span class="token key atrule">type</span><span class="token punctuation">:</span> <span class="token string">&quot;integer&quot;</span>
+        <span class="token key atrule">format</span><span class="token punctuation">:</span> <span class="token string">&quot;int64&quot;</span>
+</code></pre></div><p>Note that <code>/pet/findByStatus</code> API has been marked as deprecated in <code>swagger1.json</code> and <code>swagger2.json</code> doesn't contain
+the API anymore.</p> <h2 id="latest-maven-artifact-resolution"><a href="#latest-maven-artifact-resolution" class="header-anchor">#</a> Latest Maven artifact resolution</h2> <p>For easier CI integration, there is a possibility not to provide the old API path directly
+but to resolve it from an artifact containing the Swagger definition file from any Maven2
+repository (including Nexus and Artifactory as well). This feature requires that
+the API definition file has been packed into a JAR.</p> <p>The feature is especially useful when it comes to Maven and Gradle plugin integration. In that case within a build
+process, often only the &quot;new&quot; API is available and the old one is stored elsewhere, like in an older version of
+the same artifact.</p> <p>Let's say you want to make sure your API is always backward compatible. You can simply create a Maven artifact from the
+Swagger definition and just release it as any other artifact with a proper versioning scheme (i.e. using release
+and snapshot versions). When the release process is nailed down, you can configure swagger-brake to use your
+artifact repository and pass the artifact information required for the artifact resolution.</p> <p>The resolution always tries to find the latest version of your artifact, depending on if it's a release or a snapshot
+version.</p> <p>Since Nexus, Artifactory and other artifact repositories can have authentication in place for access-control,
+swagger-brake has configuration parameters to provide username and password data to access the repository.</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/swagger-brake/introduction/" class="prev">
+        Introduction
+      </a></span> <span class="next"><a href="/swagger-brake/cli/">
+        Command-line interface
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/swagger-brake/assets/js/app.60741cd9.js" defer></script><script src="/swagger-brake/assets/js/2.b51b5d8f.js" defer></script><script src="/swagger-brake/assets/js/8.ea11753c.js" defer></script>
+  </body>
+</html>

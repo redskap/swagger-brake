@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Command-line interface | Swagger Brake</title>
+    <meta name="generator" content="VuePress 1.7.1">
+    
+    <meta name="description" content="">
+    <meta name="theme-color" content="#3eaf7c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <link rel="preload" href="/swagger-brake/assets/css/0.styles.62c63662.css" as="style"><link rel="preload" href="/swagger-brake/assets/js/app.60741cd9.js" as="script"><link rel="preload" href="/swagger-brake/assets/js/2.b51b5d8f.js" as="script"><link rel="preload" href="/swagger-brake/assets/js/7.fab1964b.js" as="script"><link rel="prefetch" href="/swagger-brake/assets/js/10.5cc2672a.js"><link rel="prefetch" href="/swagger-brake/assets/js/11.c7d04f1b.js"><link rel="prefetch" href="/swagger-brake/assets/js/12.222fddc7.js"><link rel="prefetch" href="/swagger-brake/assets/js/13.d3ce1955.js"><link rel="prefetch" href="/swagger-brake/assets/js/14.5eec10bd.js"><link rel="prefetch" href="/swagger-brake/assets/js/15.e4a775be.js"><link rel="prefetch" href="/swagger-brake/assets/js/16.88d5cfbf.js"><link rel="prefetch" href="/swagger-brake/assets/js/3.0277475e.js"><link rel="prefetch" href="/swagger-brake/assets/js/4.09fd2c39.js"><link rel="prefetch" href="/swagger-brake/assets/js/5.fc791712.js"><link rel="prefetch" href="/swagger-brake/assets/js/6.ffe6f60a.js"><link rel="prefetch" href="/swagger-brake/assets/js/8.ea11753c.js"><link rel="prefetch" href="/swagger-brake/assets/js/9.840166ec.js">
+    <link rel="stylesheet" href="/swagger-brake/assets/css/0.styles.62c63662.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/swagger-brake/" class="home-link router-link-active"><!----> <span class="site-name">Swagger Brake</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/swagger-brake/introduction/" class="nav-link">
+  Introduction
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/swagger-brake/introduction/" class="nav-link">
+  Introduction
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/swagger-brake/introduction/" class="sidebar-link">Introduction</a></li><li><a href="/swagger-brake/configuration/" class="sidebar-link">Configuration</a></li><li><a href="/swagger-brake/cli/" aria-current="page" class="active sidebar-link">Command-line interface</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/swagger-brake/cli/#basics" class="sidebar-link">Basics</a></li><li class="sidebar-sub-header"><a href="/swagger-brake/cli/#customizing-reporting" class="sidebar-link">Customizing reporting</a></li><li class="sidebar-sub-header"><a href="/swagger-brake/cli/#deprecating-apis" class="sidebar-link">Deprecating APIs</a></li><li class="sidebar-sub-header"><a href="/swagger-brake/cli/#latest-maven-artifact-resolution" class="sidebar-link">Latest Maven artifact resolution</a></li><li class="sidebar-sub-header"><a href="/swagger-brake/cli/#full-list-of-parameters" class="sidebar-link">Full list of parameters</a></li></ul></li><li><a href="/swagger-brake/maven/" class="sidebar-link">Maven Plugin</a></li><li><a href="/swagger-brake/gradle/" class="sidebar-link">Gradle Plugin</a></li><li><a href="/swagger-brake/rules/" class="sidebar-link">Rules</a></li><li><a href="/swagger-brake/constraints/" class="sidebar-link">Constraints</a></li><li><a href="/swagger-brake/troubleshooting/" class="sidebar-link">Troubleshooting</a></li><li><a href="/swagger-brake/embedding/" class="sidebar-link">Embedding swagger-brake</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="command-line-interface"><a href="#command-line-interface" class="header-anchor">#</a> Command-line interface</h1> <h2 id="basics"><a href="#basics" class="header-anchor">#</a> Basics</h2> <p>The idea of the command-line interface is to provide a way to integrate swagger-brake into
+any type of system, pipeline. There are several configuration parameters available that you
+could use to customize the behavior of swagger-brake.</p> <p>The most basic usage is to compare 2 Swagger files.</p> <div class="language-bash extra-class"><pre class="language-bash"><code>$ java -jar swagger-brake.jar --old-api<span class="token operator">=</span>swagger.json --new-api<span class="token operator">=</span>swagger.json
+Loading old API from swagger.json
+Loading new API from swagger.json
+Successfully loaded APIs
+Starting the check <span class="token keyword">for</span> breaking API changes
+Check is finished
+No breaking API changes detected
+</code></pre></div><h2 id="customizing-reporting"><a href="#customizing-reporting" class="header-anchor">#</a> Customizing reporting</h2> <p>The custom reporting functionality is described in the
+<a href="/swagger-brake/configuration/#customizing-reporting">Customizing reporting</a> section.</p> <p>Note that whatever custom reporting type you set for the command-line interface, console
+reporting will always be enabled.</p> <p>To configure a custom reporting, the CLI accepts the <code>--output-formats</code> argument. The parameter
+accepts a comma separated list of reporting formats, in case you want to use multiple reporters.</p> <p>For file typed reporters like JSON or HTML, you must also pass the <code>--output-path</code> argument
+denoting the location where the reports should be saved.</p> <p>An example configuration could look the following:</p> <div class="language-bash extra-class"><pre class="language-bash"><code>$ java -jar swagger-brake.jar --old-api<span class="token operator">=</span>swagger.json --new-api<span class="token operator">=</span>swagger2.json --output-formats<span class="token operator">=</span>STDOUT,JSON,HTML
+</code></pre></div><h2 id="deprecating-apis"><a href="#deprecating-apis" class="header-anchor">#</a> Deprecating APIs</h2> <p>The API deprecation support is described in the
+<a href="/swagger-brake/configuration/#deprecating-apis">Deprecating APIs</a> section.</p> <p>The <code>--deprecated-api-deletion-allowed</code> parameter is responsible for setting this behavior.
+The default value is <code>true</code>, so <strong>there's no additional configuration is required</strong>,
+but it can be overridden to <code>false</code> anytime.</p> <h2 id="latest-maven-artifact-resolution"><a href="#latest-maven-artifact-resolution" class="header-anchor">#</a> Latest Maven artifact resolution</h2> <p>Latest Maven artifact resolution is described in detail within the
+<a href="/swagger-brake/configuration/#latest-maven-artifact-resolution">Latest Maven artifact resolution</a> section.</p> <p>The functionality requires the following parameters:</p> <ul><li><code>--maven-repo-url</code> <ul><li>Specifies the release repository base URL. Might be optional in case <code>--maven-snapshot-repo-url</code> is provided.
+<ul><li>Example: <code>https://oss.jfrog.org/oss-release-local/</code></li></ul></li></ul></li> <li><code>--maven-snapshot-repo-url</code> <ul><li>Specifies the snapshot repository base URL. Might be optional in case <code>--maven-repo-url</code> is provided.
+<ul><li>Example: <code>https://oss.jfrog.org/oss-snapshot-local/</code></li></ul></li></ul></li> <li><code>--groupId</code> <ul><li>The groupId of the artifact</li></ul></li> <li><code>--artifactId</code> <ul><li>The artifactId of the artifact</li></ul></li> <li><code>--current-artifact-version</code> <ul><li>The version of the artifact that contains the new API. This is used to determine if the snapshot,
+or the release repository needs to be used.
+<ul><li>Example values are: 1.0.0, 1.0.0-SNAPSHOT</li></ul></li></ul></li></ul> <h2 id="full-list-of-parameters"><a href="#full-list-of-parameters" class="header-anchor">#</a> Full list of parameters</h2> <p><code>--old-api</code>: Denotes the path of the baseline API. Can be a relative path and an absolute one.<br> <code>--new-api</code>: Denotes the path of the new, changed API. Can be a relative path and an absolute one.<br> <code>--output-formats</code>: Specifies which reports shall be generated. Possible values: <code>STDOUT</code>, <code>JSON</code>, <code>HTML</code><br> <code>--output-path</code>: Denotes the folder where the file reports shall be saved. Can be a relative path and an absolute one.
+In case the path doesn't exist, it will be created.<br> <code>--maven-repo-url</code>: Specifies the release repository base URL. Might be optional in case <code>--maven-snapshot-repo-url</code>
+is provided.<br> <code>--maven-snapshot-repo-url</code>: Specifies the snapshot repository base URL. Might be optional in case <code>--maven-repo-url</code>
+is provided.<br> <code>--groupId</code>: The groupId of the artifact.<br> <code>--artifactId</code>: The artifactId of the artifact.<br> <code>--current-artifact-version</code>: The version of the artifact that contains the new API. This is used to determine if the
+snapshot, or the release repository needs to be used.<br></p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/swagger-brake/configuration/" class="prev">
+        Configuration
+      </a></span> <span class="next"><a href="/swagger-brake/maven/">
+        Maven Plugin
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/swagger-brake/assets/js/app.60741cd9.js" defer></script><script src="/swagger-brake/assets/js/2.b51b5d8f.js" defer></script><script src="/swagger-brake/assets/js/7.fab1964b.js" defer></script>
+  </body>
+</html>

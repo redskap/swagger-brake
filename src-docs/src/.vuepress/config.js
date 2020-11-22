@@ -18,27 +18,21 @@ module.exports = {
     lastUpdated: false,
     nav: [
       {
-        text: 'Guide',
-        link: '/guide/',
+        text: 'Introduction',
+        link: '/introduction/',
       }
     ],
-    sidebar: {
-      '/guide/': [
-        {
-          title: 'Guide',
-          collapsable: false,
-          children: [
-            '',
-            'cli-interface',
-            'maven-plugin',
-            'gradle-plugin',
-            'rules',
-            'constraints',
-            'troubleshooting',
-          ]
-        }
-      ],
-    }
+    sidebar: [
+      '/introduction/',
+      '/configuration/',
+      '/cli/',
+      '/maven/',
+      '/gradle/',
+      '/rules/',
+      '/constraints/',
+      '/troubleshooting/',
+      '/embedding/',
+    ]
   },
   plugins: [
     '@vuepress/plugin-back-to-top',
