@@ -16,14 +16,8 @@ module.exports = {
     docsDir: 'src-docs/src',
     editLinkText: 'Help improve these docs!',
     lastUpdated: true,
-    nav: [
-      {
-        text: 'Introduction',
-        link: '/introduction/',
-      }
-    ],
     sidebar: [
-      '/introduction/',
+      '/',
       '/configuration/',
       '/cli/',
       '/maven/',
