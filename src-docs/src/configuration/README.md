@@ -1,6 +1,5 @@
 # Configuration
 ## Customizing reporting
-
 By default, swagger-brake uses only a console reporter, meaning the check result will be
 simply printed out to the console. For other use-cases, like when you want to store the
 report result in Jenkins and show it as an HTML, you can configure the tool to generate
@@ -137,7 +136,79 @@ and snapshot versions). When the release process is nailed down, you can configu
 artifact repository and pass the artifact information required for the artifact resolution.
 
 The resolution always tries to find the latest version of your artifact, depending on if it's a release or a snapshot
-version. 
+version. The resolution is based on the `maven-metadata.xml` file available in the Maven repository when an
+artifact gets uploaded. As soon as the resolved JAR artifact is found, it will be downloaded to the system's 
+temporary directory for further scanning.
 
 Since Nexus, Artifactory and other artifact repositories can have authentication in place for access-control, 
 swagger-brake has configuration parameters to provide username and password data to access the repository.  
+
+By default, swagger-brake scans the downloaded artifact for one of the following 3 files:
+- swagger.json
+- swagger.yaml
+- swagger.yml
+
+If needed, you can override the filename to look for. This is described on the sections of the various interfaces.
+
+CLI configuration [here](../cli/README.md#latest-maven-artifact-resolution).
+
+Maven configuration [here](../maven/README.md#latest-maven-artifact-resolution).
+
+Gradle configuration [here](../gradle/README.md#latest-maven-artifact-resolution).
+
+## Beta API support
+There might be a need to work with beta APIs. In those use-cases you might want to release a version of your API
+to receive quick feedback from the clients. Usually it means incremental changes, knowing the fact that
+they might not be backward compatible but this is acceptable.
+
+Swagger Brake provides a way to mark APIs beta, in this case those API operation changes are not going to be 
+considered as breaking and will be ignored.
+
+The following table shows the rules:
+
+| Use-case                     | Old API operation  | New API operation                 | Breaking change?  |
+|:----------------------------:|:------------------:|:---------------------------------:|:-----------------:|
+| Beta API created             | Does not exist     | Exists as beta                    | No                |
+| Beta API modified            | Exists as beta     | Exists as beta and modified       | No                |
+| Beta API is not beta anymore | Exists as beta     | Exists as non-beta (flag removed) | No                |
+| Beta API removed             | Exists as beta     | Does not exists                   | No                |
+| Standard API marked as beta  | Exists as non-beta | Exists as beta                    | Yes               |
+
+A beta API can be marked with the `x-beta-api` vendor extension in the specification file on
+operation level. It can have a boolean value only.
+
+Example snippet:
+
+```text
+...
+paths:
+  /pet:
+    post:
+      operationId: "addPet"
+      x-beta-api: true
+...
+```
+
+As of today, there is no standard way of denoting an API beta in the OpenAPI specification yet. Due to this
+there might be a need in different projects to use various vendor extension attribute names
+to mark APIs beta.
+
+There is a customization option available that you can utilize for these cases.
+
+CLI configuration [here](../cli/README.md#beta-api-support).
+
+Maven configuration [here](../maven/README.md#beta-api-support).
+
+Gradle configuration [here](../gradle/README.md#beta-api-support).
+
+## Excluding paths from the scan
+There might be a need to exclude specific APIs from the scan completely. 
+
+The exclusion works based on prefix-matching, so in case you'd like to exclude all paths that
+starts with `/auth` for example, you can pass it as a parameter.
+
+CLI configuration [here](../cli/README.md#excluding-paths-from-the-scan).
+
+Maven configuration [here](../maven/README.md#excluding-paths-from-the-scan).
+
+Gradle configuration [here](../gradle/README.md#excluding-paths-from-the-scan).

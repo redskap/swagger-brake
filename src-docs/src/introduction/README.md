@@ -1,5 +1,4 @@
 # Introduction
-
 Nowadays when the most common communication protocol is HTTP and everybody is developing APIs, 
 there's often a need to have these APIs backward compatible, so the existing functionality is
 not going to be broken. 
@@ -10,7 +9,6 @@ with each other and report if the changes made between the 2 API states are not 
 compatible.
 
 ## Quickstart
-
 swagger-brakes comes with different types of integration patterns. For generic use-cases, the
 CLI interface is recommended and can be used by any ecosystem.
 

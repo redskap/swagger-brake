@@ -1,7 +1,7 @@
 # Troubleshooting
 ## CLI file reporting doesn't work
 If you encounter the following message during an execution
-```bash
+```text
 No file reporting has been done since output file path is not set
 ```
 It means you have configured file typed reporting like JSON or HTML but you did not pass the

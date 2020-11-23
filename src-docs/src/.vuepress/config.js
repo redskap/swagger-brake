@@ -11,11 +11,11 @@ module.exports = {
     ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }]
   ],
   themeConfig: {
-    repo: '',
-    editLinks: false,
+    repo: 'redskap/swagger-brake',
+    editLinks: true,
     docsDir: 'src-docs',
-    editLinkText: '',
-    lastUpdated: false,
+    editLinkText: 'Help improve these docs!',
+    lastUpdated: true,
     nav: [
       {
         text: 'Introduction',
@@ -32,6 +32,8 @@ module.exports = {
       '/constraints/',
       '/troubleshooting/',
       '/embedding/',
+      '/devguide/',
+      '/changelog/',
     ]
   },
   plugins: [
