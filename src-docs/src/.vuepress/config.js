@@ -13,7 +13,7 @@ module.exports = {
   themeConfig: {
     repo: 'redskap/swagger-brake',
     editLinks: true,
-    docsDir: 'src-docs',
+    docsDir: 'src-docs/src',
     editLinkText: 'Help improve these docs!',
     lastUpdated: true,
     nav: [
