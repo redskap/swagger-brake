@@ -25,7 +25,6 @@ module.exports = {
       '/rules/',
       '/constraints/',
       '/troubleshooting/',
-      '/embedding/',
       '/devguide/',
       '/changelog/',
     ]

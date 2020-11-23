@@ -2,6 +2,8 @@
 ## Installation
 The command-line interface comes as a pre-packaged JAR application. The package is compiled with Java 11, so make
 sure you have Java 11+ installed.
+
+*Note: Java 8 has been tested regularly and no issues have been encountered so far.*
  
 Use the latest version of the client, you can download it from 
 [here](https://github.com/redskap/swagger-brake/releases).
