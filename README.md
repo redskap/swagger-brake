@@ -12,7 +12,7 @@ The following changes are classified as breaking:
 The tool is very useful in case it's necessary not to introduce any backward
 incompatible API change.
 
-You can find the detailed documentation [here](https://redskap.github.io/swagger-brake/introduction/).
+You can find the detailed documentation [here](https://redskap.github.io/swagger-brake/).
 
 The available releases can be found [here](https://github.com/redskap/swagger-brake/releases)
 
