@@ -117,21 +117,19 @@ $ java -jar swagger-brake.jar --old-api=swagger.yaml --new-api=swagger2.yaml --e
 ```
 
 ## Full list of parameters
-`--old-api`: Denotes the path of the baseline API. Can be a relative path and an absolute one.<br>
-`--new-api`: Denotes the path of the new, changed API. Can be a relative path and an absolute one.<br>
-`--output-formats`: Specifies which reports shall be generated. Possible values: `STDOUT`, `JSON`, `HTML`<br>
-`--output-path`: Denotes the folder where the file reports shall be saved. Can be a relative path and an absolute one. 
-In case the path doesn't exist, it will be created.<br>
-`--maven-repo-url`: Specifies the release repository base URL. Might be optional in case `--maven-snapshot-repo-url` 
-is provided.<br>
-`--maven-snapshot-repo-url`: Specifies the snapshot repository base URL. Might be optional in case `--maven-repo-url` 
-is provided.<br>
-`--groupId`: The groupId of the artifact.<br>
-`--artifactId`: The artifactId of the artifact.<br>
-`--current-artifact-version`: The version of the artifact that contains the new API. This is used to determine if the 
-snapshot, or the release repository needs to be used.<br>
-`--api-filename`: The filename to search for within the artifact.<br> 
-`--maven-repo-username`: The username for the Maven repository.<br>
-`--maven-repo-password`: The password for the Maven repository.<br>
-`--beta-api-extension-name`: The name of the custom vendor extension attribute that denotes beta APIs.<br>
-`--excluded-paths`: A comma separated list of path prefixes that shall be excluded from the scan.<br>
+| <div style="width:250px">Parameter</div>   | Description                                                                                                                                               |
+|:------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| `--old-api`                                | Denotes the path of the baseline API. Can be a relative path and an absolute one.                                                                         |
+| `--new-api`                                | Denotes the path of the new, changed API. Can be a relative path and an absolute one.                                                                     |
+| `--output-formats`                         | Specifies which reports shall be generated. Possible values: `STDOUT`, `JSON`, `HTML`                                                                     |
+| `--output-path`                            | Denotes the folder where the file reports shall be saved. Can be a relative path and an absolute one. In case the path doesn't exist, it will be created. |
+| `--maven-repo-url`                         | Specifies the release repository base URL. Might be optional in case `--maven-snapshot-repo-url` is provided.                                             |
+| `--maven-snapshot-repo-url`                | Specifies the snapshot repository base URL. Might be optional in case `--maven-repo-url` is provided.                                                     |
+| `--maven-repo-username`                    | The username for the Maven repository.                                                                                                                    |
+| `--maven-repo-password`                    | The password for the Maven repository.                                                                                                                    |
+| `--groupId`                                | The groupId of the artifact.                                                                                                                              |
+| `--artifactId`                             | The artifactId of the artifact.                                                                                                                           |
+| `--current-artifact-version`               | The version of the artifact that contains the new API. This is used to determine if the snapshot, or the release repository needs to be used.             |
+| `--api-filename`                           | The filename to search for within the artifact.                                                                                                           |
+| `--beta-api-extension-name`                | The name of the custom vendor extension attribute that denotes beta APIs.                                                                                 |
+| `--excluded-paths`                         | A comma separated list of path prefixes that shall be excluded from the scan.                

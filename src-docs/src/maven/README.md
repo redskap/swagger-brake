@@ -265,8 +265,8 @@ Example:
 | `<currentArtifactVersion>` | `${project.version}`                       |
 
 ## Full list of parameters
-| Parameter                  | Description                              |
-|:--------------------------:|:------------------------------------------:|
+| Parameter                  | Description                                                                                                                                               |
+|:--------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------:|
 | `<oldApi>`                 | Denotes the path of the baseline API. Can be a relative path and an absolute one.                                                                         |
 | `<newApi>`                 | Denotes the path of the new, changed API. Can be a relative path and an absolute one.                                                                     |
 | `<outputFormats>`          | Specifies which reports shall be generated. Possible values: `STDOUT`, `JSON`, `HTML`                                                                     |
