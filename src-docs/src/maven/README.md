@@ -1,6 +1,6 @@
 # Maven Plugin
 ## Installation
-Using the Maven plugin is quite easy. Similarly to any other plugins, you just need to include the plugin data
+Using the Maven plugin is quite easy. Similarly, to any other plugins, you just need to include the plugin data
 within your `pom.xml`.
 
 ```xml
@@ -147,7 +147,7 @@ you don't need to set the `<groupId>`, `<artifactId>`, `<currentVersion>` attrib
 use the project's `<groupId>`, `<artifactId>` and `<version>` values. However, in case there's a need to override
 any of those, you can do that within the configuration.
 
-There's a single setting you got to provide for the resolution to work, either `<mavenRepoUrl>` or `<mavenSnapshotRepoUrl`.
+There's a single setting you got to provide for the resolution to work, either `<mavenRepoUrl>` or `<mavenSnapshotRepoUrl>`.
 Respectively they represent the release and snapshot repositories that holds the previous version of your artifact.
 
 In addition, you can configure authentication to your repository with the `<mavenRepoUsername>` and `<mavenRepoPassword>`
