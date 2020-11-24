@@ -40,7 +40,7 @@ denoting the location where the reports should be saved.
 
 An example configuration could look the following:
 ```bash
-$ java -jar swagger-brake.jar --old-api=swagger.json --new-api=swagger2.json --output-formats=STDOUT,JSON,HTML
+$ java -jar swagger-brake.jar --old-api=swagger.json --new-api=swagger2.json --output-formats=STDOUT,JSON,HTML --output-path=/home/user/swagger-brake
 ```
 
 ## Deprecating APIs
