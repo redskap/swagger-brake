@@ -1,16 +1,6 @@
 # swagger-brake [![Build Status](https://travis-ci.com/redskap/swagger-brake.svg?branch=master)](https://travis-ci.com/redskap/swagger-brake)
-The main focus of the project is to have a clear view whether any breaking change
-is getting introduced with the new version of a Swagger API definition.
-
-The following changes are classified as breaking:
-- If any path is removed or the HTTP verb is changed
-- If any request parameter is removed
-- If any new request parameter is required or an existing one set as required 
-- If any request attribute is removed
-- If any response attribute is removed
-
-The tool is very useful in case it's necessary not to introduce any backward
-incompatible API change.
+The idea behind swagger-brake is to detect and prevent introducing any type of breaking API change within 
+your application, so your APIs can remain backward-compatible at all times.
 
 You can find the detailed documentation [here](https://redskap.github.io/swagger-brake/).
 
@@ -19,7 +9,7 @@ The available releases can be found [here](https://github.com/redskap/swagger-br
 The master branch represents the ongoing development of the tool. For the
 release versions, you can check out the corresponding tags.
 
-On top of the CLI, there are Maven and Gradle plugins also available for 
+On top of the CLI interface, there are Maven and Gradle plugins also available for 
 easier integration into any existing pipeline.
 
 Maven plugin can be found [here](https://github.com/redskap/swagger-brake-maven-plugin).
