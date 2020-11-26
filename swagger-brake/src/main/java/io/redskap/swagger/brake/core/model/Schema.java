@@ -130,7 +130,6 @@ public class Schema {
     }
 
     private <T> Collection<Pair<String, T>> internalGetAttributeData(Collection<SchemaAttribute> schemaAttributes, String levelName, Function<SchemaAttribute, T> mappingFunc) {
-//        List<String> result = schemaAttributes.stream().map(SchemaAttribute::getName).map(name -> generateLeveledName(name, levelName)).collect(toList());
         List<Pair<String, T>> result = schemaAttributes.stream().map(sA -> Pair.of(generateLeveledName(sA.getName(), levelName), mappingFunc.apply(sA))).collect(toList());
         for (SchemaAttribute schemaAttribute : schemaAttributes) {
             Schema childSchema = schemaAttribute.getSchema();
@@ -145,6 +144,38 @@ public class Schema {
         return result;
     }
 
+    /**
+     * Returns the schemas with attribute names recursively.
+     * @return the schemas recursively
+     */
+    public Map<String, Schema> getSchemasRecursively() {
+        Collection<SchemaAttribute> schemaAttrs = schemaAttributes;
+        if (CollectionUtils.isEmpty(schemaAttrs)) {
+            schemaAttrs = Optional.ofNullable(schema).map(Schema::getSchemaAttributes).orElse(Collections.emptySet());
+        }
+        Map<String, Schema> schemas = internalGetSchemasRecursively(schemaAttrs, "");
+        schemas.put("", this);
+        return schemas;
+    }
+
+    private Map<String, Schema> internalGetSchemasRecursively(Collection<SchemaAttribute> schemaAttributes, String levelName) {
+        Map<String, Schema> result = schemaAttributes
+            .stream()
+            .filter(a -> a.getSchema() != null)
+            .collect(toMap(a -> generateLeveledName(a.getName(), levelName), SchemaAttribute::getSchema));
+        for (SchemaAttribute schemaAttribute : schemaAttributes) {
+            Schema childSchema = schemaAttribute.getSchema();
+            if (childSchema != null) {
+                Collection<SchemaAttribute> childSchemaAttributes = childSchema.getSchemaAttributes();
+                if (isEmpty(childSchemaAttributes)) {
+                    childSchemaAttributes = childSchema.getSchema().map(Schema::getSchemaAttributes).orElse(Collections.emptySet());
+                }
+                result.putAll(internalGetSchemasRecursively(childSchemaAttributes, levelName));
+            }
+        }
+        return result;
+    }
+
     private String generateLeveledName(String name, String levelName) {
         if (!StringUtils.isBlank(levelName)) {
             return format("%s.%s", levelName, name);
@@ -152,45 +183,4 @@ public class Schema {
         return name;
     }
 
-    public static class Builder {
-        private final String type;
-        private Collection<String> enumValues;
-        private Collection<SchemaAttribute> schemaAttributes;
-        private Schema schema;
-
-        public Builder(String type) {
-            this.type = type;
-        }
-
-        public Builder enumValues(Collection<String> enumValues) {
-            this.enumValues = enumValues;
-            return this;
-        }
-
-        public Builder schemaAttributes(Collection<SchemaAttribute> schemaAttributes) {
-            this.schemaAttributes = schemaAttributes;
-            return this;
-        }
-
-        public Builder schema(Schema schema) {
-            this.schema = schema;
-            return this;
-        }
-
-        /**
-         * Builds a {@link Schema} instance.
-         * @return the constructed {@link Schema} instance.
-         */
-        public Schema build() {
-            Collection<SchemaAttribute> attributes = Collections.emptyList();
-            if (schemaAttributes != null) {
-                attributes = schemaAttributes;
-            }
-            Collection<String> enValues = Collections.emptyList();
-            if (enumValues != null) {
-                enValues = enumValues;
-            }
-            return new Schema(type, new TreeSet<>(enValues), new TreeSet<>(attributes), schema);
-        }
-    }
 }

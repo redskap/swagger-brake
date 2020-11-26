@@ -17,7 +17,7 @@ public class RequestParameterConstraintChangedBreakingChange implements Breaking
     private final String path;
     private final HttpMethod method;
     private final String attributeName;
-    private final RequestParameterConstraintChange constraintChange;
+    private final ConstraintChange constraintChange;
 
     @Override
     public String getMessage() {

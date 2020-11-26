@@ -2,6 +2,7 @@ package io.redskap.swagger.brake.core.model.parameter;
 
 import java.util.Optional;
 
+import io.redskap.swagger.brake.core.model.AttributeType;
 import io.redskap.swagger.brake.core.model.RequestParameterInType;
 import io.redskap.swagger.brake.core.model.Schema;
 import lombok.AllArgsConstructor;
@@ -20,9 +21,9 @@ public class RequestParameter {
     private final String name;
     private final boolean required;
     private final Schema schema;
-    private final RequestParameterType requestParameterType;
+    private final AttributeType requestParameterType;
 
-    public RequestParameter(RequestParameterInType inType, String name, boolean required, RequestParameterType requestParameterType) {
+    public RequestParameter(RequestParameterInType inType, String name, boolean required, AttributeType requestParameterType) {
         this(inType, name, required, null, requestParameterType);
     }
 

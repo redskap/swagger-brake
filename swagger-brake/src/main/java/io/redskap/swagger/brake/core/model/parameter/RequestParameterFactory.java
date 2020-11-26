@@ -1,9 +1,10 @@
 package io.redskap.swagger.brake.core.model.parameter;
 
-import static io.redskap.swagger.brake.core.model.parameter.RequestParameterType.GENERIC;
+import static io.redskap.swagger.brake.core.model.AttributeType.GENERIC;
 
 import java.math.BigDecimal;
 
+import io.redskap.swagger.brake.core.model.AttributeType;
 import io.redskap.swagger.brake.core.model.RequestParameterInType;
 import io.redskap.swagger.brake.core.model.service.RequestParameterInTypeResolver;
 import io.redskap.swagger.brake.core.model.transformer.SchemaTransformer;
@@ -39,9 +40,9 @@ public class RequestParameterFactory {
                 throw new IllegalStateException("schema does not have any type");
             }
             String format = swSchema.getFormat();
-            RequestParameterType requestParameterType = RequestParameterType.from(type, format);
+            AttributeType requestParameterType = AttributeType.from(type, format);
             io.redskap.swagger.brake.core.model.Schema transformedSchema = schemaTransformer.transform(swSchema);
-            if (RequestParameterType.getNumberTypes().contains(requestParameterType)) {
+            if (AttributeType.getNumberTypes().contains(requestParameterType)) {
                 BigDecimal maximum = swSchema.getMaximum();
                 Boolean exclusiveMaximum = swSchema.getExclusiveMaximum();
                 BigDecimal minimum = swSchema.getMinimum();
@@ -57,7 +58,7 @@ public class RequestParameterFactory {
                     .minimum(minimum)
                     .exclusiveMinimum(BooleanUtils.toBoolean(exclusiveMinimum))
                     .build();
-            } else if (RequestParameterType.getStringTypes().contains(requestParameterType)) {
+            } else if (AttributeType.getStringTypes().contains(requestParameterType)) {
                 Integer maxLength = swSchema.getMaxLength();
                 Integer minLength = swSchema.getMinLength();
                 return StringRequestParameter.builder()
@@ -69,7 +70,7 @@ public class RequestParameterFactory {
                     .maxLength(maxLength)
                     .minLength(minLength)
                     .build();
-            } else if (RequestParameterType.getArrayTypes().contains(requestParameterType)) {
+            } else if (AttributeType.getArrayTypes().contains(requestParameterType)) {
                 Integer maxItems = swSchema.getMaxItems();
                 Integer minItems = swSchema.getMinItems();
                 Boolean uniqueItems = swSchema.getUniqueItems();

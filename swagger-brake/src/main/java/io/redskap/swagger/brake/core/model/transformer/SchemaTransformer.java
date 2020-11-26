@@ -9,6 +9,7 @@ import java.util.*;
 
 import io.redskap.swagger.brake.core.model.Schema;
 import io.redskap.swagger.brake.core.model.SchemaAttribute;
+import io.redskap.swagger.brake.core.model.SchemaBuilder;
 import io.redskap.swagger.brake.core.model.service.TypeRefNameResolver;
 import io.redskap.swagger.brake.core.model.store.SchemaStore;
 import io.redskap.swagger.brake.core.model.store.StoreProvider;
@@ -40,7 +41,12 @@ public class SchemaTransformer implements Transformer<io.swagger.v3.oas.models.m
         }
         if (swSchema instanceof ArraySchema) {
             Schema schema = internalTransform(((ArraySchema) swSchema).getItems());
-            return new Schema.Builder(swSchema.getType()).schema(schema).schemaAttributes(getSchemaAttributes(swSchema)).build();
+            return new SchemaBuilder(swSchema.getType())
+                .schema(schema).schemaAttributes(getSchemaAttributes(swSchema))
+                .maxItems(swSchema.getMaxItems())
+                .minItems(swSchema.getMinItems())
+                .uniqueItems(swSchema.getUniqueItems())
+                .build();
         } else if (swSchema instanceof ComposedSchema) {
             return transformComposedSchema((ComposedSchema) swSchema);
         } else {
@@ -65,7 +71,7 @@ public class SchemaTransformer implements Transformer<io.swagger.v3.oas.models.m
             .map(Schema::getSchemaAttributes)
             .flatMap(Collection::stream)
             .collect(toSet());
-        return new Schema.Builder(SchemaTypeUtil.OBJECT_TYPE).schemaAttributes(objectAttributes).build();
+        return new SchemaBuilder(SchemaTypeUtil.OBJECT_TYPE).schemaAttributes(objectAttributes).build();
     }
 
     private Schema transformSchema(io.swagger.v3.oas.models.media.Schema swSchema) {
@@ -81,7 +87,16 @@ public class SchemaTransformer implements Transformer<io.swagger.v3.oas.models.m
         if (isNotBlank(ref) && SeenRefHolder.isSeen(ref) && isBlank(schemaType)) {
             return null;
         }
-        Schema.Builder schemaBuilder = new Schema.Builder(schemaType);
+        SchemaBuilder schemaBuilder = new SchemaBuilder(schemaType);
+        schemaBuilder.maxLength(swSchema.getMaxLength());
+        schemaBuilder.minLength(swSchema.getMinLength());
+        schemaBuilder.maxItems(swSchema.getMaxItems());
+        schemaBuilder.minItems(swSchema.getMinItems());
+        schemaBuilder.uniqueItems(swSchema.getUniqueItems());
+        schemaBuilder.maximum(swSchema.getMaximum());
+        schemaBuilder.minimum(swSchema.getMinimum());
+        schemaBuilder.exclusiveMaximum(swSchema.getExclusiveMaximum());
+        schemaBuilder.exclusiveMinimum(swSchema.getExclusiveMinimum());
         schemaBuilder.schemaAttributes(getSchemaAttributes(swSchema));
         List<String> enumValues = swSchema.getEnum();
         if (CollectionUtils.isNotEmpty(enumValues)) {

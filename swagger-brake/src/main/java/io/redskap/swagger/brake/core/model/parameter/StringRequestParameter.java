@@ -1,5 +1,6 @@
 package io.redskap.swagger.brake.core.model.parameter;
 
+import io.redskap.swagger.brake.core.model.AttributeType;
 import io.redskap.swagger.brake.core.model.RequestParameterInType;
 import io.redskap.swagger.brake.core.model.Schema;
 import lombok.EqualsAndHashCode;
@@ -21,12 +22,12 @@ public class StringRequestParameter extends RequestParameter {
      * @param name the name
      * @param required whether its required
      * @param schema the @{@link Schema}
-     * @param requestParameterType the {@link RequestParameterType}
+     * @param requestParameterType the {@link AttributeType}
      * @param maxLength the maximum length
      * @param minLength the minimum length
      */
     public StringRequestParameter(RequestParameterInType inType, String name,
-                                  boolean required, Schema schema, RequestParameterType requestParameterType,
+                                  boolean required, Schema schema, AttributeType requestParameterType,
                                   Integer maxLength, Integer minLength) {
         super(inType, name, required, schema, requestParameterType);
         this.maxLength = maxLength;

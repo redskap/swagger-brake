@@ -4,10 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Optional;
 
-import io.redskap.swagger.brake.core.model.RequestParameterInType;
-import io.redskap.swagger.brake.core.model.parameter.RequestParameterType;
-import io.redskap.swagger.brake.core.model.parameter.StringRequestParameter;
-import io.redskap.swagger.brake.core.rule.request.parameter.constraint.RequestParameterConstraintChange;
+import io.redskap.swagger.brake.core.rule.request.parameter.constraint.ConstraintChange;
+import io.redskap.swagger.brake.core.rule.request.parameter.constraint.StringConstrainedValue;
 import org.junit.Test;
 
 public class StringMaxLengthConstraintTest {
@@ -16,18 +14,13 @@ public class StringMaxLengthConstraintTest {
     @Test
     public void testValidateConstraintsShouldReturnEmptyOptionalWhenNullOldRequestParamIsGiven() {
         // given
-        StringRequestParameter oldRequestParameter = null;
-        StringRequestParameter newRequestParameter = new StringRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.STRING,
+        StringConstrainedValue oldRequestParameter = null;
+        StringConstrainedValue newRequestParameter = new StringConstrainedValue(
             1,
             1
         );
         // when
-        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        Optional<ConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
         assertThat(result).isNotPresent();
     }
@@ -35,18 +28,13 @@ public class StringMaxLengthConstraintTest {
     @Test
     public void testValidateConstraintsShouldReturnEmptyOptionalWhenNullNewRequestParamIsGiven() {
         // given
-        StringRequestParameter oldRequestParameter = new StringRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.STRING,
+        StringConstrainedValue oldRequestParameter = new StringConstrainedValue(
             1,
             1
         );
-        StringRequestParameter newRequestParameter = null;
+        StringConstrainedValue newRequestParameter = null;
         // when
-        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        Optional<ConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
         assertThat(result).isNotPresent();
     }
@@ -54,26 +42,16 @@ public class StringMaxLengthConstraintTest {
     @Test
     public void testValidateConstraintsShouldReturnEmptyOptionalWhenRequestParameterIsNotStringTyped() {
         // given
-        StringRequestParameter oldRequestParameter = new StringRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.GENERIC,
+        StringConstrainedValue oldRequestParameter = new StringConstrainedValue(
             1,
             1
         );
-        StringRequestParameter newRequestParameter = new StringRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.GENERIC,
+        StringConstrainedValue newRequestParameter = new StringConstrainedValue(
             1,
             1
         );
         // when
-        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        Optional<ConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
         assertThat(result).isNotPresent();
     }
@@ -81,26 +59,16 @@ public class StringMaxLengthConstraintTest {
     @Test
     public void testValidateConstraintsShouldReturnEmptyOptionalWhenMaxLengthIsExtended() {
         // given
-        StringRequestParameter oldRequestParameter = new StringRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.STRING,
+        StringConstrainedValue oldRequestParameter = new StringConstrainedValue(
             1,
             1
         );
-        StringRequestParameter newRequestParameter = new StringRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.STRING,
+        StringConstrainedValue newRequestParameter = new StringConstrainedValue(
             2,
             1
         );
         // when
-        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        Optional<ConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
         assertThat(result).isNotPresent();
     }
@@ -108,26 +76,16 @@ public class StringMaxLengthConstraintTest {
     @Test
     public void testValidateConstraintsShouldReturnEmptyOptionalWhenMaxLengthIsRemoved() {
         // given
-        StringRequestParameter oldRequestParameter = new StringRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.STRING,
+        StringConstrainedValue oldRequestParameter = new StringConstrainedValue(
             1,
             1
         );
-        StringRequestParameter newRequestParameter = new StringRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.STRING,
+        StringConstrainedValue newRequestParameter = new StringConstrainedValue(
             null,
             1
         );
         // when
-        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        Optional<ConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
         assertThat(result).isNotPresent();
     }
@@ -135,29 +93,19 @@ public class StringMaxLengthConstraintTest {
     @Test
     public void testValidateConstraintsShouldReportConstraintChangeWhenMaxLengthGetsLimited() {
         // given
-        StringRequestParameter oldRequestParameter = new StringRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.STRING,
+        StringConstrainedValue oldRequestParameter = new StringConstrainedValue(
             2,
             1
         );
-        StringRequestParameter newRequestParameter = new StringRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.STRING,
+        StringConstrainedValue newRequestParameter = new StringConstrainedValue(
             1,
             1
         );
-        RequestParameterConstraintChange expected = new RequestParameterConstraintChange(
+        ConstraintChange expected = new ConstraintChange(
             "maxLength", 2, 1
         );
         // when
-        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        Optional<ConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
         assertThat(result).get().isEqualTo(expected);
     }
@@ -165,29 +113,19 @@ public class StringMaxLengthConstraintTest {
     @Test
     public void testValidateConstraintsShouldReportConstraintChangeWhenMaxLengthGetsSet() {
         // given
-        StringRequestParameter oldRequestParameter = new StringRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.STRING,
+        StringConstrainedValue oldRequestParameter = new StringConstrainedValue(
             null,
             1
         );
-        StringRequestParameter newRequestParameter = new StringRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.STRING,
+        StringConstrainedValue newRequestParameter = new StringConstrainedValue(
             1,
             1
         );
-        RequestParameterConstraintChange expected = new RequestParameterConstraintChange(
+        ConstraintChange expected = new ConstraintChange(
             "maxLength", null, 1
         );
         // when
-        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        Optional<ConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
         assertThat(result).get().isEqualTo(expected);
     }

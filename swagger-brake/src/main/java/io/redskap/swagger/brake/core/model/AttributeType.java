@@ -1,4 +1,4 @@
-package io.redskap.swagger.brake.core.model.parameter;
+package io.redskap.swagger.brake.core.model;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -11,7 +11,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum RequestParameterType {
+public enum AttributeType {
     GENERIC(null, null),
     NUMBER("number", null),
     FLOAT("number", "float"),
@@ -31,13 +31,13 @@ public enum RequestParameterType {
      * @param format the format
      * @return the actual enum type or GENERIC if there's none
      */
-    public static RequestParameterType from(String type, String format) {
+    public static AttributeType from(String type, String format) {
         return forTypeAndFormat(type, format)
             .orElse(forTypeAndFormat(type, null).orElse(GENERIC));
     }
 
-    private static Optional<RequestParameterType> forTypeAndFormat(String type, String format) {
-        return Arrays.stream(RequestParameterType.values())
+    private static Optional<AttributeType> forTypeAndFormat(String type, String format) {
+        return Arrays.stream(AttributeType.values())
             .filter(e -> Objects.equals(e.getType(), type) && Objects.equals(e.getFormat(), format))
             .findAny();
     }
@@ -46,7 +46,7 @@ public enum RequestParameterType {
      * Returns all number types.
      * @return all number types
      */
-    public static Collection<RequestParameterType> getNumberTypes() {
+    public static Collection<AttributeType> getNumberTypes() {
         return ImmutableList.of(NUMBER, FLOAT, DOUBLE, INTEGER, INT_32, INT_64);
     }
 
@@ -54,7 +54,7 @@ public enum RequestParameterType {
      * Returns all string types.
      * @return Returns all string types
      */
-    public static Collection<RequestParameterType> getStringTypes() {
+    public static Collection<AttributeType> getStringTypes() {
         return ImmutableList.of(STRING);
     }
 
@@ -62,7 +62,7 @@ public enum RequestParameterType {
      * Returns all array types.
      * @return Returns all array types
      */
-    public static Collection<RequestParameterType> getArrayTypes() {
+    public static Collection<AttributeType> getArrayTypes() {
         return ImmutableList.of(ARRAY);
     }
 }

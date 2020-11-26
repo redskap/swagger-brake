@@ -4,10 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Optional;
 
-import io.redskap.swagger.brake.core.model.RequestParameterInType;
-import io.redskap.swagger.brake.core.model.parameter.ArrayRequestParameter;
-import io.redskap.swagger.brake.core.model.parameter.RequestParameterType;
-import io.redskap.swagger.brake.core.rule.request.parameter.constraint.RequestParameterConstraintChange;
+import io.redskap.swagger.brake.core.rule.request.parameter.constraint.ArrayConstrainedValue;
+import io.redskap.swagger.brake.core.rule.request.parameter.constraint.ConstraintChange;
 import org.junit.Test;
 
 public class ArrayMinItemsConstraintTest {
@@ -16,19 +14,14 @@ public class ArrayMinItemsConstraintTest {
     @Test
     public void testValidateConstraintsShouldReturnEmptyOptionalWhenNullOldRequestParamIsGiven() {
         // given
-        ArrayRequestParameter oldRequestParameter = null;
-        ArrayRequestParameter newRequestParameter = new ArrayRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.ARRAY,
+        ArrayConstrainedValue oldRequestParameter = null;
+        ArrayConstrainedValue newRequestParameter = new ArrayConstrainedValue(
             1,
             1,
             false
         );
         // when
-        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        Optional<ConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
         assertThat(result).isNotPresent();
     }
@@ -36,19 +29,14 @@ public class ArrayMinItemsConstraintTest {
     @Test
     public void testValidateConstraintsShouldReturnEmptyOptionalWhenNullNewRequestParamIsGiven() {
         // given
-        ArrayRequestParameter oldRequestParameter = new ArrayRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.ARRAY,
+        ArrayConstrainedValue oldRequestParameter = new ArrayConstrainedValue(
             1,
             1,
             false
         );
-        ArrayRequestParameter newRequestParameter = null;
+        ArrayConstrainedValue newRequestParameter = null;
         // when
-        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        Optional<ConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
         assertThat(result).isNotPresent();
     }
@@ -56,28 +44,18 @@ public class ArrayMinItemsConstraintTest {
     @Test
     public void testValidateConstraintsShouldReturnEmptyOptionalWhenRequestParameterIsNotStringTyped() {
         // given
-        ArrayRequestParameter oldRequestParameter = new ArrayRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.GENERIC,
+        ArrayConstrainedValue oldRequestParameter = new ArrayConstrainedValue(
             1,
             1,
             false
         );
-        ArrayRequestParameter newRequestParameter = new ArrayRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.GENERIC,
+        ArrayConstrainedValue newRequestParameter = new ArrayConstrainedValue(
             1,
             1,
             false
         );
         // when
-        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        Optional<ConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
         assertThat(result).isNotPresent();
     }
@@ -85,28 +63,18 @@ public class ArrayMinItemsConstraintTest {
     @Test
     public void testValidateConstraintsShouldReturnEmptyOptionalWhenMinLengthIsExtended() {
         // given
-        ArrayRequestParameter oldRequestParameter = new ArrayRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.ARRAY,
+        ArrayConstrainedValue oldRequestParameter = new ArrayConstrainedValue(
             1,
             1,
             false
         );
-        ArrayRequestParameter newRequestParameter = new ArrayRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.ARRAY,
+        ArrayConstrainedValue newRequestParameter = new ArrayConstrainedValue(
             1,
             0,
             false
         );
         // when
-        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        Optional<ConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
         assertThat(result).isNotPresent();
     }
@@ -114,28 +82,18 @@ public class ArrayMinItemsConstraintTest {
     @Test
     public void testValidateConstraintsShouldReturnEmptyOptionalWhenMinLengthIsRemoved() {
         // given
-        ArrayRequestParameter oldRequestParameter = new ArrayRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.ARRAY,
+        ArrayConstrainedValue oldRequestParameter = new ArrayConstrainedValue(
             1,
             1,
             false
         );
-        ArrayRequestParameter newRequestParameter = new ArrayRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.ARRAY,
+        ArrayConstrainedValue newRequestParameter = new ArrayConstrainedValue(
             1,
             null,
             false
         );
         // when
-        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        Optional<ConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
         assertThat(result).isNotPresent();
     }
@@ -143,31 +101,21 @@ public class ArrayMinItemsConstraintTest {
     @Test
     public void testValidateConstraintsShouldReportConstraintChangeWhenMinLengthGetsLimited() {
         // given
-        ArrayRequestParameter oldRequestParameter = new ArrayRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.ARRAY,
+        ArrayConstrainedValue oldRequestParameter = new ArrayConstrainedValue(
             5,
             1,
             false
         );
-        ArrayRequestParameter newRequestParameter = new ArrayRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.ARRAY,
+        ArrayConstrainedValue newRequestParameter = new ArrayConstrainedValue(
             5,
             2,
             false
         );
-        RequestParameterConstraintChange expected = new RequestParameterConstraintChange(
+        ConstraintChange expected = new ConstraintChange(
             "minItems", 1, 2
         );
         // when
-        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        Optional<ConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
         assertThat(result).get().isEqualTo(expected);
     }
@@ -175,31 +123,21 @@ public class ArrayMinItemsConstraintTest {
     @Test
     public void testValidateConstraintsShouldReportConstraintChangeWhenMinLengthGetsSet() {
         // given
-        ArrayRequestParameter oldRequestParameter = new ArrayRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.ARRAY,
+        ArrayConstrainedValue oldRequestParameter = new ArrayConstrainedValue(
             1,
             null,
             false
         );
-        ArrayRequestParameter newRequestParameter = new ArrayRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.ARRAY,
+        ArrayConstrainedValue newRequestParameter = new ArrayConstrainedValue(
             1,
             1,
             false
         );
-        RequestParameterConstraintChange expected = new RequestParameterConstraintChange(
+        ConstraintChange expected = new ConstraintChange(
             "minItems", null, 1
         );
         // when
-        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        Optional<ConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
         assertThat(result).get().isEqualTo(expected);
     }

@@ -2,24 +2,24 @@ package io.redskap.swagger.brake.core.rule.request.parameter.constraint.array;
 
 import java.util.Optional;
 
-import io.redskap.swagger.brake.core.model.parameter.ArrayRequestParameter;
-import io.redskap.swagger.brake.core.rule.request.parameter.constraint.RequestParameterConstraint;
-import io.redskap.swagger.brake.core.rule.request.parameter.constraint.RequestParameterConstraintChange;
+import io.redskap.swagger.brake.core.rule.request.parameter.constraint.ArrayConstrainedValue;
+import io.redskap.swagger.brake.core.rule.request.parameter.constraint.Constraint;
+import io.redskap.swagger.brake.core.rule.request.parameter.constraint.ConstraintChange;
 import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ArrayUniqueItemsConstraint implements RequestParameterConstraint<ArrayRequestParameter> {
+public class ArrayUniqueItemsConstraint implements Constraint<ArrayConstrainedValue> {
     public static final String UNIQUE_ITEMS_ATTRIBUTE_NAME = "uniqueItems";
 
     @Override
-    public Optional<RequestParameterConstraintChange> validateConstraints(ArrayRequestParameter oldRequestParameter, ArrayRequestParameter newRequestParameter) {
-        RequestParameterConstraintChange result = null;
+    public Optional<ConstraintChange> validateConstraints(ArrayConstrainedValue oldRequestParameter, ArrayConstrainedValue newRequestParameter) {
+        ConstraintChange result = null;
         if (oldRequestParameter != null && newRequestParameter != null) {
             Boolean oldUniqueItems = oldRequestParameter.getUniqueItems();
             Boolean newUniqueItems = newRequestParameter.getUniqueItems();
             if (BooleanUtils.isTrue(newUniqueItems) && BooleanUtils.isNotTrue(oldUniqueItems)) {
-                result = new RequestParameterConstraintChange(
+                result = new ConstraintChange(
                   UNIQUE_ITEMS_ATTRIBUTE_NAME,
                   oldUniqueItems,
                   newUniqueItems
@@ -30,7 +30,7 @@ public class ArrayUniqueItemsConstraint implements RequestParameterConstraint<Ar
     }
 
     @Override
-    public Class<ArrayRequestParameter> handledRequestParameter() {
-        return ArrayRequestParameter.class;
+    public Class<ArrayConstrainedValue> handledRequestParameter() {
+        return ArrayConstrainedValue.class;
     }
 }

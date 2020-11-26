@@ -2,29 +2,29 @@ package io.redskap.swagger.brake.core.rule.request.parameter.constraint.array;
 
 import java.util.Optional;
 
-import io.redskap.swagger.brake.core.model.parameter.ArrayRequestParameter;
-import io.redskap.swagger.brake.core.rule.request.parameter.constraint.RequestParameterConstraint;
-import io.redskap.swagger.brake.core.rule.request.parameter.constraint.RequestParameterConstraintChange;
+import io.redskap.swagger.brake.core.rule.request.parameter.constraint.ArrayConstrainedValue;
+import io.redskap.swagger.brake.core.rule.request.parameter.constraint.Constraint;
+import io.redskap.swagger.brake.core.rule.request.parameter.constraint.ConstraintChange;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ArrayMinItemsConstraint implements RequestParameterConstraint<ArrayRequestParameter> {
+public class ArrayMinItemsConstraint implements Constraint<ArrayConstrainedValue> {
     public static final String MIN_ITEMS_ATTRIBUTE_NAME = "minItems";
 
     @Override
-    public Optional<RequestParameterConstraintChange> validateConstraints(ArrayRequestParameter oldRequestParameter, ArrayRequestParameter newRequestParameter) {
-        RequestParameterConstraintChange result = null;
+    public Optional<ConstraintChange> validateConstraints(ArrayConstrainedValue oldRequestParameter, ArrayConstrainedValue newRequestParameter) {
+        ConstraintChange result = null;
         if (oldRequestParameter != null && newRequestParameter != null) {
             Integer oldMinItems = oldRequestParameter.getMinItems();
             Integer newMinItems = newRequestParameter.getMinItems();
             if (oldMinItems == null && newMinItems != null) {
-                result = new RequestParameterConstraintChange(
+                result = new ConstraintChange(
                     MIN_ITEMS_ATTRIBUTE_NAME, null, newMinItems
                 );
             }
             if (oldMinItems != null && newMinItems != null) {
                 if (oldMinItems < newMinItems) {
-                    result = new RequestParameterConstraintChange(
+                    result = new ConstraintChange(
                         MIN_ITEMS_ATTRIBUTE_NAME, oldMinItems, newMinItems
                     );
                 }
@@ -34,7 +34,7 @@ public class ArrayMinItemsConstraint implements RequestParameterConstraint<Array
     }
 
     @Override
-    public Class<ArrayRequestParameter> handledRequestParameter() {
-        return ArrayRequestParameter.class;
+    public Class<ArrayConstrainedValue> handledRequestParameter() {
+        return ArrayConstrainedValue.class;
     }
 }

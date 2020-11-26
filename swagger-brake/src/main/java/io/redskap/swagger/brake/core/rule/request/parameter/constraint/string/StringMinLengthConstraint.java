@@ -2,29 +2,29 @@ package io.redskap.swagger.brake.core.rule.request.parameter.constraint.string;
 
 import java.util.Optional;
 
-import io.redskap.swagger.brake.core.model.parameter.StringRequestParameter;
-import io.redskap.swagger.brake.core.rule.request.parameter.constraint.RequestParameterConstraint;
-import io.redskap.swagger.brake.core.rule.request.parameter.constraint.RequestParameterConstraintChange;
+import io.redskap.swagger.brake.core.rule.request.parameter.constraint.Constraint;
+import io.redskap.swagger.brake.core.rule.request.parameter.constraint.ConstraintChange;
+import io.redskap.swagger.brake.core.rule.request.parameter.constraint.StringConstrainedValue;
 import org.springframework.stereotype.Component;
 
 @Component
-public class StringMinLengthConstraint implements RequestParameterConstraint<StringRequestParameter> {
+public class StringMinLengthConstraint implements Constraint<StringConstrainedValue> {
     public static final String MIN_LENGTH_ATTRIBUTE_NAME = "minLength";
 
     @Override
-    public Optional<RequestParameterConstraintChange> validateConstraints(StringRequestParameter oldRequestParameter, StringRequestParameter newRequestParameter) {
-        RequestParameterConstraintChange result = null;
-        if (oldRequestParameter != null && newRequestParameter != null) {
-            Integer oldMinLength = oldRequestParameter.getMinLength();
-            Integer newMinLength = newRequestParameter.getMinLength();
+    public Optional<ConstraintChange> validateConstraints(StringConstrainedValue oldConstrainedValue, StringConstrainedValue newConstrainedValue) {
+        ConstraintChange result = null;
+        if (oldConstrainedValue != null && newConstrainedValue != null) {
+            Integer oldMinLength = oldConstrainedValue.getMinLength();
+            Integer newMinLength = newConstrainedValue.getMinLength();
             if (oldMinLength == null && newMinLength != null) {
-                result = new RequestParameterConstraintChange(
+                result = new ConstraintChange(
                     MIN_LENGTH_ATTRIBUTE_NAME, null, newMinLength
                 );
             }
             if (oldMinLength != null && newMinLength != null) {
                 if (oldMinLength < newMinLength) {
-                    result = new RequestParameterConstraintChange(
+                    result = new ConstraintChange(
                         MIN_LENGTH_ATTRIBUTE_NAME, oldMinLength, newMinLength
                     );
                 }
@@ -34,7 +34,7 @@ public class StringMinLengthConstraint implements RequestParameterConstraint<Str
     }
 
     @Override
-    public Class<StringRequestParameter> handledRequestParameter() {
-        return StringRequestParameter.class;
+    public Class<StringConstrainedValue> handledRequestParameter() {
+        return StringConstrainedValue.class;
     }
 }

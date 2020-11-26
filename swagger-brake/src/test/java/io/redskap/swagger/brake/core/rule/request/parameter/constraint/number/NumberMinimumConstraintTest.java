@@ -5,10 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.math.BigDecimal;
 import java.util.Optional;
 
-import io.redskap.swagger.brake.core.model.RequestParameterInType;
-import io.redskap.swagger.brake.core.model.parameter.NumberRequestParameter;
-import io.redskap.swagger.brake.core.model.parameter.RequestParameterType;
-import io.redskap.swagger.brake.core.rule.request.parameter.constraint.RequestParameterConstraintChange;
+import io.redskap.swagger.brake.core.rule.request.parameter.constraint.ConstraintChange;
+import io.redskap.swagger.brake.core.rule.request.parameter.constraint.NumberConstrainedValue;
 import org.junit.Test;
 
 public class NumberMinimumConstraintTest {
@@ -17,20 +15,15 @@ public class NumberMinimumConstraintTest {
     @Test
     public void testValidateConstraintsShouldReturnEmptyOptionalWhenNullOldRequestParamIsGiven() {
         // given
-        NumberRequestParameter oldRequestParameter = null;
-        NumberRequestParameter newRequestParameter = new NumberRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.INT_64,
+        NumberConstrainedValue oldRequestParameter = null;
+        NumberConstrainedValue newRequestParameter = new NumberConstrainedValue(
             BigDecimal.ONE,
             BigDecimal.ZERO,
             true,
             true
         );
         // when
-        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        Optional<ConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
         assertThat(result).isNotPresent();
     }
@@ -38,20 +31,15 @@ public class NumberMinimumConstraintTest {
     @Test
     public void testValidateConstraintsShouldReturnEmptyOptionalWhenNullNewRequestParamIsGiven() {
         // given
-        NumberRequestParameter oldRequestParameter = new NumberRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.INT_64,
+        NumberConstrainedValue oldRequestParameter = new NumberConstrainedValue(
             BigDecimal.ONE,
             BigDecimal.ZERO,
             true,
             true
         );
-        NumberRequestParameter newRequestParameter = null;
+        NumberConstrainedValue newRequestParameter = null;
         // when
-        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        Optional<ConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
         assertThat(result).isNotPresent();
     }
@@ -59,30 +47,20 @@ public class NumberMinimumConstraintTest {
     @Test
     public void testValidateConstraintsShouldReturnEmptyOptionalWhenRequestParameterIsNotIntegerTyped() {
         // given
-        NumberRequestParameter oldRequestParameter = new NumberRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.GENERIC,
+        NumberConstrainedValue oldRequestParameter = new NumberConstrainedValue(
             BigDecimal.TEN,
             BigDecimal.ZERO,
             true,
             true
         );
-        NumberRequestParameter newRequestParameter = new NumberRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.GENERIC,
+        NumberConstrainedValue newRequestParameter = new NumberConstrainedValue(
             BigDecimal.ONE,
             BigDecimal.ZERO,
             true,
             true
         );
         // when
-        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        Optional<ConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
         assertThat(result).isNotPresent();
     }
@@ -90,30 +68,20 @@ public class NumberMinimumConstraintTest {
     @Test
     public void testValidateConstraintsShouldReturnEmptyOptionalWhenMinimumValueSetIsExtended() {
         // given
-        NumberRequestParameter oldRequestParameter = new NumberRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.INT_64,
+        NumberConstrainedValue oldRequestParameter = new NumberConstrainedValue(
             BigDecimal.TEN,
             BigDecimal.TEN,
             true,
             true
         );
-        NumberRequestParameter newRequestParameter = new NumberRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.INT_64,
+        NumberConstrainedValue newRequestParameter = new NumberConstrainedValue(
             BigDecimal.TEN,
             BigDecimal.ONE,
             true,
             true
         );
         // when
-        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        Optional<ConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
         assertThat(result).isNotPresent();
     }
@@ -121,30 +89,20 @@ public class NumberMinimumConstraintTest {
     @Test
     public void testValidateConstraintsShouldReturnEmptyOptionalWhenMinimumValueSetIsExtendedWithExclusiveMaximumSetting() {
         // given
-        NumberRequestParameter oldRequestParameter = new NumberRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.INT_64,
+        NumberConstrainedValue oldRequestParameter = new NumberConstrainedValue(
             BigDecimal.TEN,
             BigDecimal.TEN,
             true,
             true
         );
-        NumberRequestParameter newRequestParameter = new NumberRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.INT_64,
+        NumberConstrainedValue newRequestParameter = new NumberConstrainedValue(
             BigDecimal.TEN,
             BigDecimal.TEN,
             false,
             false
         );
         // when
-        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        Optional<ConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
         assertThat(result).isNotPresent();
     }
@@ -152,33 +110,23 @@ public class NumberMinimumConstraintTest {
     @Test
     public void testValidateConstraintsShouldReportConstraintChangeWhenMinimumValueSetIsLimitedWithExclusiveMaximumSetting() {
         // given
-        NumberRequestParameter oldRequestParameter = new NumberRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.INT_64,
+        NumberConstrainedValue oldRequestParameter = new NumberConstrainedValue(
             BigDecimal.TEN,
             BigDecimal.TEN,
             false,
             false
         );
-        NumberRequestParameter newRequestParameter = new NumberRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.INT_64,
+        NumberConstrainedValue newRequestParameter = new NumberConstrainedValue(
             BigDecimal.TEN,
             BigDecimal.TEN,
             true,
             true
         );
-        RequestParameterConstraintChange expected = new RequestParameterConstraintChange(
+        ConstraintChange expected = new ConstraintChange(
             "exclusiveMinimum", false, true
         );
         // when
-        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        Optional<ConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
         assertThat(result).get().isEqualTo(expected);
     }
@@ -186,30 +134,20 @@ public class NumberMinimumConstraintTest {
     @Test
     public void testValidateConstraintsShouldReportConstraintChangeWhenMinimumValueSetIsLimitedWithExclusiveMaximumSettingEdgeCase1() {
         // given
-        NumberRequestParameter oldRequestParameter = new NumberRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.INT_64,
+        NumberConstrainedValue oldRequestParameter = new NumberConstrainedValue(
             BigDecimal.TEN,
             BigDecimal.TEN.subtract(BigDecimal.ONE),
             true,
             true
         );
-        NumberRequestParameter newRequestParameter = new NumberRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.INT_64,
+        NumberConstrainedValue newRequestParameter = new NumberConstrainedValue(
             BigDecimal.TEN,
             BigDecimal.TEN,
             false,
             false
         );
         // when
-        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        Optional<ConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
         assertThat(result).isNotPresent();
     }
@@ -217,30 +155,20 @@ public class NumberMinimumConstraintTest {
     @Test
     public void testValidateConstraintsShouldReportConstraintChangeWhenMinimumValueSetIsLimitedWithExclusiveMaximumSettingEdgeCase2() {
         // given
-        NumberRequestParameter oldRequestParameter = new NumberRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.INT_64,
+        NumberConstrainedValue oldRequestParameter = new NumberConstrainedValue(
             BigDecimal.TEN,
             BigDecimal.TEN,
             false,
             false
         );
-        NumberRequestParameter newRequestParameter = new NumberRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.INT_64,
+        NumberConstrainedValue newRequestParameter = new NumberConstrainedValue(
             BigDecimal.TEN,
             BigDecimal.TEN.subtract(BigDecimal.ONE),
             true,
             true
         );
         // when
-        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        Optional<ConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
         assertThat(result).isNotPresent();
     }
@@ -248,33 +176,23 @@ public class NumberMinimumConstraintTest {
     @Test
     public void testValidateConstraintsShouldReportConstraintChangeWhenMinimumValueSetGetsLimitedForInt64() {
         // given
-        NumberRequestParameter oldRequestParameter = new NumberRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.INT_64,
+        NumberConstrainedValue oldRequestParameter = new NumberConstrainedValue(
             BigDecimal.TEN,
             BigDecimal.ONE,
             false,
             true
         );
-        NumberRequestParameter newRequestParameter = new NumberRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.INT_64,
+        NumberConstrainedValue newRequestParameter = new NumberConstrainedValue(
             BigDecimal.ONE,
             BigDecimal.TEN,
             false,
             true
         );
-        RequestParameterConstraintChange expected = new RequestParameterConstraintChange(
+        ConstraintChange expected = new ConstraintChange(
             "minimum", BigDecimal.ONE, BigDecimal.TEN
         );
         // when
-        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        Optional<ConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
         assertThat(result).get().isEqualTo(expected);
     }
@@ -282,33 +200,23 @@ public class NumberMinimumConstraintTest {
     @Test
     public void testValidateConstraintsShouldReportConstraintChangeWhenMinimumValueSetGetsLimitedForInt32() {
         // given
-        NumberRequestParameter oldRequestParameter = new NumberRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.INT_32,
+        NumberConstrainedValue oldRequestParameter = new NumberConstrainedValue(
             BigDecimal.TEN,
             BigDecimal.ONE,
             false,
             true
         );
-        NumberRequestParameter newRequestParameter = new NumberRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.INT_32,
+        NumberConstrainedValue newRequestParameter = new NumberConstrainedValue(
             BigDecimal.ONE,
             BigDecimal.TEN,
             false,
             true
         );
-        RequestParameterConstraintChange expected = new RequestParameterConstraintChange(
+        ConstraintChange expected = new ConstraintChange(
             "minimum", BigDecimal.ONE, BigDecimal.TEN
         );
         // when
-        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        Optional<ConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
         assertThat(result).get().isEqualTo(expected);
     }
@@ -316,33 +224,23 @@ public class NumberMinimumConstraintTest {
     @Test
     public void testValidateConstraintsShouldReportConstraintChangeWhenMinimumValueSetGetsLimitedForInteger() {
         // given
-        NumberRequestParameter oldRequestParameter = new NumberRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.INTEGER,
+        NumberConstrainedValue oldRequestParameter = new NumberConstrainedValue(
             BigDecimal.TEN,
             BigDecimal.ONE,
             false,
             true
         );
-        NumberRequestParameter newRequestParameter = new NumberRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.INTEGER,
+        NumberConstrainedValue newRequestParameter = new NumberConstrainedValue(
             BigDecimal.ONE,
             BigDecimal.TEN,
             false,
             true
         );
-        RequestParameterConstraintChange expected = new RequestParameterConstraintChange(
+        ConstraintChange expected = new ConstraintChange(
             "minimum", BigDecimal.ONE, BigDecimal.TEN
         );
         // when
-        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        Optional<ConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
         assertThat(result).get().isEqualTo(expected);
     }
@@ -350,33 +248,23 @@ public class NumberMinimumConstraintTest {
     @Test
     public void testValidateConstraintsShouldReportConstraintChangeWhenMinimumValueSetGetsLimitedForNumber() {
         // given
-        NumberRequestParameter oldRequestParameter = new NumberRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.NUMBER,
+        NumberConstrainedValue oldRequestParameter = new NumberConstrainedValue(
             BigDecimal.TEN,
             BigDecimal.ONE,
             false,
             true
         );
-        NumberRequestParameter newRequestParameter = new NumberRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.NUMBER,
+        NumberConstrainedValue newRequestParameter = new NumberConstrainedValue(
             BigDecimal.ONE,
             BigDecimal.TEN,
             false,
             true
         );
-        RequestParameterConstraintChange expected = new RequestParameterConstraintChange(
+        ConstraintChange expected = new ConstraintChange(
             "minimum", BigDecimal.ONE, BigDecimal.TEN
         );
         // when
-        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        Optional<ConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
         assertThat(result).get().isEqualTo(expected);
     }
@@ -384,33 +272,23 @@ public class NumberMinimumConstraintTest {
     @Test
     public void testValidateConstraintsShouldReportConstraintChangeWhenMinimumValueSetGetsLimitedForFloat() {
         // given
-        NumberRequestParameter oldRequestParameter = new NumberRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.FLOAT,
+        NumberConstrainedValue oldRequestParameter = new NumberConstrainedValue(
             BigDecimal.TEN,
             BigDecimal.ONE.subtract(new BigDecimal("0.5")),
             false,
             true
         );
-        NumberRequestParameter newRequestParameter = new NumberRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.FLOAT,
+        NumberConstrainedValue newRequestParameter = new NumberConstrainedValue(
             BigDecimal.ONE,
             BigDecimal.TEN.subtract(new BigDecimal("0.5")),
             false,
             true
         );
-        RequestParameterConstraintChange expected = new RequestParameterConstraintChange(
+        ConstraintChange expected = new ConstraintChange(
             "minimum", BigDecimal.ONE.subtract(new BigDecimal("0.5")), BigDecimal.TEN.subtract(new BigDecimal("0.5"))
         );
         // when
-        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        Optional<ConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
         assertThat(result).get().isEqualTo(expected);
     }
@@ -418,33 +296,23 @@ public class NumberMinimumConstraintTest {
     @Test
     public void testValidateConstraintsShouldReportConstraintChangeWhenMinimumValueSetGetsLimitedForDouble() {
         // given
-        NumberRequestParameter oldRequestParameter = new NumberRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.DOUBLE,
+        NumberConstrainedValue oldRequestParameter = new NumberConstrainedValue(
             BigDecimal.TEN,
             BigDecimal.ONE.subtract(new BigDecimal("0.5")),
             false,
             true
         );
-        NumberRequestParameter newRequestParameter = new NumberRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.DOUBLE,
+        NumberConstrainedValue newRequestParameter = new NumberConstrainedValue(
             BigDecimal.ONE,
             BigDecimal.TEN.subtract(new BigDecimal("0.5")),
             false,
             true
         );
-        RequestParameterConstraintChange expected = new RequestParameterConstraintChange(
+        ConstraintChange expected = new ConstraintChange(
             "minimum", BigDecimal.ONE.subtract(new BigDecimal("0.5")), BigDecimal.TEN.subtract(new BigDecimal("0.5"))
         );
         // when
-        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        Optional<ConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
         assertThat(result).get().isEqualTo(expected);
     }
@@ -452,33 +320,23 @@ public class NumberMinimumConstraintTest {
     @Test
     public void testValidateConstraintsShouldReportConstraintChangeWhenMinimumValueGetsSet() {
         // given
-        NumberRequestParameter oldRequestParameter = new NumberRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.INTEGER,
+        NumberConstrainedValue oldRequestParameter = new NumberConstrainedValue(
             null,
             null,
             false,
             true
         );
-        NumberRequestParameter newRequestParameter = new NumberRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.INTEGER,
+        NumberConstrainedValue newRequestParameter = new NumberConstrainedValue(
             BigDecimal.ONE,
             BigDecimal.ONE,
             false,
             true
         );
-        RequestParameterConstraintChange expected = new RequestParameterConstraintChange(
+        ConstraintChange expected = new ConstraintChange(
             "minimum", null, BigDecimal.ONE
         );
         // when
-        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        Optional<ConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
         assertThat(result).get().isEqualTo(expected);
     }
@@ -486,30 +344,20 @@ public class NumberMinimumConstraintTest {
     @Test
     public void testValidateConstraintsShouldReportConstraintChangeWhenMinimumValueGetsRemoved() {
         // given
-        NumberRequestParameter oldRequestParameter = new NumberRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.INTEGER,
+        NumberConstrainedValue oldRequestParameter = new NumberConstrainedValue(
             BigDecimal.ONE,
             BigDecimal.ZERO,
             false,
             true
         );
-        NumberRequestParameter newRequestParameter = new NumberRequestParameter(
-            RequestParameterInType.PATH,
-            "testAttribute",
-            true,
-            null,
-            RequestParameterType.INTEGER,
+        NumberConstrainedValue newRequestParameter = new NumberConstrainedValue(
             null,
             null,
             false,
             true
         );
         // when
-        Optional<RequestParameterConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
+        Optional<ConstraintChange> result = underTest.validateConstraints(oldRequestParameter, newRequestParameter);
         // then
         assertThat(result).isNotPresent();
     }
