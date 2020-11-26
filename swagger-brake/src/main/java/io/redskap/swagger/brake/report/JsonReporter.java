@@ -32,17 +32,12 @@ class JsonReporter extends AbstractFileReporter implements CheckableReporter {
 
     @Override
     protected String toFileContent(Collection<BreakingChange> breakingChanges) {
-        Map<String, List<BreakingChange>> nameMapping = breakingChanges.stream().collect(groupingBy(this::getBreakingChangeName));
+        Map<String, List<BreakingChange>> nameMapping = breakingChanges.stream().collect(groupingBy(BreakingChange::getRuleCode));
         return jsonConverter.convert(nameMapping);
     }
 
     @Override
     public boolean canReport(OutputFormat format) {
         return OutputFormat.JSON.equals(format);
-    }
-
-    private String getBreakingChangeName(BreakingChange e) {
-        String clazzName = e.getClass().getSimpleName();
-        return clazzName.substring(0, 1).toLowerCase() + clazzName.substring(1);
     }
 }

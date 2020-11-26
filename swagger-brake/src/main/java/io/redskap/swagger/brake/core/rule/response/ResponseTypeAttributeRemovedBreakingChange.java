@@ -23,4 +23,9 @@ public class ResponseTypeAttributeRemovedBreakingChange implements BreakingChang
     public String getMessage() {
         return format("%s was removed from response %s in %s %s ", attributeName, code, method, path);
     }
+
+    @Override
+    public String getRuleCode() {
+        return "R014";
+    }
 }

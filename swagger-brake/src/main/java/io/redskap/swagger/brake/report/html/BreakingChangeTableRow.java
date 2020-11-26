@@ -9,9 +9,15 @@ public class BreakingChangeTableRow {
     @JsonUnwrapped
     private BreakingChange breakingChange;
     private String message;
+    private String ruleCode;
 
+    /**
+     * Constructs a table row for reporting purposes.
+     * @param breakingChange the breaking change
+     */
     public BreakingChangeTableRow(BreakingChange breakingChange) {
         this.breakingChange = breakingChange;
         this.message = breakingChange.getMessage();
+        this.ruleCode = breakingChange.getRuleCode();
     }
 }

@@ -24,4 +24,9 @@ public class RequestTypeChangedBreakingChange implements BreakingChange {
     public String getMessage() {
         return format("%s type was changed in %s %s from %s to %s ", attributeName, method, path, fromType, toType);
     }
+
+    @Override
+    public String getRuleCode() {
+        return "R010";
+    }
 }

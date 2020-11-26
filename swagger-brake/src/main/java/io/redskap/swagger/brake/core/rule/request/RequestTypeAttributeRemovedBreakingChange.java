@@ -22,4 +22,9 @@ public class RequestTypeAttributeRemovedBreakingChange implements BreakingChange
     public String getMessage() {
         return format("%s was removed from request in %s %s ", attributeName, method, path);
     }
+
+    @Override
+    public String getRuleCode() {
+        return "R009";
+    }
 }

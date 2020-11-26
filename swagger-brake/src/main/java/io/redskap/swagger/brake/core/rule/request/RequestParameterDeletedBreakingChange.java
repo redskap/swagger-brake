@@ -22,4 +22,9 @@ public class RequestParameterDeletedBreakingChange implements BreakingChange {
     public String getMessage() {
         return format("%s parameter has been deleted in %s %s", name, method, path);
     }
+
+    @Override
+    public String getRuleCode() {
+        return "R004";
+    }
 }

@@ -21,4 +21,9 @@ public class PathDeletedBreakingChange implements BreakingChange {
     public String getMessage() {
         return format("Path %s %s has been deleted", path, method);
     }
+
+    @Override
+    public String getRuleCode() {
+        return "R002";
+    }
 }

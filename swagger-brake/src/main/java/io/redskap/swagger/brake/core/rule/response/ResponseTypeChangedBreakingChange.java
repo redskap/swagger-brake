@@ -25,4 +25,9 @@ public class ResponseTypeChangedBreakingChange implements BreakingChange {
     public String getMessage() {
         return format("Response type was changed for response %s in %s %s at attribute %s from %s to %s", code, method, path, attribute, oldType, newType);
     }
+
+    @Override
+    public String getRuleCode() {
+        return "R015";
+    }
 }

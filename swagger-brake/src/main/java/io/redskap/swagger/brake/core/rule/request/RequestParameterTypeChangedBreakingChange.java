@@ -25,4 +25,9 @@ public class RequestParameterTypeChangedBreakingChange implements BreakingChange
     public String getMessage() {
         return format("%s parameter type has been changed in %s %s at attribute %s from %s to %s", name, method, path, attributeName, oldType, newType);
     }
+
+    @Override
+    public String getRuleCode() {
+        return "R008";
+    }
 }

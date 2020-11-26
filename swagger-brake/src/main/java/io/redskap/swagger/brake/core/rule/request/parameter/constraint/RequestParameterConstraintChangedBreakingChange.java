@@ -24,4 +24,9 @@ public class RequestParameterConstraintChangedBreakingChange implements Breaking
         return format("The %s constraint for attribute %s was changed in %s %s from %s to %s ", constraintChange.getAttribute(),
             attributeName, method, path, constraintChange.getOldValue(), constraintChange.getNewValue());
     }
+
+    @Override
+    public String getRuleCode() {
+        return "R017";
+    }
 }

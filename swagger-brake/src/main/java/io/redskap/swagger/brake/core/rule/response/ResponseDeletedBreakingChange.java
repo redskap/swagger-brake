@@ -22,4 +22,9 @@ public class ResponseDeletedBreakingChange implements BreakingChange {
     public String getMessage() {
         return format("Response %s has been removed from %s %s", code, method, path);
     }
+
+    @Override
+    public String getRuleCode() {
+        return "R012";
+    }
 }

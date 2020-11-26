@@ -22,5 +22,10 @@ public class RequestParameterRequiredBreakingChange implements BreakingChange {
     public String getMessage() {
         return format("Request parameter %s is required in %s %s", attribute, method, path);
     }
+
+    @Override
+    public String getRuleCode() {
+        return "R007";
+    }
 }
 

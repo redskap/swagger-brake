@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
-import io.redskap.swagger.brake.core.CheckerOptionsProvider;
 import io.redskap.swagger.brake.core.model.Path;
 import io.redskap.swagger.brake.core.model.Specification;
 import io.redskap.swagger.brake.core.rule.BreakingChangeRule;
@@ -16,8 +15,6 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @RequiredArgsConstructor
 public class StandardApiToBetaApiRule implements BreakingChangeRule<StandardApiToBetaApiBreakingChange> {
-    private final CheckerOptionsProvider checkerOptionsProvider;
-
     @Override
     public Collection<StandardApiToBetaApiBreakingChange> checkRule(Specification oldApi, Specification newApi) {
         log.debug("Checking for standard API to beta API change..");

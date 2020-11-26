@@ -23,4 +23,9 @@ public class RequestParameterEnumValueDeletedBreakingChange implements BreakingC
     public String getMessage() {
         return format("Enum value %s has been deleted for parameter %s in %s %s", enumValue, name, method, path);
     }
+
+    @Override
+    public String getRuleCode() {
+        return "R005";
+    }
 }

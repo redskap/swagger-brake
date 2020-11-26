@@ -41,7 +41,9 @@ public class JsonReporterTest {
     @Test
     public void testReportShouldWorkCorrectly() throws IOException {
         // given
-        Collection<BreakingChange> breakingChanges = Collections.singletonList(mock(BreakingChange.class));
+        BreakingChange bc = mock(BreakingChange.class);
+
+        Collection<BreakingChange> breakingChanges = Collections.singletonList(bc);
 
         String outputFilePath = "outputFilePath";
         Options options = new Options();
@@ -49,6 +51,7 @@ public class JsonReporterTest {
 
         String content = "content";
         given(jsonConverter.convert(any())).willReturn(content);
+        given(bc.getRuleCode()).willReturn("RXY");
         // when
         underTest.report(breakingChanges, options);
         // then

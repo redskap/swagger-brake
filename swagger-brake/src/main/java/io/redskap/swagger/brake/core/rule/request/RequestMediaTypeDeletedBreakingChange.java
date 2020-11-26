@@ -23,4 +23,9 @@ public class RequestMediaTypeDeletedBreakingChange implements BreakingChange {
     public String getMessage() {
         return format("%s media type request was removed from %s %s", mediaType, method, path);
     }
+
+    @Override
+    public String getRuleCode() {
+        return "R003";
+    }
 }

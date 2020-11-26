@@ -22,4 +22,9 @@ public class RequestTypeEnumValueDeletedBreakingChange implements BreakingChange
     public String getMessage() {
         return format("Enum value %s has been deleted in request body in %s %s", enumValue, method, path);
     }
+
+    @Override
+    public String getRuleCode() {
+        return "R011";
+    }
 }

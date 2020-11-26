@@ -22,4 +22,9 @@ public class ResponseTypeEnumValueDeletedBreakingChange implements BreakingChang
     public String getMessage() {
         return format("Enum value %s has been deleted in %s %s", enumValue, method, path);
     }
+
+    @Override
+    public String getRuleCode() {
+        return "R016";
+    }
 }

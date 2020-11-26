@@ -25,6 +25,7 @@
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
+                            <th>Rule code</th>
                             <th>Path</th>
                             <th>Method</th>
                             <th>Name</th>
@@ -34,6 +35,7 @@
                     <tbody>
                     {{#data.breakingChanges}}
                         <tr>
+                            <td>{{ruleCode}}</td>
                             <td>{{path}}</td>
                             <td>{{method}}</td>
                             <td>{{name}}</td>

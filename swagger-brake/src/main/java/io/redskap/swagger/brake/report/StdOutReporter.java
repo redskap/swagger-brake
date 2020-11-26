@@ -15,7 +15,7 @@ class StdOutReporter implements Reporter, CheckableReporter {
     public void report(Collection<BreakingChange> breakingChanges, Options options) {
         if (!breakingChanges.isEmpty()) {
             System.err.println("There were breaking API changes");
-            breakingChanges.stream().map(BreakingChange::getMessage).forEach(System.err::println);
+            breakingChanges.stream().map(bc -> bc.getRuleCode() + bc.getMessage()).forEach(System.err::println);
         } else {
             System.out.println("No breaking API changes detected");
         }
