@@ -16,6 +16,16 @@ module.exports = {
     docsDir: 'src-docs/src',
     editLinkText: 'Help improve these docs!',
     lastUpdated: true,
+    nav: [
+      {
+        text: 'Author\'s blog',
+        link: 'https://arnoldgalovics.com/',
+      },
+      {
+        text: 'Twitter',
+        link: 'https://twitter.com/ArnoldGalovics',
+      }
+    ],
     sidebar: [
       '/',
       '/configuration/',
