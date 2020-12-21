@@ -1,11 +1,27 @@
 # Changelog
 
-## 2.2.0-SNAPSHOT
+## 2.3.0-SNAPSHOT
 **Under development**
 
 TBD
 
-Planned release date TBD
+Planned release date 2021Q1
+
+## 2.2.0
+### CLI and Core
+* [#44](https://github.com/redskap/swagger-brake/issues/44) Support for Array minItems/maxItems/uniqueItems constraints
+* [#43](https://github.com/redskap/swagger-brake/issues/43) Support for String minLength/maxLength constraints
+* [#42](https://github.com/redskap/swagger-brake/issues/42) swagger-brake not reporting violation in breaking changes | MIN/MAX validation | POST object mandatory field validation
+
+CLI download: [swagger-brake-2.2.0-cli.jar](https://github.com/redskap/swagger-brake/releases/download/2.2.0/swagger-brake-2.2.0-cli.jar)
+
+### Maven plugin
+* [#20](https://github.com/redskap/swagger-brake-maven-plugin/issues/20) Upgrade Swagger Brake to 2.2.0
+
+### Gradle plugin
+* [#20](https://github.com/redskap/swagger-brake-gradle/issues/20) Upgrade Swagger Brake to 2.2.0
+
+Released at 2020-12-21
 
 ## 2.1.0 
 ### CLI and Core
@@ -17,10 +33,10 @@ Planned release date TBD
 CLI download: [swagger-brake-2.1.0-cli.jar](https://github.com/redskap/swagger-brake/releases/download/2.1.0/swagger-brake-2.1.0-cli.jar)
 
 ### Maven plugin
-* Upgrade Swagger Brake to 2.1.0
+* [#18](https://github.com/redskap/swagger-brake-gradle/issues/18) Upgrade Swagger Brake to 2.1.0
 
 ### Gradle plugin
-* Upgrade Swagger Brake to 2.1.0
+* [#19](https://github.com/redskap/swagger-brake-gradle/issues/19) Upgrade Swagger Brake to 2.1.0
 
 Released at 2020-09-06
 
