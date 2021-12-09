@@ -19,6 +19,7 @@ public enum CliOption {
     ARTIFACT_ID("artifactId"),
     GROUP_ID("groupId"),
     CURRENT_ARTIFACT_VERSION("current-artifact-version"),
+    ARTIFACT_PACKAGING("artifact-packaging"),
 
     DEPRECATED_API_DELETION_ALLOWED("deprecated-api-deletion-allowed"),
 

@@ -39,7 +39,7 @@ public class Maven2UrlFactory {
     public String createLatestArtifactUrl(DownloadOptions options, String latestFilename, String latestVersion) {
         String repoUrl = getRepoUrl(options);
         String artifactBasePathUrl = createLatestArtifactBasePathUrl(options, repoUrl);
-        return format("%s/%s/%s.jar", artifactBasePathUrl, latestVersion, latestFilename);
+        return format("%s/%s/%s.%s", artifactBasePathUrl, latestVersion, latestFilename, options.getArtifactPackaging().getPackaging());
     }
 
     private String createLatestArtifactBasePathUrl(DownloadOptions options, String repoUrl) {

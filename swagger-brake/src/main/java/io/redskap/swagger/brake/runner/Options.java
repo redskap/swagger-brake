@@ -20,6 +20,7 @@ public class Options {
     private String mavenRepoUsername;
     private String mavenRepoPassword;
     private String currentArtifactVersion;
+    private ArtifactPackaging artifactPackaging;
 
     private Boolean deprecatedApiDeletionAllowed;
 

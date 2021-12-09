@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
+import io.redskap.swagger.brake.maven.DownloadOptions;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
@@ -18,13 +19,13 @@ import org.springframework.stereotype.Component;
 class TemporaryJarFileDownloader {
     private final HttpClient httpClient;
 
-    File download(HttpUriRequest httpRequest) {
+    File download(DownloadOptions options, HttpUriRequest httpRequest) {
         try {
-            log.debug("Downloading JAR from {}", httpRequest.getURI());
-            File destination = Files.createTempFile("swagger-brake", ".jar").toFile();
+            log.debug("Downloading artifact from {}", httpRequest.getURI());
+            File destination = Files.createTempFile("swagger-brake", "." + options.getArtifactPackaging().getPackaging()).toFile();
             HttpResponse response = httpClient.execute(httpRequest);
             FileUtils.copyInputStreamToFile(response.getEntity().getContent(), destination);
-            log.debug("Created temporary JAR file to {}", destination.getAbsolutePath());
+            log.debug("Created temporary artifact file to {}", destination.getAbsolutePath());
             return destination;
         } catch (IOException e) {
             throw new RuntimeException(e);

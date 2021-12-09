@@ -1,5 +1,6 @@
 package io.redskap.swagger.brake.maven;
 
+import io.redskap.swagger.brake.runner.ArtifactPackaging;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
@@ -12,6 +13,7 @@ public class DownloadOptions {
     private String username;
     private String password;
     private String currentArtifactVersion;
+    private ArtifactPackaging artifactPackaging;
 
     public boolean isAuthenticationNeeded() {
         return StringUtils.isNotBlank(username) && StringUtils.isNotBlank(password);

@@ -20,6 +20,7 @@ public class DownloadOptionsFactory {
         result.setUsername(options.getMavenRepoUsername());
         result.setPassword(options.getMavenRepoPassword());
         result.setCurrentArtifactVersion(options.getCurrentArtifactVersion());
+        result.setArtifactPackaging(options.getArtifactPackaging());
         return result;
     }
 }

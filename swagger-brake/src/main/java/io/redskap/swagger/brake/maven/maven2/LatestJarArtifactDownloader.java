@@ -17,6 +17,6 @@ class LatestJarArtifactDownloader {
     File download(DownloadOptions options, String latestFilename, String latestVersion) {
         String url = urlFactory.createLatestArtifactUrl(options, latestFilename, latestVersion);
         HttpUriRequest httpRequest = requestFactory.create(url, options);
-        return temporaryJarFileDownloader.download(httpRequest);
+        return temporaryJarFileDownloader.download(options, httpRequest);
     }
 }

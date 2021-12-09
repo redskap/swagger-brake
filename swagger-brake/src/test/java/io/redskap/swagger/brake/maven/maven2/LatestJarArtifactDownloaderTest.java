@@ -39,7 +39,7 @@ public class LatestJarArtifactDownloaderTest {
         File expected = mock(File.class);
         given(urlFactory.createLatestArtifactUrl(options, latestSnapshotName, latestVersion)).willReturn(url);
         given(requestFactory.create(url, options)).willReturn(request);
-        given(temporaryJarFileDownloader.download(request)).willReturn(expected);
+        given(temporaryJarFileDownloader.download(options, request)).willReturn(expected);
         // when
         File result = underTest.download(options, latestSnapshotName, latestVersion);
         // then
