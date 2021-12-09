@@ -1,0 +1,66 @@
+swagger: '2.0'
+info:
+  description: ABC
+  version: 1.0.5
+  title: Swagger Petstore
+  termsOfService: 'http://swagger.io/terms/'
+host: petstore.swagger.io
+basePath: /v2
+schemes:
+  - https
+  - http
+paths:
+  /pet/uploadImage:
+    put:
+      tags:
+        - pet
+      summary: Update an existing pet
+      description: ''
+      operationId: updatePet
+      parameters:
+        - in: body
+          name: body
+          description: Pet object that needs to be added to the store
+          required: true
+          schema:
+            $ref: '#/definitions/Pet'
+      responses:
+        '400':
+          description: Invalid ID supplied
+definitions:
+  Pet:
+    type: object
+    required:
+      - id
+      - breed
+    properties:
+      id:
+        type: integer
+        format: int64
+      petFood:
+        $ref: '#/definitions/PetFood'
+      breed:
+        $ref: '#/definitions/Breed'
+  PetFood:
+    type: object
+    required:
+      - name
+    properties:
+      name:
+        type: string
+  Breed:
+    type: object
+    required:
+      - name
+    properties:
+      name:
+        type: string
+      details:
+        $ref: '#/definitions/BreedDetails'
+  BreedDetails:
+    type: object
+    required:
+      - weight
+    properties:
+      weight:
+        type: integer

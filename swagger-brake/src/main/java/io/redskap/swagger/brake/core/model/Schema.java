@@ -12,7 +12,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
-import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.util.CollectionUtils;
@@ -107,11 +106,38 @@ public class Schema {
         if (CollectionUtils.isEmpty(schemaAttrs)) {
             schemaAttrs = Optional.ofNullable(schema).map(Schema::getSchemaAttributes).orElse(Collections.emptySet());
         }
-        return internalGetAttributeData(schemaAttrs, "", SchemaAttribute::isRequired)
-            .stream()
-            .filter(p -> BooleanUtils.isTrue(p.getRight()))
-            .map(Pair::getLeft)
-            .collect(toSet());
+        Map<String, Boolean> attributeRequiredMap = internalGetAttributeData(schemaAttrs, "", SchemaAttribute::isRequired)
+                .stream()
+                .collect(toMap(Pair::getLeft, Pair::getRight));
+        Set<String> result = new HashSet<>();
+        for (Map.Entry<String, Boolean> entry : attributeRequiredMap.entrySet()) {
+            String attributeName = entry.getKey();
+            Boolean attributeIsRequired = entry.getValue();
+            if (attributeName.contains(".")) {
+                boolean hierarchicallyNotRequired = false;
+                List<String> pieces = Arrays.asList(attributeName.split("\\."));
+                for (int i = 0; i < pieces.size(); i++) {
+                    StringJoiner stringJoiner = new StringJoiner(".");
+                    pieces.subList(0, i + 1).forEach(stringJoiner::add);
+                    String attrToSearchFor = stringJoiner.toString();
+                    Boolean isRequired = attributeRequiredMap.get(attrToSearchFor);
+                    if (!isRequired) {
+                        hierarchicallyNotRequired = true;
+                        break;
+                    }
+                }
+                if (!hierarchicallyNotRequired) {
+                    if (attributeIsRequired) {
+                        result.add(attributeName);
+                    }
+                }
+            } else {
+                if (attributeIsRequired) {
+                    result.add(attributeName);
+                }
+            }
+        }
+        return result;
     }
 
     /**
