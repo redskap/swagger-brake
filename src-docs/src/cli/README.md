@@ -70,6 +70,8 @@ The functionality requires the following parameters:
   * The version of the artifact that contains the new API. This is used to determine if the snapshot, 
 or the release repository needs to be used. 
     * Example values are: 1.0.0, 1.0.0-SNAPSHOT
+* `--artifact-packaging`
+  * Specifies the artifact packaging. Could be jar or war. Used when resolving the latest artifact version.
     
 Example command:
 ```bash
@@ -130,6 +132,7 @@ $ java -jar swagger-brake.jar --old-api=swagger.yaml --new-api=swagger2.yaml --e
 | `--groupId`                                | The groupId of the artifact.                                                                                                                              |
 | `--artifactId`                             | The artifactId of the artifact.                                                                                                                           |
 | `--current-artifact-version`               | The version of the artifact that contains the new API. This is used to determine if the snapshot, or the release repository needs to be used.             |
+| `--artifact-packaging`                     | Specifies the artifact packaging. Could be jar or war. Used when resolving the latest artifact version. Defaults to jar if not specified.                 |
 | `--api-filename`                           | The filename to search for within the artifact.                                                                                                           |
 | `--beta-api-extension-name`                | The name of the custom vendor extension attribute that denotes beta APIs.                                                                                 |
 | `--excluded-paths`                         | A comma separated list of path prefixes that shall be excluded from the scan.                

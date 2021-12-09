@@ -183,6 +183,15 @@ Example configuration with authentication:
 ...
 ```
 
+You can also configure the packaging of your artifact using the `artifactPackaging` property.
+
+Possible values are:
+* jar
+* war
+
+However, keep in mind that the plugin tries to automatically resolve which packaging is most appropriate.
+Only set it if you experience issues.
+
 ## Beta API support
 For further reference, check out [Beta API support](../configuration/README.md#beta-api-support) 
 in the Configuration section.
@@ -263,6 +272,7 @@ Example:
 | `<groupId>`                | `${project.groupId}`                       |
 | `<artifactId>`             | `${project.artifactId}`                    |
 | `<currentArtifactVersion>` | `${project.version}`                       |
+| `<artifactPackaging>`      | `${project.packaging}`                     |
 
 ## Full list of parameters
 | Parameter                  | Description                                                                                                                                               |
@@ -278,6 +288,7 @@ Example:
 | `<groupId>`                | The groupId of the artifact.                                                                                                                              |
 | `<artifactId>`             | The artifactId of the artifact.                                                                                                                           |
 | `<currentArtifactVersion>` | The version of the artifact that contains the new API. This is used to determine if the snapshot, or the release repository needs to be used.             |
+| `<artifactPackaging>`      | Specifies the artifact packaging. Could be jar or war. Defaults to jar. If the `<packaging>` property is set on the project, it'll be used.               |
 | `<apiFilename>`            | The filename to search for within the artifact.                                                                                                           |
 | `<betaApiExtensionName>`   | The name of the custom vendor extension attribute that denotes beta APIs.                                                                                 |
 | `<excludedPaths>`          | A  list of path prefixes that shall be excluded from the scan.                                                                                            |
