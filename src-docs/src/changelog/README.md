@@ -1,11 +1,23 @@
 # Changelog
 
-## 2.3.0-SNAPSHOT
-**Under development**
-
+## 2.4.0-SNAPSHOT
 TBD
 
-Planned release date 2021Q1
+## 2.3.0
+### CLI and Core
+* [#61](https://github.com/redskap/swagger-brake/issues/61) Add support for war files
+* [#54](https://github.com/redskap/swagger-brake/issues/54) Required fields in nested definitions are being reported as breaking when they are not
+
+CLI download: [swagger-brake-2.3.0-cli.jar](https://github.com/redskap/swagger-brake/releases/download/2.3.0/swagger-brake-2.3.0-cli.jar)
+
+### Maven plugin
+* [#22](https://github.com/redskap/swagger-brake-maven-plugin/issues/22) Upgrade Swagger Brake to 2.3.0
+* [#21](https://github.com/redskap/swagger-brake-maven-plugin/issues/21) Add support for war files
+
+### Gradle plugin
+* [#22](https://github.com/redskap/swagger-brake-gradle/issues/22) Upgrade Swagger Brake to 2.3.0
+
+Released at 2021-12-09
 
 ## 2.2.0
 ### CLI and Core
