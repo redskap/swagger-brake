@@ -12,6 +12,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.util.CollectionUtils;
@@ -120,7 +121,7 @@ public class Schema {
                     StringJoiner stringJoiner = new StringJoiner(".");
                     pieces.subList(0, i + 1).forEach(stringJoiner::add);
                     String attrToSearchFor = stringJoiner.toString();
-                    Boolean isRequired = attributeRequiredMap.get(attrToSearchFor);
+                    boolean isRequired = BooleanUtils.toBoolean(attributeRequiredMap.get(attrToSearchFor));
                     if (!isRequired) {
                         hierarchicallyNotRequired = true;
                         break;
