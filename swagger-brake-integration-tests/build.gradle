@@ -3,26 +3,24 @@ repositories {
 }
 
 dependencies {
-	testCompile "ch.qos.logback:logback-core:1.2.11"
-	testCompile "ch.qos.logback:logback-classic:1.2.11"
-
-	testCompile "org.awaitility:awaitility:4.2.0"
-	testCompile "org.seleniumhq.selenium:selenium-java:4.4.0"
-	testCompile "org.seleniumhq.selenium:selenium-chrome-driver:4.4.0"
-	testCompile "io.github.bonigarcia:webdrivermanager:4.4.3"
-
-	testCompile "org.testcontainers:testcontainers:1.17.3"
-	testCompile "org.apache.httpcomponents:httpclient:4.5.13"
-	testCompile "org.projectlombok:lombok:1.18.24"
+	testImplementation "ch.qos.logback:logback-core:1.2.11"
+	testImplementation "ch.qos.logback:logback-classic:1.2.11"
+	testImplementation "org.awaitility:awaitility:4.2.0"
+	testImplementation "org.seleniumhq.selenium:selenium-java:4.4.0"
+	testImplementation "org.seleniumhq.selenium:selenium-chrome-driver:4.4.0"
+	testImplementation "io.github.bonigarcia:webdrivermanager:4.4.3"
+	testImplementation "org.testcontainers:testcontainers:1.17.3"
+	testImplementation "org.apache.httpcomponents:httpclient:4.5.13"
+	testImplementation "org.projectlombok:lombok:1.18.24"
 	testAnnotationProcessor "org.projectlombok:lombok:1.18.24"
-	testCompile "org.testng:testng:7.5"
-	testCompile "org.assertj:assertj-core:3.23.1"
-	testCompile "org.springframework:spring-test:5.3.22"
-	testCompile "org.mockito:mockito-core:2.28.2"
-	testCompile "org.apache.maven.shared:maven-invoker:3.2.0"
-	testCompile "com.google.code.gson:gson:2.9.1"
+	testImplementation "org.testng:testng:7.5"
+	testImplementation "org.assertj:assertj-core:3.23.1"
+	testImplementation "org.springframework:spring-test:5.3.22"
+	testImplementation "org.mockito:mockito-core:2.28.2"
+	testImplementation "org.apache.maven.shared:maven-invoker:3.2.0"
+	testImplementation "com.google.code.gson:gson:2.9.1"
 
-	testCompile project(":swagger-brake-cli")
+	testImplementation project(":swagger-brake-cli")
 }
 
 test {

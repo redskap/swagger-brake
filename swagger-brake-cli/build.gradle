@@ -15,9 +15,9 @@ repositories {
 apply plugin: 'com.github.johnrengelman.shadow'
 
 dependencies {
-    compile project(":swagger-brake")
-    compile "ch.qos.logback:logback-core:1.2.11"
-    compile "ch.qos.logback:logback-classic:1.2.11"
+    implementation project(":swagger-brake")
+    implementation "ch.qos.logback:logback-core:1.2.11"
+    implementation "ch.qos.logback:logback-classic:1.2.11"
 }
 
 jar {
