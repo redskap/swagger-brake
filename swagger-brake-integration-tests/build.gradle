@@ -3,8 +3,8 @@ repositories {
 }
 
 dependencies {
-	testCompile "ch.qos.logback:logback-core:1.4.0"
-	testCompile "ch.qos.logback:logback-classic:1.4.0"
+	testCompile "ch.qos.logback:logback-core:1.2.11"
+	testCompile "ch.qos.logback:logback-classic:1.2.11"
 
 	testCompile "org.awaitility:awaitility:4.2.0"
 	testCompile "org.seleniumhq.selenium:selenium-java:4.4.0"
@@ -15,7 +15,7 @@ dependencies {
 	testCompile "org.apache.httpcomponents:httpclient:4.5.13"
 	testCompile "org.projectlombok:lombok:1.18.24"
 	testAnnotationProcessor "org.projectlombok:lombok:1.18.24"
-	testCompile "org.testng:testng:7.6.1"
+	testCompile "org.testng:testng:7.5"
 	testCompile "org.assertj:assertj-core:3.23.1"
 	testCompile "org.springframework:spring-test:5.3.22"
 	testCompile "org.mockito:mockito-core:2.28.2"
