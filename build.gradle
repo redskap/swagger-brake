@@ -3,8 +3,13 @@ version '2.4.0-SNAPSHOT'
 
 buildscript {
     repositories {
-        jcenter()
         mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.github.spotbugs.snom:spotbugs-gradle-plugin:5.0.12"
     }
 }
 
@@ -17,23 +22,31 @@ subprojects {
     version = rootProject.version
 
     apply plugin: 'java'
-    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
     apply plugin: 'checkstyle'
-    apply plugin: 'findbugs'
+    apply plugin: 'com.github.spotbugs'
 
     sourceCompatibility = 1.8
 
     dependencies {
+        compileOnly "com.github.spotbugs:spotbugs-annotations:${spotbugs.toolVersion.get()}"
+        testCompileOnly "com.github.spotbugs:spotbugs-annotations:${spotbugs.toolVersion.get()}"
+
         compileOnly "org.projectlombok:lombok:1.18.24"
+        annotationProcessor "org.projectlombok:lombok:1.18.24"
 
-        compile "org.springframework:spring-context:5.3.22"
-        compile "com.google.code.findbugs:findbugs-annotations:3.0.1"
-        compile "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.4"
+        implementation 'com.google.guava:guava:31.1-jre'
+        implementation "org.apache.commons:commons-collections4:4.4"
+        implementation "org.apache.commons:commons-lang3:3.12.0"
+        implementation "org.apache.commons:commons-lang3:3.12.0"
+        implementation "org.springframework:spring-context:5.3.22"
+        implementation "org.springframework:spring-context:5.3.22"
+        implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.4"
 
-        testCompile "junit:junit:4.13.2"
-        testCompile "org.assertj:assertj-core:3.23.1"
-        testCompile "org.springframework:spring-test:5.3.22"
-        testCompile "org.mockito:mockito-core:2.28.2"
+        testImplementation "junit:junit:4.13.2"
+        testImplementation "org.assertj:assertj-core:3.23.1"
+        testImplementation "org.springframework:spring-test:5.3.22"
+        testImplementation "org.mockito:mockito-core:2.28.2"
     }
 
     checkstyle {
@@ -47,11 +60,9 @@ subprojects {
         }
     }
 
-    tasks.withType(FindBugs) {
-        reports {
-            xml.enabled false
-            html.enabled true
-        }
+    spotbugs {
+        reportLevel = 'high'
+        showProgress = false
     }
 
     //<editor-fold desc="Uploading to central">
@@ -73,34 +84,28 @@ subprojects {
 
     if (project.hasProperty('signing.keyId')) {
         signing {
-            sign configurations.archives
+            sign publishing.publications.mavenJava
         }
     }
 
     if (project.hasProperty('ossrhUsername') && project.hasProperty('ossrhPassword')) {
-        uploadArchives {
-            repositories {
-                mavenDeployer {
-                    beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+        publishing {
+            publications {
+                mavenJava(MavenPublication) {
+                    groupId = project.group
+                    artifactId = project.name
+                    version = project.version
 
-                    repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                        authentication(userName: ossrhUsername, password: ossrhPassword)
-                    }
-
-                    snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                        authentication(userName: ossrhUsername, password: ossrhPassword)
-                    }
-
-                    pom.project {
+                    pom {
                         name 'Swagger Brake'
                         packaging 'jar'
                         description 'Swagger contract checker for breaking API changes'
                         url 'https://github.com/redskap/swagger-brake'
 
                         scm {
-                            connection 'scm:git:git://github.com/redskap/swagger-brake.git'
-                            developerConnection 'scm:git:ssh://github.com:redskap/swagger-brake.git'
-                            url 'https://github.com/redskap/swagger-brake'
+                            connection = 'scm:git:git://github.com/redskap/swagger-brake.git'
+                            developerConnection = 'scm:git:ssh://github.com:redskap/swagger-brake.git'
+                            url = 'https://github.com/redskap/swagger-brake'
                         }
 
                         licenses {
@@ -117,6 +122,21 @@ subprojects {
                                 email 'info@arnoldgalovics.com'
                             }
                         }
+                        scm {
+                            connection = 'scm:git:git://github.com/redskap/swagger-brake.git'
+                            developerConnection = 'scm:git:ssh://github.com:redskap/swagger-brake.git'
+                            url = 'https://github.com/redskap/swagger-brake'
+                        }
+                    }
+                }
+            }
+            repositories {
+                maven {
+                    url = isReleaseBuild() ? 'https://oss.sonatype.org/service/local/staging/deploy/maven2/' : 'https://oss.sonatype.org/content/repositories/snapshots/'
+
+                    credentials {
+                        username = ossrhUsername
+                        password = ossrhPassword
                     }
                 }
             }
