@@ -1,5 +1,9 @@
 name: Integration tests - Corretto JDK 8
-on: [ push, pull_request ]
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 permissions:
   contents: read
