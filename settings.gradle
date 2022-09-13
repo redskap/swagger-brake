@@ -2,4 +2,5 @@ rootProject.name = 'swagger-brake-root'
 
 include 'swagger-brake'
 include 'swagger-brake-cli'
+include 'swagger-brake-integration-tests'
 

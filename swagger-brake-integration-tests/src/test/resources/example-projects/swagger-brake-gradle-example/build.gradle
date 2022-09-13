@@ -1,0 +1,109 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots"
+        }
+    }
+    dependencies {
+        classpath("io.swagger:swagger-codegen:2.3.1")
+        classpath "io.redskap:swagger-brake-gradle:${swaggerBrakeVersion}"
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.25.1"
+    }
+}
+
+group = 'io.redskap.example'
+version = '<VERSION_PLACEHOLDER>'
+
+apply plugin: 'java'
+apply plugin: "maven"
+apply plugin: "maven-publish"
+apply plugin: "com.jfrog.artifactory"
+apply plugin: "io.redskap.swagger-brake"
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots"
+    }
+}
+import io.swagger.codegen.DefaultGenerator
+import io.swagger.codegen.config.CodegenConfigurator
+
+ext.artifactoryContextUrl       = "${artifactoryContextUrl}"
+ext.artifactoryRepoKey          = "${artifactoryRepoKey}"
+ext.artifactoryRepoUrl          = "${artifactoryRepoUrl}"
+ext.artifactorySnapshotRepoKey  = "${artifactorySnapshotRepoKey}"
+ext.artifactorySnapshotRepoUrl  = "${artifactorySnapshotRepoUrl}"
+ext.artifactoryUsername         = "${artifactoryUsername}"
+ext.artifactoryPassword         = "${artifactoryPassword}"
+ext.isSnapshotVersion           = "${customVersion}".endsWith("-SNAPSHOT")
+ext.packaging                   = "${packaging}"
+
+
+if (packaging.equalsIgnoreCase("war")) {
+    apply plugin: 'war'
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.web
+            }
+        }
+    }
+} else {
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+            }
+        }
+    }
+}
+
+swaggerBrake {
+    mavenRepoUrl = artifactoryRepoUrl
+    mavenSnapshotRepoUrl = artifactorySnapshotRepoUrl
+    mavenRepoUsername = artifactoryUsername
+    mavenRepoPassword = artifactoryPassword
+    newApi = "${project.buildDir}/resources/main/swagger.yaml"
+    outputFormats = ["HTML", "JSON"]
+}
+
+artifactory {
+    contextUrl = artifactoryContextUrl
+    publish {
+        repository {
+            repoKey  = isSnapshotVersion ? artifactorySnapshotRepoKey : artifactoryRepoKey
+            username = artifactoryUsername
+            password = artifactoryPassword
+        }
+        defaults {
+            publications ('mavenJava')
+            publishConfigs('archives', 'published')
+            publishBuildInfo = true
+            publishArtifacts = true
+            publishPom = true
+        }
+    }
+    clientConfig.info.setBuildNumber('' + new java.util.Random(System.currentTimeMillis()).nextInt(20000))
+    clientConfig.timeout = 600
+}
+
+task generateApi {
+    doLast {
+        def config = new CodegenConfigurator()
+        config.setLang("swagger")
+        config.setInputSpec("${project.rootDir}/src/main/resources/swagger.yaml")
+        config.setOutputDir(project.buildDir.toString())
+        new DefaultGenerator().opts(config.toClientOptInput()).generate()
+    }
+}
+
+compileJava.dependsOn('generateApi')

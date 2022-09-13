@@ -1,0 +1,35 @@
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	testCompile "ch.qos.logback:logback-core:1.2.3"
+	testCompile "ch.qos.logback:logback-classic:1.2.3"
+
+	testCompile "org.awaitility:awaitility:4.0.3"
+	testCompile "org.seleniumhq.selenium:selenium-java:4.0.0-alpha-6"
+	testCompile "org.seleniumhq.selenium:selenium-chrome-driver:4.0.0-alpha-6"
+	testCompile "io.github.bonigarcia:webdrivermanager:4.0.0"
+
+	testCompile "org.testcontainers:testcontainers:1.16.2"
+	testCompile "org.apache.httpcomponents:httpclient:4.5.6"
+	testCompile "org.projectlombok:lombok:1.18.2"
+	testAnnotationProcessor "org.projectlombok:lombok:1.18.2"
+	testCompile "org.testng:testng:7.1.0"
+	testCompile "org.assertj:assertj-core:3.11.1"
+	testCompile "org.springframework:spring-test:5.1.1.RELEASE"
+	testCompile "org.mockito:mockito-core:2.23.0"
+	testCompile "org.apache.maven.shared:maven-invoker:3.0.1"
+	testCompile "com.google.code.gson:gson:2.8.6"
+
+	testCompile project(":swagger-brake-cli")
+}
+
+test {
+	useTestNG() {
+		suites 'src/test/resources/testng.xml'
+	}
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
+}
