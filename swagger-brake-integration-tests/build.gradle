@@ -16,7 +16,7 @@ dependencies {
 	testImplementation "org.testng:testng:7.5"
 	testImplementation "org.assertj:assertj-core:3.23.1"
 	testImplementation "org.springframework:spring-test:5.3.22"
-	testImplementation "org.mockito:mockito-core:2.28.2"
+	testImplementation "org.mockito:mockito-core:4.8.0"
 	testImplementation "org.apache.maven.shared:maven-invoker:3.2.0"
 	testImplementation "com.google.code.gson:gson:2.9.1"
 
