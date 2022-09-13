@@ -5,6 +5,7 @@
     "group:allNonMajor"
   ],
   "ignorePaths": [
-    "docs/**"
+    "docs/**",
+    "swagger-brake-integration-tests/src/test/resources/example-projects/**"
   ]
 }
