@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath "com.github.jengelman.gradle.plugins:shadow:4.0.2"
+        classpath "com.github.jengelman.gradle.plugins:shadow:4.0.4"
     }
 }
 
@@ -16,8 +16,8 @@ apply plugin: 'com.github.johnrengelman.shadow'
 
 dependencies {
     compile project(":swagger-brake")
-    compile "ch.qos.logback:logback-core:1.2.3"
-    compile "ch.qos.logback:logback-classic:1.2.3"
+    compile "ch.qos.logback:logback-core:1.4.0"
+    compile "ch.qos.logback:logback-classic:1.4.0"
 }
 
 jar {
