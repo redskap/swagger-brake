@@ -3,7 +3,7 @@ FROM openjdk:8-jdk as baseimage
 
 WORKDIR swagger-brake
 COPY . .
-RUN sh gradlew clean build shadowJar
+RUN sh gradlew clean build shadowJar -x test
 
 # Actual container
 FROM openjdk:8-jdk
