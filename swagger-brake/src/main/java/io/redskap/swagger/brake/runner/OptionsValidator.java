@@ -62,9 +62,14 @@ public class OptionsValidator {
     }
 
     private boolean isAnyRepoSet(Options options) {
-        String mavenRepoUrl = mavenConfigMap.get(getMavenRepoUrlName()).apply(options);
-        String mavenSnapshotRepoUrl = mavenConfigMap.get(getMavenSnapshotRepoUrlName()).apply(options);
-        return isNotBlank(mavenRepoUrl) || isNotBlank(mavenSnapshotRepoUrl);
+        Function<Options, String> mavenRepoUrlFunction = mavenConfigMap.get(getMavenRepoUrlName());
+        Function<Options, String> mavenSnapshotRepoUrlFunction = mavenConfigMap.get(getMavenSnapshotRepoUrlName());
+        if (mavenRepoUrlFunction != null && mavenSnapshotRepoUrlFunction != null) {
+            String mavenRepoUrl = mavenRepoUrlFunction.apply(options);
+            String mavenSnapshotRepoUrl = mavenSnapshotRepoUrlFunction.apply(options);
+            return isNotBlank(mavenRepoUrl) || isNotBlank(mavenSnapshotRepoUrl);
+        }
+        throw new IllegalStateException("mavenConfigMap is not configured properly");
     }
 
     private boolean isFullMavenConfigurationSet(Options options) {

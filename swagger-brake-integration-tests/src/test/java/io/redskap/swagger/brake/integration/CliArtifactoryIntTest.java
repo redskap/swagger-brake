@@ -20,7 +20,6 @@ import org.testng.annotations.Test;
 
 public class CliArtifactoryIntTest {
     public static final String GROUP_ID = "io.redskap.example";
-    public static final String ARTIFACT_ID = "example-project";
 
     private final Network commonNetwork = NetworkHolder.getInstance();
     private final ArtifactoryServerPool artifactoryServerPool = ArtifactoryServerPool.getInstance();
