@@ -1,6 +1,5 @@
 package io.redskap.swagger.brake.core.model.transformer;
 
-import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
@@ -77,11 +76,10 @@ public class SchemaTransformer implements Transformer<io.swagger.v3.oas.models.m
     private Schema transformSchema(io.swagger.v3.oas.models.media.Schema swSchema) {
         String ref = swSchema.get$ref();
         if (isNotBlank(ref) && SeenRefHolder.isNotSeen(ref)) {
-            io.swagger.v3.oas.models.media.Schema resolvedSchema = getSchemaForRef(ref);
             SeenRefHolder.store(ref);
-            Schema schema = internalTransform(resolvedSchema);
+            Schema resolvedSchema = getSchemaForRef(ref);
             SeenRefHolder.remove(ref);
-            return schema;
+            return resolvedSchema;
         }
         String schemaType = swSchema.getType();
         if (isNotBlank(ref) && SeenRefHolder.isSeen(ref) && isBlank(schemaType)) {
@@ -114,19 +112,20 @@ public class SchemaTransformer implements Transformer<io.swagger.v3.oas.models.m
         if (CollectionUtils.isNotEmpty(swSchema.getRequired())) {
             requiredAttributes.addAll(swSchema.getRequired());
         }
-        return properties.entrySet()
-                    .stream()
-                    .map(e -> {
-                        io.swagger.v3.oas.models.media.Schema newInternalSchema = e.getValue();
-                        Schema schema = internalTransform(newInternalSchema);
-                        String attributeName = e.getKey();
-                        boolean required = requiredAttributes.contains(attributeName);
-                        return new SchemaAttribute(attributeName, schema, required);
-                    })
-                    .collect(toList());
+
+        Set<Map.Entry<String, io.swagger.v3.oas.models.media.Schema>> entries = properties.entrySet();
+        List<SchemaAttribute> result = new ArrayList<>();
+        for (Map.Entry<String, io.swagger.v3.oas.models.media.Schema> e : entries) {
+            io.swagger.v3.oas.models.media.Schema newInternalSchema = e.getValue();
+            Schema schema = internalTransform(newInternalSchema);
+            String attributeName = e.getKey();
+            boolean required = requiredAttributes.contains(attributeName);
+            result.add(new SchemaAttribute(attributeName, schema, required));
+        }
+        return result;
     }
 
-    private io.swagger.v3.oas.models.media.Schema getSchemaForRef(String originalRefName) {
+    private Schema getSchemaForRef(String originalRefName) {
         if (originalRefName == null) {
             return null;
         }
@@ -135,7 +134,10 @@ public class SchemaTransformer implements Transformer<io.swagger.v3.oas.models.m
         if (schemaStore == null) {
             return null;
         }
-        return schemaStore.get(refName).orElseThrow(() -> new IllegalStateException("Reference not found for " + refName));
+        io.swagger.v3.oas.models.media.Schema nativeSchema = schemaStore.getNative(refName).orElseThrow(() -> new IllegalStateException("Reference not found for " + refName));
+        Schema transformedSchema =
+            schemaStore.getTransformer(refName, () -> internalTransform(nativeSchema)).orElseThrow(() -> new IllegalArgumentException("Transformed schema cannot be resolved"));
+        return transformedSchema;
     }
 
     /*

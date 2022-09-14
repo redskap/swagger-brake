@@ -1,9 +1,6 @@
 package io.redskap.swagger.brake.core.model;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 import com.google.common.collect.ImmutableList;
 import lombok.AllArgsConstructor;
@@ -22,6 +19,8 @@ public enum AttributeType {
     STRING("string", null),
     ARRAY("array", null);
 
+    private static final List<AttributeType> VALUES = Arrays.asList(AttributeType.values());
+
     private String type;
     private String format;
 
@@ -37,9 +36,12 @@ public enum AttributeType {
     }
 
     private static Optional<AttributeType> forTypeAndFormat(String type, String format) {
-        return Arrays.stream(AttributeType.values())
-            .filter(e -> Objects.equals(e.getType(), type) && Objects.equals(e.getFormat(), format))
-            .findAny();
+        for (AttributeType attributeType : VALUES) {
+            if (Objects.equals(attributeType.getType(), type) && Objects.equals(attributeType.getFormat(), format)) {
+                return Optional.of(attributeType);
+            }
+        }
+        return Optional.empty();
     }
 
     /**
