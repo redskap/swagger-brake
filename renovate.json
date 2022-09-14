@@ -7,5 +7,14 @@
   "ignorePaths": [
     "docs/**",
     "swagger-brake-integration-tests/src/test/resources/example-projects/**"
+  ],
+  "packageRules": [
+    {
+      "matchPackageNames": [
+        "io.swagger.parser.v3:swagger-parser"
+      ],
+      "allowedVersions": "<=2.0.5"
+    }
   ]
 }
+
