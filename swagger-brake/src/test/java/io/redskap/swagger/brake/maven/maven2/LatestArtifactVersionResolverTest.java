@@ -1,6 +1,7 @@
 package io.redskap.swagger.brake.maven.maven2;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -8,13 +9,13 @@ import io.redskap.swagger.brake.maven.DownloadOptions;
 import io.redskap.swagger.brake.maven.model.MavenMetadata;
 import io.redskap.swagger.brake.maven.model.MavenVersioning;
 import org.apache.http.client.methods.HttpUriRequest;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class LatestArtifactVersionResolverTest {
     @Mock
     private Maven2UrlFactory urlFactory;
@@ -29,7 +30,7 @@ public class LatestArtifactVersionResolverTest {
     private LatestArtifactVersionResolver underTest;
 
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void testResolveShouldThrowExceptionWhenNoVersionCanBeResolved() {
         // given
         MavenMetadata mavenMetadata = new MavenMetadata("groupId", "artifactId", new MavenVersioning(null, null, null));
@@ -41,7 +42,7 @@ public class LatestArtifactVersionResolverTest {
         given(requestFactory.create(metadataUrl, options)).willReturn(metadataRequest);
         given(metadataDownloader.download(metadataRequest)).willReturn(mavenMetadata);
         // when
-        underTest.resolve(options);
+        assertThatThrownBy(() -> underTest.resolve(options)).isExactlyInstanceOf(IllegalStateException.class);
         // then exception thrown
     }
 

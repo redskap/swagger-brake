@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import io.redskap.swagger.brake.runner.Options;
 import io.redskap.swagger.brake.runner.OutputFormat;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class OutputFormatsHandlerTest {
     private OutputFormatsHandler underTest = new OutputFormatsHandler();

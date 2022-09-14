@@ -9,18 +9,18 @@ import io.redskap.swagger.brake.core.BreakingChange;
 import io.redskap.swagger.brake.core.model.HttpMethod;
 import io.redskap.swagger.brake.core.rule.response.ResponseTypeChangedBreakingChange;
 import io.redskap.swagger.brake.integration.AbstractSwaggerBrakeIntTest;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class ResponseTypeChangedIntTest extends AbstractSwaggerBrakeIntTest {
     @Test
     public void testResponseTypeChangeIsBreakingChangeWhenExistingAttributeRemoved() {
         // given
         String oldApiPath = "swaggers/v2/response/typechanged/petstore.yaml";
         String newApiPath = "swaggers/v2/response/typechanged/petstore_v2.yaml";
-        ResponseTypeChangedBreakingChange bc1 = new ResponseTypeChangedBreakingChange("/pet/findByStatus", HttpMethod.GET, "200", "","array", "object");
+        ResponseTypeChangedBreakingChange bc1 = new ResponseTypeChangedBreakingChange("/pet/findByStatus", HttpMethod.GET, "200", "", "array", "object");
         ResponseTypeChangedBreakingChange bc2 = new ResponseTypeChangedBreakingChange("/pet/findByTags", HttpMethod.GET, "200", "", "array", "string");
         Collection<BreakingChange> expected = Arrays.asList(bc1, bc2);
         // when

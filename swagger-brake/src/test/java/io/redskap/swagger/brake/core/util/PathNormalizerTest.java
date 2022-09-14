@@ -1,24 +1,25 @@
 package io.redskap.swagger.brake.core.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class PathNormalizerTest {
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testNormalizePathSlashesThrowsExceptionWhenNullGiven() {
         // given
         // when
-        PathNormalizer.normalizePathSlashes(null);
+        assertThatThrownBy(() -> PathNormalizer.normalizePathSlashes(null)).isExactlyInstanceOf(IllegalArgumentException.class);
         // then exception thrown
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testNormalizePathSlashesThrowsExceptionWhenBlankGiven() {
         // given
         // when
-        PathNormalizer.normalizePathSlashes("   ");
+        assertThatThrownBy(() -> PathNormalizer.normalizePathSlashes("   ")).isExactlyInstanceOf(IllegalArgumentException.class);
         // then exception thrown
     }
 

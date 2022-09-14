@@ -24,14 +24,14 @@ import io.redskap.swagger.brake.runner.download.ArtifactDownloaderHandler;
 import io.redskap.swagger.brake.runner.download.DownloadOptionsFactory;
 import io.redskap.swagger.brake.runner.openapi.OpenApiFactory;
 import io.swagger.v3.oas.models.OpenAPI;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Spy;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 @SuppressFBWarnings("RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT")
 public class RunnerIntTest {
     @Mock
@@ -62,7 +62,7 @@ public class RunnerIntTest {
 
     private Runner underTest;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         artifactDownloaderHandler = new ArtifactDownloaderHandler(downloaderFactory, apiFileResolver, downloadOptionsFactory);
         underTest = new Runner(optionsValidator, artifactDownloaderHandler, openApiFactory, checkerOptionsFactory, checker, reporterFactory);

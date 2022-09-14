@@ -1,15 +1,17 @@
 package io.redskap.swagger.brake.runner;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import io.redskap.swagger.brake.core.BreakChecker;
 import io.redskap.swagger.brake.report.ReporterFactory;
 import io.redskap.swagger.brake.runner.download.ArtifactDownloaderHandler;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class RunnerTest {
     @Mock
     private BreakChecker breakChecker;
@@ -26,23 +28,23 @@ public class RunnerTest {
     @InjectMocks
     private Runner underTest;
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testRunShouldThrowExceptionWhenOldApiPathIsNotPresent() {
         // given
         Options options = new Options();
         options.setNewApiPath("newApi");
         // when
-        underTest.run(options);
+        assertThatThrownBy(() -> underTest.run(options)).isExactlyInstanceOf(IllegalArgumentException.class);
         // then exception thrown
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testRunShouldThrowExceptionWhenNewApiPathIsNotPresent() {
         // given
         Options options = new Options();
         options.setOldApiPath("oldApi");
         // when
-        underTest.run(options);
+        assertThatThrownBy(() -> underTest.run(options)).isExactlyInstanceOf(IllegalArgumentException.class);
         // then exception thrown
     }
 }

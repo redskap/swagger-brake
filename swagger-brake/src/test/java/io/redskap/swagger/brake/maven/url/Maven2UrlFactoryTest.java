@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import io.redskap.swagger.brake.maven.DownloadOptions;
 import io.redskap.swagger.brake.maven.maven2.Maven2UrlFactory;
 import io.redskap.swagger.brake.runner.ArtifactPackaging;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class Maven2UrlFactoryTest {
     private Maven2UrlFactory underTest = new Maven2UrlFactory();
@@ -57,7 +57,8 @@ public class Maven2UrlFactoryTest {
         String latestVersion = "1.2.0-SNAPSHOT";
         String latestSnapshotName = "swagger-brake-example-1.2.0-20181118.221307-1";
 
-        String expected = "http://localhost:8081/artifactory/libs-snapshot-local/io/swagger/brake/swagger-brake-example/1.2.0-SNAPSHOT/swagger-brake-example-1.2.0-20181118.221307-1.jar";
+        String expected =
+            "http://localhost:8081/artifactory/libs-snapshot-local/io/swagger/brake/swagger-brake-example/1.2.0-SNAPSHOT/swagger-brake-example-1.2.0-20181118.221307-1.jar";
         // when
         String result = underTest.createLatestArtifactUrl(options, latestSnapshotName, latestVersion);
         // then
@@ -76,7 +77,8 @@ public class Maven2UrlFactoryTest {
         String latestVersion = "1.2.0-SNAPSHOT";
         String latestSnapshotName = "swagger-brake-example-1.2.0-20181118.221307-1";
 
-        String expected = "http://localhost:8081/artifactory/libs-snapshot-local/io/swagger/brake/swagger-brake-example/1.2.0-SNAPSHOT/swagger-brake-example-1.2.0-20181118.221307-1.war";
+        String expected =
+            "http://localhost:8081/artifactory/libs-snapshot-local/io/swagger/brake/swagger-brake-example/1.2.0-SNAPSHOT/swagger-brake-example-1.2.0-20181118.221307-1.war";
         // when
         String result = underTest.createLatestArtifactUrl(options, latestSnapshotName, latestVersion);
         // then

@@ -4,11 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import io.redskap.swagger.brake.maven.DownloadOptions;
 import io.redskap.swagger.brake.runner.Options;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class DownloadOptionsFactoryTest {
     private DownloadOptionsFactory underTest = new DownloadOptionsFactory();
-    
+
     @Test
     public void testCreateShouldWorkProperly() {
         // given

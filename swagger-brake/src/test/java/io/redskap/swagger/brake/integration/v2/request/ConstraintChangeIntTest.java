@@ -11,11 +11,11 @@ import io.redskap.swagger.brake.core.model.HttpMethod;
 import io.redskap.swagger.brake.core.rule.request.parameter.constraint.ConstraintChange;
 import io.redskap.swagger.brake.core.rule.request.parameter.constraint.RequestParameterConstraintChangedBreakingChange;
 import io.redskap.swagger.brake.integration.AbstractSwaggerBrakeIntTest;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class ConstraintChangeIntTest extends AbstractSwaggerBrakeIntTest {
     @Test
     public void testRequestTypeConstraintChangeIsBreakingChangeWhenMaximumChangesForInteger64() {
