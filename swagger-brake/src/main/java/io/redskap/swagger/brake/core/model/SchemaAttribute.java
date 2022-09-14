@@ -14,6 +14,10 @@ public class SchemaAttribute implements Comparable<SchemaAttribute> {
     private final Schema schema;
     private final boolean required;
 
+    public String getName() {
+        return name.replace(Schema.LEVEL_DELIMITER_REPLACE_VALUE, Schema.LEVEL_DELIMITER);
+    }
+
     public String getType() {
         return schema.getType();
     }

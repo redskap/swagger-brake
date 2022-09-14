@@ -44,4 +44,19 @@ public class RequestParameterRequiredIntTest extends AbstractSwaggerBrakeIntTest
         assertThat(result).hasSize(1);
         assertThat(result).hasSameElementsAs(expected);
     }
+
+    @Test
+    public void testRequestParameterRequiredWorksForDottedPostObjects() {
+        // given
+        String oldApiPath = "swaggers/v2/request/dottedparameterrequired/swagger-old.json";
+        String newApiPath = "swaggers/v2/request/dottedparameterrequired/swagger-new.json";
+
+        RequestParameterRequiredBreakingChange bc1 = new RequestParameterRequiredBreakingChange("/pet", HttpMethod.POST, "urn:scim:schemas:extension:workspace:1.0:name");
+        Collection<BreakingChange> expected = Collections.singletonList(bc1);
+        // when
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
+        // then
+        assertThat(result).hasSize(1);
+        assertThat(result).hasSameElementsAs(expected);
+    }
 }

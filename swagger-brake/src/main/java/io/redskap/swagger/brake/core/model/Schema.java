@@ -23,6 +23,8 @@ import org.springframework.util.CollectionUtils;
 @ToString
 @RequiredArgsConstructor
 public class Schema {
+    public static final String LEVEL_DELIMITER_REPLACE_VALUE = "$";
+    public static final String LEVEL_DELIMITER = ".";
     private final String type;
     private final Set<String> enumValues;
     private final Set<SchemaAttribute> schemaAttributes;
@@ -114,12 +116,13 @@ public class Schema {
         Set<String> result = new HashSet<>();
         for (Map.Entry<String, Boolean> entry : attributeRequiredMap.entrySet()) {
             String attributeName = entry.getKey();
+            String originalAttributeName = attributeName.replace(LEVEL_DELIMITER_REPLACE_VALUE, LEVEL_DELIMITER);
             Boolean attributeIsRequired = entry.getValue();
-            if (attributeName.contains(".")) {
+            if (attributeName.contains(LEVEL_DELIMITER)) {
                 boolean hierarchicallyNotRequired = false;
-                List<String> pieces = Arrays.asList(attributeName.split("\\."));
+                List<String> pieces = Arrays.asList(attributeName.split("\\" + LEVEL_DELIMITER));
                 for (int i = 0; i < pieces.size(); i++) {
-                    StringJoiner stringJoiner = new StringJoiner(".");
+                    StringJoiner stringJoiner = new StringJoiner(LEVEL_DELIMITER);
                     pieces.subList(0, i + 1).forEach(stringJoiner::add);
                     String attrToSearchFor = stringJoiner.toString();
                     boolean isRequired = BooleanUtils.toBoolean(attributeRequiredMap.get(attrToSearchFor));
@@ -130,12 +133,12 @@ public class Schema {
                 }
                 if (!hierarchicallyNotRequired) {
                     if (attributeIsRequired) {
-                        result.add(attributeName);
+                        result.add(originalAttributeName);
                     }
                 }
             } else {
                 if (attributeIsRequired) {
-                    result.add(attributeName);
+                    result.add(originalAttributeName);
                 }
             }
         }
@@ -206,9 +209,9 @@ public class Schema {
 
     private String generateLeveledName(String name, String levelName) {
         if (!StringUtils.isBlank(levelName)) {
-            return format("%s.%s", levelName, name);
+            return format("%s%s%s", levelName, LEVEL_DELIMITER, name);
         }
-        return name;
+        return name.replace(LEVEL_DELIMITER, LEVEL_DELIMITER_REPLACE_VALUE);
     }
 
 }
