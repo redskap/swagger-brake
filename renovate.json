@@ -14,6 +14,24 @@
         "io.swagger.parser.v3:swagger-parser"
       ],
       "allowedVersions": "<=2.0.5"
+    },
+    {
+      "matchPackageNames": [
+        "org.testng:testng"
+      ],
+      "allowedVersions": "<=7.5"
+    },
+    {
+      "matchPackageNames": [
+        "ch.qos.logback:logback-core"
+      ],
+      "allowedVersions": "<=1.2.11"
+    },
+    {
+      "matchPackageNames": [
+        "ch.qos.logback:logback-classic"
+      ],
+      "allowedVersions": "<=1.2.11"
     }
   ]
 }
