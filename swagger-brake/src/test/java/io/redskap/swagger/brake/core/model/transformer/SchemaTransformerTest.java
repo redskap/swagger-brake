@@ -14,13 +14,13 @@ import io.redskap.swagger.brake.core.model.service.TypeRefNameResolver;
 import io.redskap.swagger.brake.core.model.store.SchemaStore;
 import io.redskap.swagger.brake.core.model.store.StoreProvider;
 import io.swagger.v3.oas.models.media.*;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class SchemaTransformerTest {
     private SchemaTransformer underTest;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         underTest = new SchemaTransformer(new TypeRefNameResolver());
     }

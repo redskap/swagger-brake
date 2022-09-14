@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import io.redskap.swagger.brake.core.rule.request.parameter.constraint.ConstraintChange;
 import io.redskap.swagger.brake.core.rule.request.parameter.constraint.StringConstrainedValue;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class StringMinLengthConstraintTest {
     private StringMinLengthConstraint underTest = new StringMinLengthConstraint();

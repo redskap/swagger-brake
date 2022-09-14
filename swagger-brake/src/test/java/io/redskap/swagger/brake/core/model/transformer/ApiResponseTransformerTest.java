@@ -5,13 +5,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import io.redskap.swagger.brake.core.model.Response;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class ApiResponseTransformerTest {
     @Mock
     private MediaTypeTransformer mediaTypeTransformer;

@@ -43,10 +43,12 @@ subprojects {
         implementation "org.springframework:spring-context:5.3.22"
         implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.4"
 
-        testImplementation "junit:junit:4.13.2"
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
         testImplementation "org.assertj:assertj-core:3.23.1"
         testImplementation "org.springframework:spring-test:5.3.22"
         testImplementation "org.mockito:mockito-core:4.8.0"
+        testImplementation "org.mockito:mockito-junit-jupiter:4.8.0"
     }
 
     checkstyle {
@@ -63,6 +65,10 @@ subprojects {
     spotbugs {
         reportLevel = 'high'
         showProgress = false
+    }
+
+    test {
+        useJUnitPlatform()
     }
 
     //<editor-fold desc="Uploading to central">

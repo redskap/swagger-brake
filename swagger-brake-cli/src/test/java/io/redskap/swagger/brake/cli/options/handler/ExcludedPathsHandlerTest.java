@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.google.common.base.Joiner;
 import io.redskap.swagger.brake.runner.Options;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ExcludedPathsHandlerTest {
     private ExcludedPathsHandler underTest = new ExcludedPathsHandler();

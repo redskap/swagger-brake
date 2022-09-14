@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import io.redskap.swagger.brake.cli.options.CliOption;
 import io.redskap.swagger.brake.runner.Options;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class GroupIdHandlerTest {
     private GroupIdHandler underTest = new GroupIdHandler();

@@ -3,7 +3,7 @@ package io.redskap.swagger.brake.runner;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import io.redskap.swagger.brake.core.CheckerOptions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class CheckerOptionsFactoryTest {
     private CheckerOptionsFactory underTest = new CheckerOptionsFactory();

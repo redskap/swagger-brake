@@ -9,11 +9,11 @@ import io.redskap.swagger.brake.core.BreakingChange;
 import io.redskap.swagger.brake.core.model.HttpMethod;
 import io.redskap.swagger.brake.core.rule.request.RequestParameterEnumValueDeletedBreakingChange;
 import io.redskap.swagger.brake.integration.AbstractSwaggerBrakeIntTest;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class RequestParameterEnumValueDeletedIntTest extends AbstractSwaggerBrakeIntTest {
     @Test
     public void testRequestParameterEnumValueDeletedWorksCorrectly() {

@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import io.redskap.swagger.brake.core.rule.request.parameter.constraint.ConstraintChange;
 import io.redskap.swagger.brake.core.rule.request.parameter.constraint.NumberConstrainedValue;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class NumberMinimumConstraintTest {
     private NumberMinimumConstraint underTest = new NumberMinimumConstraint();

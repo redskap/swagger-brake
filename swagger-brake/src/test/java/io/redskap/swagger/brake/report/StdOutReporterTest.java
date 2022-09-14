@@ -3,7 +3,7 @@ package io.redskap.swagger.brake.report;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import io.redskap.swagger.brake.runner.OutputFormat;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class StdOutReporterTest {
     private StdOutReporter underTest = new StdOutReporter();

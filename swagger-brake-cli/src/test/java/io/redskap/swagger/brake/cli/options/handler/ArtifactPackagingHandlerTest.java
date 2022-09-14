@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
 import io.redskap.swagger.brake.runner.ArtifactPackaging;
 import io.redskap.swagger.brake.runner.Options;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ArtifactPackagingHandlerTest {
     private ArtifactPackagingHandler underTest = new ArtifactPackagingHandler();

@@ -3,7 +3,7 @@ package io.redskap.swagger.brake.runner;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class OptionsValidatorTest {
     private OptionsValidator underTest = new OptionsValidator();

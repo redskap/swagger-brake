@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import io.redskap.swagger.brake.core.rule.request.parameter.constraint.ArrayConstrainedValue;
 import io.redskap.swagger.brake.core.rule.request.parameter.constraint.ConstraintChange;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ArrayUniqueItemsConstraintTest {
     private ArrayUniqueItemsConstraint underTest = new ArrayUniqueItemsConstraint();

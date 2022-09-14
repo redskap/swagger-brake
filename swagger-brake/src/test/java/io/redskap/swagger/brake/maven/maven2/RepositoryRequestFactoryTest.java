@@ -1,6 +1,7 @@
 package io.redskap.swagger.brake.maven.maven2;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -11,13 +12,13 @@ import io.redskap.swagger.brake.maven.DownloadOptions;
 import io.redskap.swagger.brake.maven.http.HttpRequestFactory;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class RepositoryRequestFactoryTest {
     @Mock
     private HttpRequestFactory requestFactory;
@@ -62,14 +63,14 @@ public class RepositoryRequestFactoryTest {
     }
 
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testCreateShouldThrowExceptionWhenRequestCannotBeCreated() throws MalformedURLException, URISyntaxException {
         // given
         String url = "url";
         DownloadOptions options = new DownloadOptions();
         given(requestFactory.get(url)).willThrow(MalformedURLException.class);
         // when
-        underTest.create(url, options);
+        assertThatThrownBy(() -> underTest.create(url, options)).isExactlyInstanceOf(RuntimeException.class);
         // then exception thrown
     }
 }

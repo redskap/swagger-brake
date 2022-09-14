@@ -1,23 +1,24 @@
 package io.redskap.swagger.brake.maven.jar.filename;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ConfigurableApiFileNameCheckerTest {
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testConstructorShouldThrowExceptionIfNullParameterIsGiven() {
         // given
         // when
-        new ConfigurableApiFileNameChecker(null);
+        assertThatThrownBy(() -> new ConfigurableApiFileNameChecker(null)).isExactlyInstanceOf(IllegalArgumentException.class);
         // then exception thrown
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testConstructorShouldThrowExceptionIfEmptyStringParameterIsGiven() {
         // given
         // when
-        new ConfigurableApiFileNameChecker("  ");
+        assertThatThrownBy(() -> new ConfigurableApiFileNameChecker("  ")).isExactlyInstanceOf(IllegalArgumentException.class);
         // then exception thrown
     }
 

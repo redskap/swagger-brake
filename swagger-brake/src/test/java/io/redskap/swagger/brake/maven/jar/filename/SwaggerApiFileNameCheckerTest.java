@@ -2,7 +2,7 @@ package io.redskap.swagger.brake.maven.jar.filename;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SwaggerApiFileNameCheckerTest {
     private SwaggerApiFileNameChecker underTest = new SwaggerApiFileNameChecker();
