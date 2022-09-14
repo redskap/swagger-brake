@@ -7,6 +7,7 @@ import static org.apache.commons.collections4.CollectionUtils.isEmpty;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -153,7 +154,7 @@ public class Schema {
         return internalGetAttributeData(schemaAttrs, "", identity())
             .stream()
             .map(Pair::getLeft)
-            .collect(toList());
+            .collect(Collectors.toCollection(TreeSet::new));
     }
 
     private <T> Collection<Pair<String, T>> internalGetAttributeData(Collection<SchemaAttribute> schemaAttributes, String levelName, Function<SchemaAttribute, T> mappingFunc) {

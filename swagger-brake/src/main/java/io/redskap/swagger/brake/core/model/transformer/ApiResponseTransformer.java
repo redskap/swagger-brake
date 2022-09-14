@@ -1,10 +1,8 @@
 package io.redskap.swagger.brake.core.model.transformer;
 
-import static java.util.Collections.emptyMap;
-import static java.util.stream.Collectors.toMap;
-
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import io.redskap.swagger.brake.core.model.MediaType;
@@ -27,11 +25,17 @@ public class ApiResponseTransformer implements Transformer<Pair<String, ApiRespo
 
     @Override
     public Response transform(Pair<String, ApiResponse> from) {
-        Map<MediaType, Schema> schemaRefs = emptyMap();
+        Map<MediaType, Schema> schemaRefs = new HashMap<>();
         Content content = from.getValue().getContent();
         if (content != null) {
             Set<Map.Entry<String, io.swagger.v3.oas.models.media.MediaType>> entries = resolveReferencedSchemas(content.entrySet());
-            schemaRefs = entries.stream().collect(toMap(e -> new MediaType(e.getKey()), e -> mediaTypeTransformer.transform(e.getValue())));
+            for (Map.Entry<String, io.swagger.v3.oas.models.media.MediaType> entry : entries) {
+                MediaType key = new MediaType(entry.getKey());
+                Schema value = mediaTypeTransformer.transform(entry.getValue());
+                if (value != null) {
+                    schemaRefs.put(key, value);
+                }
+            }
         }
         return new Response(from.getKey(), schemaRefs);
     }
@@ -44,7 +48,7 @@ public class ApiResponseTransformer implements Transformer<Pair<String, ApiRespo
         Map<String, io.swagger.v3.oas.models.media.MediaType> result = new HashMap<>();
         for (Map.Entry<String, io.swagger.v3.oas.models.media.MediaType> entry : entries) {
             io.swagger.v3.oas.models.media.MediaType mediaType = entry.getValue();
-            String schemaRef = mediaType.getSchema().get$ref();
+            String schemaRef = Optional.ofNullable(mediaType.getSchema()).map(io.swagger.v3.oas.models.media.Schema::get$ref).orElse(null);
             if (schemaRef == null) {
                 result.put(entry.getKey(), entry.getValue());
             } else {

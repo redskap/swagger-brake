@@ -8,6 +8,8 @@ import java.util.TreeSet;
 import org.apache.commons.lang3.BooleanUtils;
 
 public class SchemaBuilder {
+    private static final TreeSet<?> EMPTY_TREE_SET = new TreeSet<>();
+
     private final String type;
     private String format;
     private Collection<String> enumValues;
@@ -106,8 +108,18 @@ public class SchemaBuilder {
             enValues = enumValues;
         }
         AttributeType attributeType = AttributeType.from(type, format);
-        TreeSet<String> enumValues = new TreeSet<>(enValues);
-        TreeSet<SchemaAttribute> schemaAttributes = new TreeSet<>(attributes);
+        TreeSet<String> enumValues;
+        if (enValues.isEmpty()) {
+            enumValues = (TreeSet<String>) EMPTY_TREE_SET;
+        } else {
+            enumValues = new TreeSet<>(enValues);
+        }
+        TreeSet<SchemaAttribute> schemaAttributes;
+        if (attributes.isEmpty()) {
+            schemaAttributes = (TreeSet<SchemaAttribute>) EMPTY_TREE_SET;
+        } else {
+            schemaAttributes = new TreeSet<>(attributes);
+        }
         if (AttributeType.getStringTypes().contains(attributeType)) {
             return new StringSchema(type, enumValues, schemaAttributes, schema, maxLength, minLength);
         } else if (AttributeType.getNumberTypes().contains(attributeType)) {
