@@ -50,10 +50,10 @@ public class SchemaTransformerTest {
         composedSchema.setAllOf(ImmutableList.of(petRef, dogRef));
 
         Schema expectedSchema = new SchemaBuilder("object").schemaAttributes(ImmutableList.of(
-            new SchemaAttribute("id", new SchemaBuilder("integer").build(), false),
-            new SchemaAttribute("name", new SchemaBuilder("string").build(), false),
-            new SchemaAttribute("bark", new SchemaBuilder("string").build(), false),
-            new SchemaAttribute("breed", new SchemaBuilder("string").build(), false)
+            new SchemaAttribute("id", new SchemaBuilder("integer").build(), false, false),
+            new SchemaAttribute("name", new SchemaBuilder("string").build(), false, false),
+            new SchemaAttribute("bark", new SchemaBuilder("string").build(), false, false),
+            new SchemaAttribute("breed", new SchemaBuilder("string").build(), false, false)
         )).build();
         // when
         Schema result = withSchemaStore(schemaStore, () -> underTest.transform(composedSchema));
@@ -86,9 +86,9 @@ public class SchemaTransformerTest {
         composedSchema.setAllOf(ImmutableList.of(petRef, dogRef));
 
         Schema expectedSchema = new SchemaBuilder("object").schemaAttributes(ImmutableList.of(
-            new SchemaAttribute("id", new SchemaBuilder("integer").build(), false),
-            new SchemaAttribute("name", new SchemaBuilder("string").build(), false),
-            new SchemaAttribute("breed", new SchemaBuilder("string").build(), false)
+            new SchemaAttribute("id", new SchemaBuilder("integer").build(), false, false),
+            new SchemaAttribute("name", new SchemaBuilder("string").build(), false, false),
+            new SchemaAttribute("breed", new SchemaBuilder("string").build(), false, false)
         )).build();
         // when
         Schema result = withSchemaStore(schemaStore, () -> underTest.transform(composedSchema));
@@ -129,10 +129,10 @@ public class SchemaTransformerTest {
         composedSchema.setAllOf(ImmutableList.of(petRef, dogRef, catRef));
 
         Schema expectedSchema = new SchemaBuilder("object").schemaAttributes(ImmutableList.of(
-            new SchemaAttribute("id", new SchemaBuilder("integer").build(), false),
-            new SchemaAttribute("name", new SchemaBuilder("string").build(), false),
-            new SchemaAttribute("breed", new SchemaBuilder("string").build(), false),
-            new SchemaAttribute("meow", new SchemaBuilder("string").build(), false)
+            new SchemaAttribute("id", new SchemaBuilder("integer").build(), false, false),
+            new SchemaAttribute("name", new SchemaBuilder("string").build(), false, false),
+            new SchemaAttribute("breed", new SchemaBuilder("string").build(), false, false),
+            new SchemaAttribute("meow", new SchemaBuilder("string").build(), false, false)
         )).build();
         // when
         Schema result = withSchemaStore(schemaStore, () -> underTest.transform(composedSchema));
@@ -173,10 +173,10 @@ public class SchemaTransformerTest {
         composedSchema.setAllOf(ImmutableList.of(petRef, dogRef, catRef));
 
         Schema expectedSchema = new SchemaBuilder("object").schemaAttributes(ImmutableList.of(
-            new SchemaAttribute("id", new SchemaBuilder("integer").build(), false),
-            new SchemaAttribute("name", new SchemaBuilder("string").build(), false),
-            new SchemaAttribute("breed", new SchemaBuilder("string").build(), false),
-            new SchemaAttribute("meow", new SchemaBuilder("string").build(), false)
+            new SchemaAttribute("id", new SchemaBuilder("integer").build(), false, false),
+            new SchemaAttribute("name", new SchemaBuilder("string").build(), false, false),
+            new SchemaAttribute("breed", new SchemaBuilder("string").build(), false, false),
+            new SchemaAttribute("meow", new SchemaBuilder("string").build(), false, false)
         )).build();
         // when
         Schema result = withSchemaStore(schemaStore, () -> underTest.transform(composedSchema));

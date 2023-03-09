@@ -119,8 +119,10 @@ public class SchemaTransformer implements Transformer<io.swagger.v3.oas.models.m
             io.swagger.v3.oas.models.media.Schema newInternalSchema = e.getValue();
             Schema schema = internalTransform(newInternalSchema);
             String attributeName = e.getKey();
+            Boolean deprecatedInSchema = newInternalSchema.getDeprecated();
+            boolean deprecated = deprecatedInSchema == null ? false : deprecatedInSchema;
             boolean required = requiredAttributes.contains(attributeName);
-            result.add(new SchemaAttribute(attributeName, schema, required));
+            result.add(new SchemaAttribute(attributeName, schema, required, deprecated));
         }
         return result;
     }
