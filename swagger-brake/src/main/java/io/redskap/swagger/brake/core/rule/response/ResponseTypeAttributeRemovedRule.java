@@ -36,9 +36,15 @@ public class ResponseTypeAttributeRemovedRule implements BreakingChangeRule<Resp
                             Optional<Schema> newApiSchema = newResponse.getSchemaByMediaType(mediaType);
                             if (newApiSchema.isPresent()) {
                                 Schema newSchema = newApiSchema.get();
-                                Collection<String> oldAttributeNames = schema.getAttributeNames();
+                                Set<SchemaAttribute> oldAttributes = schema.getSchemaAttributes();
                                 Collection<String> newAttributeNames = newSchema.getAttributeNames();
-                                for (String oldAttributeName : oldAttributeNames) {
+                                for (SchemaAttribute oldAttribute : oldAttributes) {
+                                    if (oldAttribute.isDeprecated()) {
+                                        continue;
+                                    }
+
+                                    String oldAttributeName = oldAttribute.getName();
+
                                     if (!newAttributeNames.contains(oldAttributeName)) {
                                         breakingChanges.add(
                                             new ResponseTypeAttributeRemovedBreakingChange(path.getPath(), path.getMethod(), apiResponse.getCode(), oldAttributeName));
