@@ -1,8 +1,8 @@
 package io.redskap.swagger.brake.core.model.store;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 
 import io.swagger.v3.oas.models.media.Schema;
@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SchemaStore {
     private final Map<String, Schema> nativeSchemas;
-    private final Map<String, io.redskap.swagger.brake.core.model.Schema> transformerSchemas = new HashMap<>();
+    private final Map<String, io.redskap.swagger.brake.core.model.Schema> transformerSchemas = new ConcurrentHashMap<>();
 
     public Optional<Schema> getNative(String name) {
         return Optional.ofNullable(nativeSchemas.get(name));
