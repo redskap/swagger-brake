@@ -6,10 +6,15 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 public class WebDriverFactory {
-    public static final String BROWSER_VERSION = "83.0.4103.97";
+    public static final String BROWSER_VERSION = "111.0.5563.111";
+    public static final String DRIVER_VERSION = "111.0.5563.64";
 
     public static WebDriver create() {
-        WebDriverManager.chromedriver().browserVersion(BROWSER_VERSION).setup();
+        WebDriverManager
+                .chromedriver()
+                .browserVersion(BROWSER_VERSION)
+                .driverVersion(DRIVER_VERSION)
+                .setup();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("start-maximized");
         options.addArguments("enable-automation");
@@ -18,6 +23,9 @@ public class WebDriverFactory {
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--disable-browser-side-navigation");
         options.addArguments("--disable-gpu");
+        options.addArguments("--window-size=1600,900");
+        // https://stackoverflow.com/questions/75718422/org-openqa-selenium-remote-http-connectionfailedexception-unable-to-establish-w
+        options.addArguments("--remote-allow-origins=*");
         options.addArguments("--headless");
         return new ChromeDriver(options);
     }
