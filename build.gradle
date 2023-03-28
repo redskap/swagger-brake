@@ -26,7 +26,7 @@ subprojects {
     apply plugin: 'checkstyle'
     apply plugin: 'com.github.spotbugs'
 
-    sourceCompatibility = 1.8
+    sourceCompatibility = '17'
 
     dependencies {
         compileOnly "com.github.spotbugs:spotbugs-annotations:${spotbugs.toolVersion.get()}"
