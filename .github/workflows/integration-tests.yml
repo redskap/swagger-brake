@@ -22,7 +22,7 @@ jobs:
           distribution: 'corretto'
           cache: gradle
       - name: Validate Gradle wrapper
-        uses: gradle/wrapper-validation-action@ccb4328a959376b642e027874838f60f8e596de3
+        uses: gradle/wrapper-validation-action@342dbebe7272035434f9baccc29a816ec6dd2c7b
       - name: Build & Test
         run: |
           ./gradlew --no-daemon --console=plain build test
