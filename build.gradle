@@ -35,7 +35,7 @@ subprojects {
         compileOnly "org.projectlombok:lombok:1.18.24"
         annotationProcessor "org.projectlombok:lombok:1.18.24"
 
-        implementation 'com.google.guava:guava:31.1-jre'
+        implementation 'com.google.guava:guava:32.1.2-jre'
         implementation "org.apache.commons:commons-collections4:4.4"
         implementation "org.apache.commons:commons-lang3:3.12.0"
         implementation "org.apache.commons:commons-lang3:3.12.0"
