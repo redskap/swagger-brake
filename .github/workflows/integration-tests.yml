@@ -25,6 +25,17 @@ jobs:
         uses: gradle/wrapper-validation-action@342dbebe7272035434f9baccc29a816ec6dd2c7b
       - name: Build & Test
         run: |
+          chromeBrowserVersionRegex='Google Chrome ([0-9]{1,4}.[0-9]{1,4}.[0-9]{1,4}).[0-9]*'
+          rawChromeBrowserVersion=$(google-chrome --version)
+          [[ $rawChromeBrowserVersion =~ $chromeBrowserVersionRegex ]]
+          export CHROME_BROWSER_VERSION=${BASH_REMATCH[1]}
+          
+          chromeDriverVersionRegex='ChromeDriver ([0-9]{1,4}.[0-9]{1,4}.[0-9]{1,4}).[0-9]*'
+          rawChromeDriverVersion=$(chromedriver --version)
+          [[ $rawChromeDriverVersion =~ $chromeDriverVersionRegex ]]
+          export CHROME_DRIVER_VERSION=${BASH_REMATCH[1]}
+          
+          echo "Using $CHROME_BROWSER_VERSION browser version with $CHROME_DRIVER_VERSION driver"
           ./gradlew --no-daemon --console=plain build test
 
       - name: Archive test results

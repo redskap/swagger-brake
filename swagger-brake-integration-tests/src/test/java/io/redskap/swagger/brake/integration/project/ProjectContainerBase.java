@@ -75,8 +75,7 @@ public abstract class ProjectContainerBase<T extends ProjectParameter> {
     protected boolean isBuildComplete(String logs) {
         boolean isBuildSuccess = isBuildSuccess(logs);
         if (isBuildFailure(logs) || (!isBuildSuccess && !container.isRunning())) {
-            log.error(logs);
-            throw new BuildFailureException();
+            throw new BuildFailureException(logs);
         }
         return isBuildSuccess;
     }

@@ -1,19 +1,22 @@
 package io.redskap.swagger.brake.integration.artifactory.factory;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 public class WebDriverFactory {
-    public static final String BROWSER_VERSION = "111.0.5563.111";
-    public static final String DRIVER_VERSION = "111.0.5563.64";
+    private static final String CHROME_DRIVER_VERSION_ENV_VAR = "CHROME_DRIVER_VERSION";
+    private static final String CHROME_BROWSER_VERSION_ENV_VAR = "CHROME_BROWSER_VERSION";
+    public static final String DEFAULT_DRIVER_VERSION = "111.0.5563.64";
+    public static final String DEFAULT_BROWSER_VERSION = "111.0.5563.111";
 
     public static WebDriver create() {
         WebDriverManager
                 .chromedriver()
-                .browserVersion(BROWSER_VERSION)
-                .driverVersion(DRIVER_VERSION)
+                .browserVersion(getBrowserVersion())
+                .driverVersion(getDriverVersion())
                 .setup();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("start-maximized");
@@ -28,5 +31,21 @@ public class WebDriverFactory {
         options.addArguments("--remote-allow-origins=*");
         options.addArguments("--headless");
         return new ChromeDriver(options);
+    }
+
+    private static String getDriverVersion() {
+        String chromeDriverVersion = System.getenv(CHROME_DRIVER_VERSION_ENV_VAR);
+        if (StringUtils.isBlank(chromeDriverVersion)) {
+            chromeDriverVersion = DEFAULT_DRIVER_VERSION;
+        }
+        return chromeDriverVersion;
+    }
+
+    private static String getBrowserVersion() {
+        String chromeBrowserVersion = System.getenv(CHROME_BROWSER_VERSION_ENV_VAR);;
+        if (StringUtils.isBlank(chromeBrowserVersion)) {
+            chromeBrowserVersion = DEFAULT_BROWSER_VERSION;
+        }
+        return chromeBrowserVersion;
     }
 }
