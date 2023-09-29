@@ -27,7 +27,7 @@ public abstract class AbstractFileReporter implements Reporter {
         String json = toFileContent(breakingChanges, apiInfo);
         try {
             directoryCreator.create(options.getOutputFilePath());
-            String filePath = options.getOutputFilePath() + File.separator + getFilename();
+            String filePath = options.getOutputFilePath() + File.separator + getFilename(apiInfo);
             fileWriter.write(filePath, json);
             log.info("Report can be found at {}", filePath);
         } catch (Exception e) {
@@ -35,7 +35,7 @@ public abstract class AbstractFileReporter implements Reporter {
         }
     }
 
-    protected abstract String getFilename();
+    protected abstract String getFilename(ApiInfo apiInfo);
 
     protected abstract String toFileContent(Collection<BreakingChange> breakingChanges, ApiInfo apiInfo);
 }

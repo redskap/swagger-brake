@@ -1,6 +1,7 @@
 package io.redskap.swagger.brake.report;
 
 import static java.util.stream.Collectors.groupingBy;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 import io.redskap.swagger.brake.core.ApiInfo;
 import io.redskap.swagger.brake.core.BreakingChange;
@@ -19,7 +20,8 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 class JsonReporter extends AbstractFileReporter implements CheckableReporter {
-    private static final String FILENAME = "swagger-brake.json";
+    private static final String DEFAULT_FILENAME = "swagger-brake.json";
+    private static final String VERSIONED_FILENAME_TEMPLATE = "swagger-brake-%s.json";
     private final JsonConverter jsonConverter;
 
     public JsonReporter(FileWriter fileWriter, DirectoryCreator directoryCreator, JsonConverter jsonConverter) {
@@ -28,8 +30,12 @@ class JsonReporter extends AbstractFileReporter implements CheckableReporter {
     }
 
     @Override
-    protected String getFilename() {
-        return FILENAME;
+    protected String getFilename(ApiInfo apiInfo) {
+        String result = DEFAULT_FILENAME;
+        if (apiInfo != null && isNotBlank(apiInfo.getVersion())) {
+            result = VERSIONED_FILENAME_TEMPLATE.formatted(apiInfo.getVersion());
+        }
+        return result;
     }
 
     @Override
