@@ -14,6 +14,18 @@
     <body>
         <div id="main-container">
             <header>
+                {{#info.title}}
+                    <b>API title:</b> {{info.title}}
+                    <br>
+                {{/info.title}}
+                {{#info.description}}
+                    <b>Description:</b> {{info.description}}
+                    <br>
+                {{/info.description}}
+                {{#info.version}}
+                    <b>Version:</b> {{info.version}}
+                    <br>
+                {{/info.version}}
                 {{#data.breakingChanges.size}}
                     <div class="alert alert-danger">API is not backward compatible</div>
                 {{/data.breakingChanges.size}}

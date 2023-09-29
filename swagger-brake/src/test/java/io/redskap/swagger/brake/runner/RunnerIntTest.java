@@ -6,6 +6,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+import io.redskap.swagger.brake.runner.openapi.ApiInfoFactory;
 import java.io.File;
 import java.util.Collection;
 import java.util.Collections;
@@ -55,6 +56,9 @@ public class RunnerIntTest {
     @Mock
     private DownloadOptionsFactory downloadOptionsFactory;
 
+    @Mock
+    private ApiInfoFactory apiInfoFactory;
+
     private ArtifactDownloaderHandler artifactDownloaderHandler;
 
     @Spy
@@ -65,7 +69,7 @@ public class RunnerIntTest {
     @BeforeEach
     public void setUp() {
         artifactDownloaderHandler = new ArtifactDownloaderHandler(downloaderFactory, apiFileResolver, downloadOptionsFactory);
-        underTest = new Runner(optionsValidator, artifactDownloaderHandler, openApiFactory, checkerOptionsFactory, checker, reporterFactory);
+        underTest = new Runner(optionsValidator, artifactDownloaderHandler, openApiFactory, checkerOptionsFactory, checker, reporterFactory, apiInfoFactory);
     }
 
     @Test
