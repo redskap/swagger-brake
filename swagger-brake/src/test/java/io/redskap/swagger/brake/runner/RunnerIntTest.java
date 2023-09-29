@@ -1,17 +1,15 @@
 package io.redskap.swagger.brake.runner;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-import io.redskap.swagger.brake.runner.openapi.ApiInfoFactory;
-import java.io.File;
-import java.util.Collection;
-import java.util.Collections;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import io.redskap.swagger.brake.core.ApiInfo;
 import io.redskap.swagger.brake.core.BreakingChange;
 import io.redskap.swagger.brake.core.CheckerOptions;
 import io.redskap.swagger.brake.maven.DownloadOptions;
@@ -23,8 +21,12 @@ import io.redskap.swagger.brake.report.Reporter;
 import io.redskap.swagger.brake.report.ReporterFactory;
 import io.redskap.swagger.brake.runner.download.ArtifactDownloaderHandler;
 import io.redskap.swagger.brake.runner.download.DownloadOptionsFactory;
+import io.redskap.swagger.brake.runner.openapi.ApiInfoFactory;
 import io.redskap.swagger.brake.runner.openapi.OpenApiFactory;
 import io.swagger.v3.oas.models.OpenAPI;
+import java.io.File;
+import java.util.Collection;
+import java.util.Collections;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -56,7 +58,7 @@ public class RunnerIntTest {
     @Mock
     private DownloadOptionsFactory downloadOptionsFactory;
 
-    @Mock
+    @Spy
     private ApiInfoFactory apiInfoFactory;
 
     private ArtifactDownloaderHandler artifactDownloaderHandler;
@@ -109,7 +111,7 @@ public class RunnerIntTest {
         verify(openApiFactory).fromFile(oldApiPath);
         verify(openApiFactory).fromFile(options.getNewApiPath());
         verify(checker).check(eq(oldApi), eq(newApi), any(CheckerOptions.class));
-        verify(reporter).report(anyList(), eq(options));
+        verify(reporter).report(anyList(), eq(options), any(ApiInfo.class));
     }
 
     @Test
@@ -150,6 +152,6 @@ public class RunnerIntTest {
         verify(openApiFactory).fromFile(oldApiPath);
         verify(openApiFactory).fromFile(options.getNewApiPath());
         verify(checker).check(eq(oldApi), eq(newApi), any(CheckerOptions.class));
-        verify(reporter).report(anyList(), eq(options));
+        verify(reporter).report(anyList(), eq(options), any(ApiInfo.class));
     }
 }
