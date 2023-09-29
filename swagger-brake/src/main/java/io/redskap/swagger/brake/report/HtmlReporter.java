@@ -1,5 +1,7 @@
 package io.redskap.swagger.brake.report;
 
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+
 import io.redskap.swagger.brake.core.ApiInfo;
 import io.redskap.swagger.brake.core.BreakingChange;
 import io.redskap.swagger.brake.report.file.DirectoryCreator;
@@ -21,7 +23,8 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 class HtmlReporter extends AbstractFileReporter implements CheckableReporter {
-    private static final String FILENAME = "swagger-brake.html";
+    private static final String DEFAULT_FILENAME = "swagger-brake.html";
+    private static final String VERSIONED_FILENAME_TEMPLATE = "swagger-brake-%s.html";
     private final JsonConverter jsonConverter;
     private final MustacheContentResolver mustacheContentResolver;
 
@@ -32,8 +35,12 @@ class HtmlReporter extends AbstractFileReporter implements CheckableReporter {
     }
 
     @Override
-    protected String getFilename() {
-        return FILENAME;
+    protected String getFilename(ApiInfo apiInfo) {
+        String result = DEFAULT_FILENAME;
+        if (apiInfo != null && isNotBlank(apiInfo.getVersion())) {
+            result = VERSIONED_FILENAME_TEMPLATE.formatted(apiInfo.getVersion());
+        }
+        return result;
     }
 
     @Override
