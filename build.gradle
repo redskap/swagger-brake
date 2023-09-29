@@ -9,7 +9,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath "com.github.spotbugs.snom:spotbugs-gradle-plugin:5.0.12"
+        classpath "com.github.spotbugs.snom:spotbugs-gradle-plugin:5.1.3"
     }
 }
 
@@ -32,23 +32,23 @@ subprojects {
         compileOnly "com.github.spotbugs:spotbugs-annotations:${spotbugs.toolVersion.get()}"
         testCompileOnly "com.github.spotbugs:spotbugs-annotations:${spotbugs.toolVersion.get()}"
 
-        compileOnly "org.projectlombok:lombok:1.18.24"
-        annotationProcessor "org.projectlombok:lombok:1.18.24"
+        compileOnly "org.projectlombok:lombok:1.18.30"
+        annotationProcessor "org.projectlombok:lombok:1.18.30"
 
         implementation 'com.google.guava:guava:32.1.2-jre'
         implementation "org.apache.commons:commons-collections4:4.4"
-        implementation "org.apache.commons:commons-lang3:3.12.0"
-        implementation "org.apache.commons:commons-lang3:3.12.0"
-        implementation "org.springframework:spring-context:6.0.7"
-        implementation "org.springframework:spring-context:6.0.7"
-        implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.4"
+        implementation "org.apache.commons:commons-lang3:3.13.0"
+        implementation "org.apache.commons:commons-lang3:3.13.0"
+        implementation "org.springframework:spring-context:6.0.12"
+        implementation "org.springframework:spring-context:6.0.12"
+        implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.15.2"
 
-        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.1'
-        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.1'
-        testImplementation "org.assertj:assertj-core:3.23.1"
-        testImplementation "org.springframework:spring-test:6.0.7"
-        testImplementation "org.mockito:mockito-core:5.2.0"
-        testImplementation "org.mockito:mockito-junit-jupiter:5.2.0"
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
+        testImplementation "org.assertj:assertj-core:3.24.2"
+        testImplementation "org.springframework:spring-test:6.0.12"
+        testImplementation "org.mockito:mockito-core:5.5.0"
+        testImplementation "org.mockito:mockito-junit-jupiter:5.5.0"
     }
 
     checkstyle {
