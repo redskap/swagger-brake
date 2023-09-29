@@ -2,9 +2,10 @@ buildscript {
     repositories {
         jcenter()
         mavenCentral()
+        gradlePluginPortal()
     }
     dependencies {
-        classpath "com.github.jengelman.gradle.plugins:shadow:6.1.0"
+        classpath "com.github.johnrengelman:shadow:8.1.1"
     }
 }
 
@@ -28,6 +29,6 @@ jar {
 }
 
 shadowJar {
-    baseName = 'swagger-brake'
-    classifier = 'cli'
+    archiveBaseName = 'swagger-brake'
+    archiveClassifier = 'cli'
 }

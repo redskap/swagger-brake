@@ -52,13 +52,13 @@ subprojects {
     }
 
     checkstyle {
-        toolVersion = '8.14'
+        toolVersion = '10.12.3'
     }
 
     tasks.withType(Checkstyle) {
         reports {
-            xml.enabled false
-            html.enabled true
+            xml.required = false
+            html.required = true
         }
     }
 
@@ -75,12 +75,12 @@ subprojects {
     apply plugin: 'signing'
 
     task javadocJar(type: Jar) {
-        classifier = 'javadoc'
+        archiveClassifier = 'javadoc'
         from javadoc
     }
 
     task sourcesJar(type: Jar) {
-        classifier = 'sources'
+        archiveClassifier = 'sources'
         from sourceSets.main.allSource
     }
 

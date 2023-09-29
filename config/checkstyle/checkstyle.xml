@@ -11,6 +11,10 @@
         <property name="eachLine" value="true"/>
     </module>
 
+    <module name="LineLength">
+        <property name="max" value="180"/>
+        <property name="ignorePattern" value="^package.*|^import.*|a href|href|http://|https://|ftp://"/>
+    </module>
     <module name="TreeWalker">
         <module name="OuterTypeFilename"/>
         <module name="IllegalTokenText">
@@ -23,10 +27,6 @@
             <property name="allowEscapesForControlCharacters" value="true"/>
             <property name="allowByTailComment" value="true"/>
             <property name="allowNonPrintableEscapes" value="true"/>
-        </module>
-        <module name="LineLength">
-            <property name="max" value="180"/>
-            <property name="ignorePattern" value="^package.*|^import.*|a href|href|http://|https://|ftp://"/>
         </module>
         <module name="OneTopLevelClass"/>
         <module name="NoLineWrap"/>
@@ -170,13 +170,11 @@
         </module>
         <module name="JavadocMethod">
             <property name="severity" value="warning"/>
-            <property name="scope" value="public"/>
+            <property name="accessModifiers" value="public"/>
             <property name="allowMissingParamTags" value="true"/>
-            <property name="allowMissingThrowsTags" value="true"/>
+            <property name="validateThrows" value="false"/>
             <property name="allowMissingReturnTag" value="true"/>
-            <property name="minLineCount" value="2"/>
             <property name="allowedAnnotations" value="Override, Test, Bean"/>
-            <property name="allowThrowsTagsForSubclasses" value="true"/>
         </module>
         <module name="MethodName">
             <property name="format" value="^[a-z][a-z0-9][a-zA-Z0-9_]*$"/>
