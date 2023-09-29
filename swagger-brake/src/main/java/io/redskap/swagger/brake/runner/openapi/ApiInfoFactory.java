@@ -8,11 +8,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class ApiInfoFactory {
     public ApiInfo create(OpenAPI openApi) {
-        Info info = openApi.getInfo();
         ApiInfo apiInfo = new ApiInfo();
-        apiInfo.setTitle(info.getTitle());
-        apiInfo.setDescription(info.getDescription());
-        apiInfo.setVersion(info.getVersion());
+        Info info = openApi.getInfo();
+        if (info != null) {
+            apiInfo.setTitle(info.getTitle());
+            apiInfo.setDescription(info.getDescription());
+            apiInfo.setVersion(info.getVersion());
+        }
         return apiInfo;
     }
 }
