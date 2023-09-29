@@ -8,7 +8,7 @@ import java.util.Collection;
 public interface Reporter {
     default void report(Collection<BreakingChange> breakingChanges, Options options) {
         report(breakingChanges, options, null);
-    };
+    }
 
     void report(Collection<BreakingChange> breakingChanges, Options options, ApiInfo apiInfo);
 }
