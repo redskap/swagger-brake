@@ -1,7 +1,5 @@
 package io.redskap.swagger.brake.integration;
 
-import java.util.Collection;
-
 import com.google.common.collect.ImmutableSet;
 import io.redskap.swagger.brake.core.BreakingChange;
 import io.redskap.swagger.brake.core.CoreConfiguration;
@@ -11,6 +9,7 @@ import io.redskap.swagger.brake.runner.Options;
 import io.redskap.swagger.brake.runner.OutputFormat;
 import io.redskap.swagger.brake.runner.Runner;
 import io.redskap.swagger.brake.runner.RunnerConfiguration;
+import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 

@@ -1,5 +1,6 @@
 package io.redskap.swagger.brake.report;
 
+import io.redskap.swagger.brake.core.ApiInfo;
 import java.io.File;
 import java.util.Collection;
 
@@ -18,12 +19,12 @@ public abstract class AbstractFileReporter implements Reporter {
     private final DirectoryCreator directoryCreator;
 
     @Override
-    public void report(Collection<BreakingChange> breakingChanges, Options options) {
+    public void report(Collection<BreakingChange> breakingChanges, Options options, ApiInfo apiInfo) {
         if (StringUtils.isBlank(options.getOutputFilePath())) {
             log.warn("No file reporting has been done since output file path is not set");
             return;
         }
-        String json = toFileContent(breakingChanges);
+        String json = toFileContent(breakingChanges, apiInfo);
         try {
             directoryCreator.create(options.getOutputFilePath());
             String filePath = options.getOutputFilePath() + File.separator + getFilename();
@@ -36,5 +37,5 @@ public abstract class AbstractFileReporter implements Reporter {
 
     protected abstract String getFilename();
 
-    protected abstract String toFileContent(Collection<BreakingChange> breakingChanges);
+    protected abstract String toFileContent(Collection<BreakingChange> breakingChanges, ApiInfo apiInfo);
 }

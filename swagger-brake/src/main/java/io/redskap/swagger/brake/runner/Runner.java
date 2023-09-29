@@ -1,5 +1,7 @@
 package io.redskap.swagger.brake.runner;
 
+import io.redskap.swagger.brake.core.ApiInfo;
+import io.redskap.swagger.brake.runner.openapi.ApiInfoFactory;
 import java.util.Collection;
 
 import io.redskap.swagger.brake.core.BreakingChange;
@@ -26,6 +28,7 @@ public class Runner {
     private final CheckerOptionsFactory checkerOptionsFactory;
     private final Checker checker;
     private final ReporterFactory reporterFactory;
+    private final ApiInfoFactory apiInfoFactory;
 
     /**
      * Runs Swagger Brake with the specified {@link Options}.
@@ -50,7 +53,9 @@ public class Runner {
         log.info("Successfully loaded APIs");
         CheckerOptions checkerOptions = checkerOptionsFactory.create(options);
         Collection<BreakingChange> breakingChanges = checker.check(oldApi, newApi, checkerOptions);
-        reporterFactory.create(options).report(breakingChanges, options);
+
+        ApiInfo apiInfo = apiInfoFactory.create(newApi);
+        reporterFactory.create(options).report(breakingChanges, options, apiInfo);
         return breakingChanges;
     }
 }
