@@ -35,19 +35,12 @@ public class RequestTypeAttributeRemovedRule implements BreakingChangeRule<Reque
                         Optional<Schema> newApiSchema = newRequestBody.get().getSchemaByMediaType(mediaType);
                         if (newApiSchema.isPresent()) {
                             Schema newSchema = newApiSchema.get();
-                            Set<SchemaAttribute> oldAttributes = schema.getSchemaAttributes();
+                            Collection<String> oldAttributeNames = schema.getNonDeprecatedAttributeNames();
                             Collection<String> newAttributeNames = newSchema.getAttributeNames();
-                            for (SchemaAttribute oldAttribute : oldAttributes) {
-                                if (oldAttribute.isDeprecated()) {
-                                    continue;
-                                }
-
-                                String oldAttributeName = oldAttribute.getName();
-
+                            for (String oldAttributeName : oldAttributeNames) {
                                 if (!newAttributeNames.contains(oldAttributeName)) {
                                     breakingChanges.add(
-                                            new RequestTypeAttributeRemovedBreakingChange(path.getPath(),
-                                                    path.getMethod(), oldAttributeName));
+                                            new RequestTypeAttributeRemovedBreakingChange(path.getPath(), path.getMethod(), oldAttributeName));
                                 }
                             }
                         }

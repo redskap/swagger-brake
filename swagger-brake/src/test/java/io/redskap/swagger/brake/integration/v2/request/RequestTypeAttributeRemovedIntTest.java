@@ -88,4 +88,29 @@ public class RequestTypeAttributeRemovedIntTest extends AbstractSwaggerBrakeIntT
         assertThat(result).hasSize(3);
         assertThat(result).hasSameElementsAs(expected);
     }
+
+    @Test
+    public void testRequestTypeChangeIsNotBreakingChangeWhenDeprecatedExistingAttributeRemoved() {
+        // given
+        String oldApiPath = "swaggers/v3/request/attributeremoved-deprecated/petstore.yaml";
+        String newApiPath = "swaggers/v3/request/attributeremoved-deprecated/petstore_v2.yaml";
+        // when
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
+        // then
+        assertThat(result).hasSize(0);
+    }
+
+    @Test
+    public void testRequestTypeChangeIsBreakingChangeWhenExistingAttributeRemoved_V3Schema() {
+        // given
+        String oldApiPath = "swaggers/v3/request/attributeremoved/petstore.yaml";
+        String newApiPath = "swaggers/v3/request/attributeremoved/petstore_v2.yaml";
+        RequestTypeAttributeRemovedBreakingChange bc1 = new RequestTypeAttributeRemovedBreakingChange("/pet", HttpMethod.PATCH, "id");
+        Collection<BreakingChange> expected = Arrays.asList(bc1);
+        // when
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
+        // then
+        assertThat(result).hasSize(1);
+        assertThat(result).hasSameElementsAs(expected);
+    }
 }

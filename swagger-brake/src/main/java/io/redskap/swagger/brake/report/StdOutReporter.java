@@ -35,7 +35,9 @@ class StdOutReporter implements Reporter, CheckableReporter {
     }
 
     private void printIfNotNull(String str) {
-        System.out.println(str);
+        if (str != null) {
+            System.out.println(str);
+        }
     }
 
     @Override

@@ -160,6 +160,22 @@ public class Schema {
             .collect(Collectors.toCollection(TreeSet::new));
     }
 
+    /**
+     * Returns all the attribute names that are not deprecated recursively.
+     * @return the attribute names.
+     */
+    public Collection<String> getNonDeprecatedAttributeNames() {
+        Collection<SchemaAttribute> schemaAttrs = schemaAttributes;
+        if (CollectionUtils.isEmpty(schemaAttrs)) {
+            schemaAttrs = Optional.ofNullable(schema).map(Schema::getSchemaAttributes).orElse(Collections.emptySet());
+        }
+        return internalGetAttributeData(schemaAttrs, "", identity())
+                .stream()
+                .filter(p -> !p.getRight().isDeprecated())
+                .map(Pair::getLeft)
+                .collect(Collectors.toCollection(TreeSet::new));
+    }
+
     private <T> Collection<Pair<String, T>> internalGetAttributeData(Collection<SchemaAttribute> schemaAttributes, String levelName, Function<SchemaAttribute, T> mappingFunc) {
         List<Pair<String, T>> result = schemaAttributes.stream().map(sA -> Pair.of(generateLeveledName(sA.getName(), levelName), mappingFunc.apply(sA))).collect(toList());
         for (SchemaAttribute schemaAttribute : schemaAttributes) {

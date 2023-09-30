@@ -88,4 +88,30 @@ public class ResponseTypeAttributeRemovedIntTest extends AbstractSwaggerBrakeInt
         assertThat(result).hasSize(3);
         assertThat(result).hasSameElementsAs(expected);
     }
+
+    @Test
+    public void testResponseTypeChangeIsNotBreakingChangeWhenDeprecatedExistingAttributeRemoved() {
+        // given
+        String oldApiPath = "swaggers/v3/response/attributeremoved-deprecated/petstore.yaml";
+        String newApiPath = "swaggers/v3/response/attributeremoved-deprecated/petstore_v2.yaml";
+        // when
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
+        // then
+        assertThat(result).hasSize(0);
+    }
+
+    @Test
+    public void testResponseTypeChangeIsBreakingChangeWhenExistingAttributeRemoved_V3Schema() {
+        // given
+        String oldApiPath = "swaggers/v3/response/attributeremoved/petstore.yaml";
+        String newApiPath = "swaggers/v3/response/attributeremoved/petstore_v2.yaml";
+        ResponseTypeAttributeRemovedBreakingChange bc1 = new ResponseTypeAttributeRemovedBreakingChange("/pet", HttpMethod.PATCH, "201", "id");
+        ResponseTypeAttributeRemovedBreakingChange bc2 = new ResponseTypeAttributeRemovedBreakingChange("/pet", HttpMethod.PATCH, "201", "breed");
+        Collection<BreakingChange> expected = Arrays.asList(bc1, bc2);
+        // when
+        Collection<BreakingChange> result = execute(oldApiPath, newApiPath);
+        // then
+        assertThat(result).hasSize(2);
+        assertThat(result).hasSameElementsAs(expected);
+    }
 }
