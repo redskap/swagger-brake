@@ -18,13 +18,13 @@ For Maven:
 <dependency>
     <groupId>io.redskap</groupId>
     <artifactId>swagger-brake</artifactId>
-    <version>2.2.0</version>
+    <version>2.4.0</version>
 </dependency>
 ```
 
 For Gradle:
 ```groovy
-compile group: 'io.redskap', name: 'swagger-brake', version: '2.2.0'
+compile group: 'io.redskap', name: 'swagger-brake', version: '2.4.0'
 ```
 
 The entrypoint for the execution is the `io.redskap.swagger.brake.runner.Starter` class. There are several methods available:

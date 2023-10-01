@@ -1,7 +1,28 @@
 # Changelog
 
-## 2.4.0-SNAPSHOT
+## 2.5.0-SNAPSHOT
 TBD
+
+## 2.4.0
+### CLI and Core
+* [#107](https://github.com/redskap/swagger-brake/issues/107) Include version number into report and filename
+* [#97](https://github.com/redskap/swagger-brake/issues/97) False negatives when removing deprecated properties from models
+* [#96](https://github.com/redskap/swagger-brake/issues/96) Swagger brake cli jar in maven repository
+* [#82](https://github.com/redskap/swagger-brake/issues/82) JUnit 4 migration to JUnit 5
+* [#65](https://github.com/redskap/swagger-brake/issues/65) Schema class attributeRequiredMap.get(attrToSearchFor); returning null
+
+CLI download from Maven Central: [swagger-brake-cli-2.4.0-cli.jar](https://repo1.maven.org/maven2/io/redskap/swagger-brake-cli/2.4.0/swagger-brake-cli-2.4.0-cli.jar)
+
+CLI download from GitHub: [swagger-brake-cli-2.4.0-cli.jar](https://github.com/redskap/swagger-brake/releases/download/2.4.0/swagger-brake-cli-2.4.0-cli.jar)
+
+### Maven plugin
+* [#22](https://github.com/redskap/swagger-brake-maven-plugin/issues/22) Upgrade Swagger Brake to 2.3.0
+* [#21](https://github.com/redskap/swagger-brake-maven-plugin/issues/21) Add support for war files
+
+### Gradle plugin
+* [#22](https://github.com/redskap/swagger-brake-gradle/issues/22) Upgrade Swagger Brake to 2.3.0
+
+Released at 2021-12-09
 
 ## 2.3.0
 ### CLI and Core

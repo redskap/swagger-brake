@@ -5,7 +5,7 @@ Using the Gradle plugin is easy. Similarly, to any other plugins, you just need 
 With plugins DSL:
 ```groovy
 plugins {
-  id "io.redskap.swagger-brake" version "2.2.0"
+  id "io.redskap.swagger-brake" version "2.4.0"
 }
 ```
 
@@ -18,7 +18,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath "io.redskap:swagger-brake-gradle:2.2.0"
+    classpath "io.redskap:swagger-brake-gradle:2.4.0"
   }
 }
 

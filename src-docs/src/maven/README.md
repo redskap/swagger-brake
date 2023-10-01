@@ -11,7 +11,7 @@ within your `pom.xml`.
         <plugin>
             <groupId>io.redskap</groupId>
             <artifactId>swagger-brake-maven-plugin</artifactId>
-            <version>2.2.0</version>
+            <version>2.4.0</version>
             <executions>
                 <execution>
                     <goals>
@@ -79,7 +79,7 @@ Example:
         <plugin>
             <groupId>io.redskap</groupId>
             <artifactId>swagger-brake-maven-plugin</artifactId>
-            <version>2.2.0</version>
+            <version>2.4.0</version>
             <executions>
                 <execution>
                     <goals>
@@ -118,7 +118,7 @@ Example:
         <plugin>
             <groupId>io.redskap</groupId>
             <artifactId>swagger-brake-maven-plugin</artifactId>
-            <version>2.2.0</version>
+            <version>2.4.0</version>
             <executions>
                 <execution>
                     <goals>
@@ -162,7 +162,7 @@ Example configuration with authentication:
         <plugin>
             <groupId>io.redskap</groupId>
             <artifactId>swagger-brake-maven-plugin</artifactId>
-            <version>2.2.0</version>
+            <version>2.4.0</version>
             <executions>
                 <execution>
                     <goals>
@@ -207,7 +207,7 @@ Example:
         <plugin>
             <groupId>io.redskap</groupId>
             <artifactId>swagger-brake-maven-plugin</artifactId>
-            <version>2.2.0</version>
+            <version>2.4.0</version>
             <executions>
                 <execution>
                     <goals>
@@ -241,7 +241,7 @@ Example:
         <plugin>
             <groupId>io.redskap</groupId>
             <artifactId>swagger-brake-maven-plugin</artifactId>
-            <version>2.2.0</version>
+            <version>2.4.0</version>
             <executions>
                 <execution>
                     <goals>
