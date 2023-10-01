@@ -17,6 +17,11 @@ repositories {
     mavenCentral()
 }
 
+
+def isReleaseBuild() {
+    return version.contains("SNAPSHOT") == false
+}
+
 subprojects {
     group = rootProject.group
     version = rootProject.version
@@ -88,12 +93,6 @@ subprojects {
         archives javadocJar, sourcesJar
     }
 
-    if (project.hasProperty('signing.keyId')) {
-        signing {
-            sign publishing.publications.mavenJava
-        }
-    }
-
     if (project.hasProperty('ossrhUsername') && project.hasProperty('ossrhPassword')) {
         publishing {
             publications {
@@ -103,10 +102,10 @@ subprojects {
                     version = project.version
 
                     pom {
-                        name 'Swagger Brake'
-                        packaging 'jar'
-                        description 'Swagger contract checker for breaking API changes'
-                        url 'https://github.com/redskap/swagger-brake'
+                        name = 'Swagger Brake'
+                        packaging = 'jar'
+                        description = 'Swagger contract checker for breaking API changes'
+                        url = 'https://github.com/redskap/swagger-brake'
 
                         scm {
                             connection = 'scm:git:git://github.com/redskap/swagger-brake.git'
@@ -116,16 +115,16 @@ subprojects {
 
                         licenses {
                             license {
-                                name 'The Apache License, Version 2.0'
-                                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                                name = 'The Apache License, Version 2.0'
+                                url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
                             }
                         }
 
                         developers {
                             developer {
-                                id 'galovics'
-                                name 'Arnold Galovics'
-                                email 'info@arnoldgalovics.com'
+                                id = 'galovics'
+                                name = 'Arnold Galovics'
+                                email = 'info@arnoldgalovics.com'
                             }
                         }
                         scm {
@@ -146,6 +145,12 @@ subprojects {
                     }
                 }
             }
+        }
+    }
+
+    if (project.hasProperty('signing.keyId')) {
+        signing {
+            sign publishing.publications.mavenJava
         }
     }
     //</editor-fold>
