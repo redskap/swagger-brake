@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 class StdOutReporter implements Reporter, CheckableReporter {
     @Override
     public void report(Collection<BreakingChange> breakingChanges, Options options, ApiInfo apiInfo) {
-        printApiInfo(apiInfo);
         printBreakingChangesIfAny(breakingChanges);
     }
 
@@ -23,20 +22,6 @@ class StdOutReporter implements Reporter, CheckableReporter {
             breakingChanges.stream().map(bc -> bc.getRuleCode() + " " + bc.getMessage()).forEach(System.err::println);
         } else {
             System.out.println("No breaking API changes detected");
-        }
-    }
-
-    private void printApiInfo(ApiInfo apiInfo) {
-        if (apiInfo != null) {
-            printIfNotNull(apiInfo.getTitle());
-            printIfNotNull(apiInfo.getDescription());
-            printIfNotNull(apiInfo.getVersion());
-        }
-    }
-
-    private void printIfNotNull(String str) {
-        if (str != null) {
-            System.out.println(str);
         }
     }
 

@@ -20,11 +20,18 @@ Gradle configuration [here](../gradle/README.md#customizing-reporting).
 An example JSON report looks the following:
 ```json
 {
-  "pathDeletedBreakingChange" : [ {
-    "path" : "/pet",
-    "method" : "POST",
-    "message" : "Path /pet POST has been deleted"
-  } ]
+  "info": {
+    "title": "Example API title",
+    "description": "API description",
+    "version": "1.0.0"
+  },
+  "breakingChanges": {
+    "pathDeletedBreakingChange" : [ {
+      "path" : "/pet",
+      "method" : "POST",
+      "message" : "Path /pet POST has been deleted"
+    } ]  
+  }
 }
 ```
 In case of no breaking changes, the JSON report will be an empty JSON.
