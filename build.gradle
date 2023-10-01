@@ -89,10 +89,6 @@ subprojects {
         from sourceSets.main.allSource
     }
 
-    artifacts {
-        archives javadocJar, sourcesJar
-    }
-
     if (project.hasProperty('ossrhUsername') && project.hasProperty('ossrhPassword')) {
         publishing {
             publications {
@@ -100,6 +96,10 @@ subprojects {
                     groupId = project.group
                     artifactId = project.name
                     version = project.version
+
+                    from components.java
+                    artifact javadocJar
+                    artifact sourcesJar
 
                     pom {
                         name = 'Swagger Brake'
