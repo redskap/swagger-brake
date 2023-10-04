@@ -12,7 +12,7 @@ buildscript {
     dependencies {
         classpath("io.swagger:swagger-codegen:2.4.28")
         classpath "io.redskap:swagger-brake-gradle:${swaggerBrakeVersion}"
-        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.29.0"
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:5.1.10"
     }
 }
 
@@ -20,12 +20,12 @@ group = 'io.redskap.example'
 version = '<VERSION_PLACEHOLDER>'
 
 apply plugin: 'java'
-apply plugin: "maven"
 apply plugin: "maven-publish"
 apply plugin: "com.jfrog.artifactory"
 apply plugin: "io.redskap.swagger-brake"
 
-sourceCompatibility = 1.8
+sourceCompatibility = 17
+targetCompatibility = 17
 
 repositories {
     mavenCentral()
@@ -76,8 +76,9 @@ swaggerBrake {
 }
 
 artifactory {
-    contextUrl = artifactoryContextUrl
     publish {
+        contextUrl = artifactoryContextUrl
+        publishBuildInfo = true
         repository {
             repoKey  = isSnapshotVersion ? artifactorySnapshotRepoKey : artifactoryRepoKey
             username = artifactoryUsername
@@ -85,8 +86,6 @@ artifactory {
         }
         defaults {
             publications ('mavenJava')
-            publishConfigs('archives', 'published')
-            publishBuildInfo = true
             publishArtifacts = true
             publishPom = true
         }
