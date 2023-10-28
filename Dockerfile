@@ -1,6 +1,7 @@
 # Build
 FROM openjdk:17.0.2-jdk as baseimage
 
+RUN microdnf install findutils
 WORKDIR swagger-brake
 COPY . .
 RUN sh gradlew clean build shadowJar -x test
