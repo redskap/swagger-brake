@@ -22,7 +22,7 @@ jobs:
           distribution: 'corretto'
           cache: gradle
       - name: Validate Gradle wrapper
-        uses: gradle/wrapper-validation-action@342dbebe7272035434f9baccc29a816ec6dd2c7b
+        uses: gradle/wrapper-validation-action@b231772637bb498f11fdbc86052b6e8a8dc9fc92
       - name: Build & Test
         run: |
           chromeBrowserVersionRegex='Google Chrome ([0-9]{1,4}.[0-9]{1,4}.[0-9]{1,4}).[0-9]*'
