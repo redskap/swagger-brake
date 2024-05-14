@@ -1,11 +1,10 @@
 package io.redskap.swagger.brake.core.model.store;
 
+import io.swagger.v3.oas.models.media.Schema;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
-
-import io.swagger.v3.oas.models.media.Schema;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -18,6 +17,12 @@ public class SchemaStore {
     }
 
     public Optional<io.redskap.swagger.brake.core.model.Schema> getTransformer(String name, Supplier<io.redskap.swagger.brake.core.model.Schema> provider) {
-        return Optional.ofNullable(transformerSchemas.computeIfAbsent(name, (k) -> provider.get()));
+       if (!transformerSchemas.containsKey(name)){
+		   io.redskap.swagger.brake.core.model.Schema schema = provider.get();
+		   transformerSchemas.put(name, schema);
+	   }
+
+	   return Optional.ofNullable(transformerSchemas.get(name));
+
     }
 }

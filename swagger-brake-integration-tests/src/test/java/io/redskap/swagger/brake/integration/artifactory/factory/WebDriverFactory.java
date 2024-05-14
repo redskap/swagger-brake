@@ -9,8 +9,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 public class WebDriverFactory {
     private static final String CHROME_DRIVER_VERSION_ENV_VAR = "CHROME_DRIVER_VERSION";
     private static final String CHROME_BROWSER_VERSION_ENV_VAR = "CHROME_BROWSER_VERSION";
-    public static final String DEFAULT_DRIVER_VERSION = "117.0.5938.132";
-    public static final String DEFAULT_BROWSER_VERSION = "117.0.5938.132";
+    public static final String DEFAULT_DRIVER_VERSION = "124.0.6367.207";
+    public static final String DEFAULT_BROWSER_VERSION = "124.0.6367.208";
 
     public static WebDriver create() {
         WebDriverManager
