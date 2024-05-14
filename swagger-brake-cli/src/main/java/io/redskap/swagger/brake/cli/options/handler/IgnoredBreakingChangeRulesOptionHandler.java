@@ -30,6 +30,7 @@ public class IgnoredBreakingChangeRulesOptionHandler implements CliOptionHandler
 
     @Override
     public String getHelpMessage() {
-        return "Specifies which breaking changes shall be ignored. Rules have to be provided (find them in the doc). Multiple values can be provided by using comma. Example: R001,R002";
+        return "Specifies which breaking changes shall be ignored. Rules have to be provided (find them in the doc). "
+                + "Multiple values can be provided by using comma. Example: R001,R002";
     }
 }

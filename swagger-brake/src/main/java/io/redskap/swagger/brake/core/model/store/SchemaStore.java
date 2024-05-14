@@ -17,12 +17,12 @@ public class SchemaStore {
     }
 
     public Optional<io.redskap.swagger.brake.core.model.Schema> getTransformer(String name, Supplier<io.redskap.swagger.brake.core.model.Schema> provider) {
-       if (!transformerSchemas.containsKey(name)){
-		   io.redskap.swagger.brake.core.model.Schema schema = provider.get();
-		   transformerSchemas.put(name, schema);
-	   }
+        if (!transformerSchemas.containsKey(name)) {
+            io.redskap.swagger.brake.core.model.Schema schema = provider.get();
+            transformerSchemas.put(name, schema);
+        }
 
-	   return Optional.ofNullable(transformerSchemas.get(name));
+        return Optional.ofNullable(transformerSchemas.get(name));
 
     }
 }
