@@ -166,6 +166,23 @@ swaggerBrake {
 ...
 ```
 
+
+## Ignoring specific breaking changes
+For detailed description on the feature, see [Ignoring specific breaking changes](../configuration/README.md#ignoring-specific-breaking-changes).
+
+Similarly, to other configurations, use the `ignoredBreakingChangeRules` parameter.
+
+Example:
+```groovy
+...
+swaggerBrake {
+    newApi = "${project.buildDir}/resources/main/swagger.yaml"
+    mavenRepoUrl = "${REPO_URL}/artifactory/libs-release-local"
+    ignoredBreakingChangeRules = ['R001', 'R002']
+}
+...
+```
+
 ## Default parameter values
 
 | Parameter                  | Default value                              |
@@ -195,3 +212,4 @@ swaggerBrake {
 | `apiFilename`              | The filename to search for within the artifact.                                                                                                           |
 | `betaApiExtensionName`     | The name of the custom vendor extension attribute that denotes beta APIs.                                                                                 |
 | `excludedPaths`            | A  list of path prefixes that shall be excluded from the scan.                                                                                            |
+| `ignoredBreakingChangeRules`            | A  list of rule codes that shall be ignored during the scan.                                                                                            |

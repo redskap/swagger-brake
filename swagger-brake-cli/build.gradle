@@ -19,6 +19,8 @@ dependencies {
     implementation project(":swagger-brake")
     implementation "ch.qos.logback:logback-core:1.2.11"
     implementation "ch.qos.logback:logback-classic:1.2.11"
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+    testRuntimeOnly  'org.junit.platform:junit-platform-launcher'
 }
 
 jar {
@@ -31,4 +33,13 @@ jar {
 shadowJar {
     archiveBaseName = 'swagger-brake'
     archiveClassifier = 'cli'
+}
+
+
+tasks.named('test', Test) {
+    useJUnitPlatform()
+
+    testLogging {
+        events "passed"
+    }
 }

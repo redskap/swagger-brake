@@ -25,7 +25,8 @@ public enum CliOption {
 
     API_FILENAME("api-filename"),
     BETA_API_EXTENSION_NAME("beta-api-extension-name"),
-    EXCLUDED_PATHS("excluded-paths");
+    EXCLUDED_PATHS("excluded-paths"),
+    IGNORED_BREAKING_CHANGE_RULES("ignored-breaking-change-rules");
 
 
     private final String cliOptionName;

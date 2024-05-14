@@ -7,4 +7,5 @@ import lombok.Data;
 @Data
 public class HtmlData {
     private Collection<BreakingChangeTableRow> breakingChanges;
+    private Collection<BreakingChangeTableRow> ignoredBreakingChanges;
 }

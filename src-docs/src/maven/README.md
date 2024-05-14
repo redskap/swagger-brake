@@ -263,6 +263,44 @@ Example:
 ...
 ```
 
+
+## Ignoring specific breaking changes
+For detailed description on the feature, see [Ignoring specific breaking changes](../configuration/README.md#ignoring-specific-breaking-changes).
+
+Similarly, to other configurations, use the `<ignoredBreakingChangeRules>` parameter.
+
+Example:
+```xml
+...
+<build>
+    <plugins>
+        ...
+        <plugin>
+            <groupId>io.redskap</groupId>
+            <artifactId>swagger-brake-maven-plugin</artifactId>
+            <version>2.4.0</version>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>check</goal>
+                    </goals>
+                    <configuration>
+                        <newApi>${project.build.directory}/generated-sources/swagger/swagger.json</newApi>
+                        <mavenRepoUrl>http://${REPO_URL}/artifactory/libs-release-local</mavenRepoUrl>
+                        <ignoredBreakingChangeRules>
+                            <ignoredBreakingChangeRule>R001</ignoredBreakingChangeRule>
+                            <ignoredBreakingChangeRule>R002</ignoredBreakingChangeRule>
+                        </ignoredBreakingChangeRules>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+        ...
+    </plugins>
+</build>
+...
+```
+
 ## Default parameter values
 
 | Parameter                  | Default value                              |
@@ -275,20 +313,21 @@ Example:
 | `<artifactPackaging>`      | `${project.packaging}`                     |
 
 ## Full list of parameters
-| Parameter                  | Description                                                                                                                                               |
-|:--------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------:|
-| `<oldApi>`                 | Denotes the path of the baseline API. Can be a relative path and an absolute one.                                                                         |
-| `<newApi>`                 | Denotes the path of the new, changed API. Can be a relative path and an absolute one.                                                                     |
-| `<outputFormats>`          | Specifies which reports shall be generated. Possible values: `STDOUT`, `JSON`, `HTML`                                                                     |
-| `<outputFilePath>`         | Denotes the folder where the file reports shall be saved. Can be a relative path and an absolute one. In case the path doesn't exist, it will be created. |
-| `<mavenRepoUrl>`           | Specifies the release repository base URL. Might be optional in case `<mavenSnapshotRepoUrl>` is provided.                                                |
-| `<mavenSnapshotRepoUrl>`   | Specifies the snapshot repository base URL. Might be optional in case `<mavenRepoUrl>` is provided.                                                       |
-| `<mavenRepoUsername>`      | The username for the Maven repository.                                                                                                                    |
-| `<mavenRepoPassword>`      | The password for the Maven repository.                                                                                                                    |
-| `<groupId>`                | The groupId of the artifact.                                                                                                                              |
-| `<artifactId>`             | The artifactId of the artifact.                                                                                                                           |
-| `<currentArtifactVersion>` | The version of the artifact that contains the new API. This is used to determine if the snapshot, or the release repository needs to be used.             |
-| `<artifactPackaging>`      | Specifies the artifact packaging. Could be jar or war. Defaults to jar. If the `<packaging>` property is set on the project, it'll be used.               |
-| `<apiFilename>`            | The filename to search for within the artifact.                                                                                                           |
-| `<betaApiExtensionName>`   | The name of the custom vendor extension attribute that denotes beta APIs.                                                                                 |
-| `<excludedPaths>`          | A  list of path prefixes that shall be excluded from the scan.                                                                                            |
+|           Parameter            |                                                                        Description                                                                        |
+|:------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------:|
+|           `<oldApi>`           |                                     Denotes the path of the baseline API. Can be a relative path and an absolute one.                                     |
+|           `<newApi>`           |                                   Denotes the path of the new, changed API. Can be a relative path and an absolute one.                                   |
+|       `<outputFormats>`        |                                   Specifies which reports shall be generated. Possible values: `STDOUT`, `JSON`, `HTML`                                   |
+|       `<outputFilePath>`       | Denotes the folder where the file reports shall be saved. Can be a relative path and an absolute one. In case the path doesn't exist, it will be created. |
+|        `<mavenRepoUrl>`        |                        Specifies the release repository base URL. Might be optional in case `<mavenSnapshotRepoUrl>` is provided.                         |
+|    `<mavenSnapshotRepoUrl>`    |                            Specifies the snapshot repository base URL. Might be optional in case `<mavenRepoUrl>` is provided.                            |
+|     `<mavenRepoUsername>`      |                                                          The username for the Maven repository.                                                           |
+|     `<mavenRepoPassword>`      |                                                          The password for the Maven repository.                                                           |
+|          `<groupId>`           |                                                               The groupId of the artifact.                                                                |
+|         `<artifactId>`         |                                                              The artifactId of the artifact.                                                              |
+|   `<currentArtifactVersion>`   |       The version of the artifact that contains the new API. This is used to determine if the snapshot, or the release repository needs to be used.       |
+|     `<artifactPackaging>`      |        Specifies the artifact packaging. Could be jar or war. Defaults to jar. If the `<packaging>` property is set on the project, it'll be used.        |
+|        `<apiFilename>`         |                                                      The filename to search for within the artifact.                                                      |
+|    `<betaApiExtensionName>`    |                                         The name of the custom vendor extension attribute that denotes beta APIs.                                         |
+|       `<excludedPaths>`        |                                              A  list of path prefixes that shall be excluded from the scan.                                               |
+| `<ignoredBreakingChangeRules>` |                                             A  list of rule codes that shall be ignored during the scan.                                             |

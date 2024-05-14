@@ -20,4 +20,9 @@ class CompositeReporter implements Reporter {
     public void report(Collection<BreakingChange> breakingChanges, Options options, ApiInfo apiInfo) {
         delegates.forEach(d -> d.report(breakingChanges, options, apiInfo));
     }
+
+    @Override
+    public void report(Collection<BreakingChange> breakingChanges, Collection<BreakingChange> ignoredBreakingChanges, Options options, ApiInfo apiInfo) {
+        delegates.forEach(d -> d.report(breakingChanges, ignoredBreakingChanges, options, apiInfo));
+    }
 }

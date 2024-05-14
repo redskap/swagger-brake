@@ -219,3 +219,13 @@ CLI configuration [here](../cli/README.md#excluding-paths-from-the-scan).
 Maven configuration [here](../maven/README.md#excluding-paths-from-the-scan).
 
 Gradle configuration [here](../gradle/README.md#excluding-paths-from-the-scan).
+
+## Ignoring specific breaking changes
+In case you don't want a specific rule to be considered as a breaking change for your API, you can disable them.
+
+
+CLI configuration [here](../cli/README.md#ignoring-specific-breaking-changes).
+
+Maven configuration [here](../maven/README.md#ignoring-specific-breaking-changes).
+
+Gradle configuration [here](../gradle/README.md#ignoring-specific-breaking-changes).

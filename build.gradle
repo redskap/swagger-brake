@@ -47,8 +47,6 @@ subprojects {
         implementation "org.springframework:spring-context:6.0.13"
         implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.4"
 
-        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
-        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
         testImplementation "org.assertj:assertj-core:3.24.2"
         testImplementation "org.springframework:spring-test:6.0.13"
         testImplementation "org.mockito:mockito-core:5.6.0"
@@ -69,10 +67,6 @@ subprojects {
     spotbugs {
         reportLevel = 'high'
         showProgress = false
-    }
-
-    test {
-        useJUnitPlatform()
     }
 
     //<editor-fold desc="Uploading to central">

@@ -39,9 +39,10 @@ class JsonReporter extends AbstractFileReporter implements CheckableReporter {
     }
 
     @Override
-    protected String toFileContent(Collection<BreakingChange> breakingChanges, ApiInfo apiInfo) {
+    protected String toFileContent(Collection<BreakingChange> breakingChanges, Collection<BreakingChange> ignoredBreakingChanges, ApiInfo apiInfo) {
         Map<String, List<BreakingChange>> nameMapping = breakingChanges.stream().collect(groupingBy(BreakingChange::getRuleCode));
-        return jsonConverter.convert(new JsonContent(apiInfo, nameMapping));
+        Map<String, List<BreakingChange>> ignoredNameMapping = ignoredBreakingChanges.stream().collect(groupingBy(BreakingChange::getRuleCode));
+        return jsonConverter.convert(new JsonContent(apiInfo, nameMapping, ignoredNameMapping));
     }
 
     @Override
@@ -54,5 +55,6 @@ class JsonReporter extends AbstractFileReporter implements CheckableReporter {
     static class JsonContent {
         private final ApiInfo info;
         private final Map<String, List<BreakingChange>> breakingChanges;
+        private final Map<String, List<BreakingChange>> ignoredBreakingChanges;
     }
 }

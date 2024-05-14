@@ -118,6 +118,19 @@ Example command:
 $ java -jar swagger-brake.jar --old-api=swagger.yaml --new-api=swagger2.yaml --excluded-paths=/auth 
 ```
 
+## Ignoring specific breaking changes
+For detailed description on the feature, see [Ignoring specific breaking changes](../configuration/README.md#ignoring-specific-breaking-changes).
+
+There's a parameter `--ignored-breaking-change-rules` where you can provide a list of rule codes you want to be ignored
+during the check. The rules can be separated by commas. The rule codes can be found in the docs.
+
+Example command:
+
+```bash
+$ java -jar swagger-brake.jar --old-api=swagger.yaml --new-api=swagger2.yaml --ignored-breaking-change-rules=R001,R002
+```
+
+
 ## Full list of parameters
 | <div style="width:250px">Parameter</div>   | Description                                                                                                                                               |
 |:------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------:|
@@ -136,3 +149,4 @@ $ java -jar swagger-brake.jar --old-api=swagger.yaml --new-api=swagger2.yaml --e
 | `--api-filename`                           | The filename to search for within the artifact.                                                                                                           |
 | `--beta-api-extension-name`                | The name of the custom vendor extension attribute that denotes beta APIs.                                                                                 |
 | `--excluded-paths`                         | A comma separated list of path prefixes that shall be excluded from the scan.                
+| `--ignored-breaking-change-rules`                         | Specifies which breaking changes shall be ignored. Rules have to be provided (find them in the doc). Multiple values can be provided by using comma. Example: R001,R002                

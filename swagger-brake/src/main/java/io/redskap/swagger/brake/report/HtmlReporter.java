@@ -44,12 +44,16 @@ class HtmlReporter extends AbstractFileReporter implements CheckableReporter {
     }
 
     @Override
-    protected String toFileContent(Collection<BreakingChange> breakingChanges, ApiInfo apiInfo) {
+    protected String toFileContent(Collection<BreakingChange> breakingChanges, Collection<BreakingChange> ignoredBreakingChanges, ApiInfo apiInfo) {
         String mustacheTemplate = "htmlreporter/swagger-brake.mustache";
         HtmlData data = new HtmlData();
         List<BreakingChangeTableRow> tableRows = breakingChanges.stream().map(BreakingChangeTableRow::new).collect(Collectors.toCollection(ArrayList::new));
         if (!tableRows.isEmpty()) {
             data.setBreakingChanges(tableRows);
+        }
+        List<BreakingChangeTableRow> ignoredTableRows = ignoredBreakingChanges.stream().map(BreakingChangeTableRow::new).collect(Collectors.toCollection(ArrayList::new));
+        if (!ignoredBreakingChanges.isEmpty()) {
+            data.setIgnoredBreakingChanges(ignoredTableRows);
         }
 
         Map<String, Map<String, Object>> paramMap = new HashMap<>();

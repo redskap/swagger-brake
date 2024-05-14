@@ -19,12 +19,12 @@ public abstract class AbstractFileReporter implements Reporter {
     private final DirectoryCreator directoryCreator;
 
     @Override
-    public void report(Collection<BreakingChange> breakingChanges, Options options, ApiInfo apiInfo) {
+    public void report(Collection<BreakingChange> breakingChanges, Collection<BreakingChange> ignoredBreakingChanges, Options options, ApiInfo apiInfo) {
         if (StringUtils.isBlank(options.getOutputFilePath())) {
             log.warn("No file reporting has been done since output file path is not set");
             return;
         }
-        String json = toFileContent(breakingChanges, apiInfo);
+        String json = toFileContent(breakingChanges, ignoredBreakingChanges, apiInfo);
         try {
             directoryCreator.create(options.getOutputFilePath());
             String filePath = options.getOutputFilePath() + File.separator + getFilename(apiInfo);
@@ -37,5 +37,5 @@ public abstract class AbstractFileReporter implements Reporter {
 
     protected abstract String getFilename(ApiInfo apiInfo);
 
-    protected abstract String toFileContent(Collection<BreakingChange> breakingChanges, ApiInfo apiInfo);
+    protected abstract String toFileContent(Collection<BreakingChange> breakingChanges, Collection<BreakingChange> ignoredBreakingChanges, ApiInfo apiInfo);
 }

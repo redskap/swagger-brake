@@ -10,6 +10,7 @@ import io.redskap.swagger.brake.report.ReporterFactory;
 import io.redskap.swagger.brake.runner.download.ArtifactDownloaderHandler;
 import io.redskap.swagger.brake.runner.openapi.OpenApiFactory;
 import io.swagger.v3.oas.models.OpenAPI;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -52,10 +53,20 @@ public class Runner {
         OpenAPI newApi = openApiFactory.fromFile(newApiPath);
         log.info("Successfully loaded APIs");
         CheckerOptions checkerOptions = checkerOptionsFactory.create(options);
-        Collection<BreakingChange> breakingChanges = checker.check(oldApi, newApi, checkerOptions);
+        Collection<BreakingChange> allBreakingChanges = checker.check(oldApi, newApi, checkerOptions);
+        Collection<BreakingChange> breakingChanges = allBreakingChanges.stream().filter(bc -> isNotIgnoredBreakingChange(options, bc)).toList();
+        Collection<BreakingChange> ignoredBreakingChanges = allBreakingChanges.stream().filter(bc -> isIgnoredBreakingChange(options, bc)).toList();
 
         ApiInfo apiInfo = apiInfoFactory.create(newApi);
         reporterFactory.create(options).report(breakingChanges, options, apiInfo);
         return breakingChanges;
+    }
+
+    private boolean isNotIgnoredBreakingChange(Options options, BreakingChange breakingChange) {
+        return !isIgnoredBreakingChange(options, breakingChange);
+    }
+
+    private boolean isIgnoredBreakingChange(Options options, BreakingChange breakingChange) {
+        return options.getIgnoredBreakingChangeRules().contains(breakingChange.getRuleCode());
     }
 }
