@@ -46,10 +46,10 @@ subprojects {
         implementation "org.springframework:spring-context:6.2.5"
         implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.4"
 
-        testImplementation "org.assertj:assertj-core:3.25.3"
+        testImplementation "org.assertj:assertj-core:3.27.3"
         testImplementation "org.springframework:spring-test:6.2.5"
         testImplementation "org.mockito:mockito-core:5.17.0"
-        testImplementation "org.mockito:mockito-junit-jupiter:5.16.1"
+        testImplementation "org.mockito:mockito-junit-jupiter:5.17.0"
     }
 
     checkstyle {
