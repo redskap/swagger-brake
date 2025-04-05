@@ -36,25 +36,24 @@ subprojects {
         compileOnly "com.github.spotbugs:spotbugs-annotations:${spotbugs.toolVersion.get()}"
         testCompileOnly "com.github.spotbugs:spotbugs-annotations:${spotbugs.toolVersion.get()}"
 
-        compileOnly "org.projectlombok:lombok:1.18.32"
-        annotationProcessor "org.projectlombok:lombok:1.18.32"
+        compileOnly "org.projectlombok:lombok:1.18.38"
+        annotationProcessor "org.projectlombok:lombok:1.18.38"
 
-        implementation 'com.google.guava:guava:33.2.0-jre'
+        implementation 'com.google.guava:guava:33.4.6-jre'
         implementation "org.apache.commons:commons-collections4:4.4"
-        implementation "org.apache.commons:commons-lang3:3.14.0"
-        implementation "org.apache.commons:commons-lang3:3.14.0"
-        implementation "org.springframework:spring-context:6.1.6"
-        implementation "org.springframework:spring-context:6.1.6"
+        implementation "org.apache.commons:commons-lang3:3.17.0"
+        implementation "org.springframework:spring-context:6.2.5"
+        implementation "org.springframework:spring-context:6.2.5"
         implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.4"
 
         testImplementation "org.assertj:assertj-core:3.25.3"
-        testImplementation "org.springframework:spring-test:6.1.6"
-        testImplementation "org.mockito:mockito-core:5.12.0"
-        testImplementation "org.mockito:mockito-junit-jupiter:5.12.0"
+        testImplementation "org.springframework:spring-test:6.2.5"
+        testImplementation "org.mockito:mockito-core:5.17.0"
+        testImplementation "org.mockito:mockito-junit-jupiter:5.16.1"
     }
 
     checkstyle {
-        toolVersion = '10.16.0'
+        toolVersion = '10.23.0'
     }
 
     tasks.withType(Checkstyle) {

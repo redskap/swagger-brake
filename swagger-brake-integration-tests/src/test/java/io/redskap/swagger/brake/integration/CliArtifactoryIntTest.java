@@ -306,7 +306,7 @@ public class CliArtifactoryIntTest {
         parameter.setArtifactId(artifactId);
         parameter.setPackagingType(PackagingType.JAR);
         parameter.setCustomVersion(version);
-        parameter.setArtifactoryContextUrl(artifactoryServer.getInternalContextUrl());
+        parameter.setArtifactoryContextUrl(artifactoryServer.getBaseApiInternalUrl());
         parameter.setUsername(ArtifactoryServer.DEFAULT_USERNAME);
         parameter.setPassword(ArtifactoryServer.UPDATED_PASSWORD);
         parameter.setReleaseRepoKey(ArtifactoryServer.RELEASE_REPO_KEY);

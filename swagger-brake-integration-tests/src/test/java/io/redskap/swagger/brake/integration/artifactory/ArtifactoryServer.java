@@ -47,12 +47,14 @@ public class ArtifactoryServer {
     private final HttpClient httpClient = HttpClientBuilder.create().build();
     private final Gson gson = new Gson();
     private final GenericContainer artifactoryContainer;
+    private final Network dockerNetwork;
 
-    public ArtifactoryServer(Network network) {
+    public ArtifactoryServer(Network dockerNetwork) {
         this.artifactoryContainer = new GenericContainer<>("docker.bintray.io/jfrog/artifactory-oss:7.5.7")
             .withExposedPorts(8081, 8082)
-            .withNetwork(network)
+            .withNetwork(dockerNetwork)
             .withStartupTimeout(STARTUP_TIMEOUT);
+        this.dockerNetwork = dockerNetwork;
     }
 
     public void initialize() {
@@ -61,9 +63,9 @@ public class ArtifactoryServer {
         waitUntilArtifactoryIsInitialized();
         log.info("Artifactory started");
         log.info("Starting to initialize Artifactory");
-        WebDriver webDriver = WebDriverFactory.create();
+        WebDriver webDriver = WebDriverFactory.create(((Network.NetworkImpl) dockerNetwork).getName());
         PageFactory pageFactory = new PageFactory(webDriver);
-        webDriver.get(getBaseUiUrl());
+        webDriver.get(getBaseUiInternalUrl());
 
         log.info("Logging into Artifactory");
         ArtifactoryLoginPage loginPage = pageFactory.create(ArtifactoryLoginPage.class);
@@ -184,7 +186,7 @@ public class ArtifactoryServer {
     }
 
     public String getInternalReleaseRepoUrl() {
-        return format("%s/%s", getInternalContextUrl(), RELEASE_REPO_KEY);
+        return format("%s/%s", getBaseApiInternalUrl(), RELEASE_REPO_KEY);
     }
 
     public String getSnapshotRepoUrl() {
@@ -192,20 +194,23 @@ public class ArtifactoryServer {
     }
 
     public String getInternalSnapshotRepoUrl() {
-        return format("%s/%s", getInternalContextUrl(), SNAPSHOT_REPO_KEY);
+        return format("%s/%s", getBaseApiInternalUrl(), SNAPSHOT_REPO_KEY);
     }
 
     private String getBaseApiUrl() {
         return format("http://%s:%s/artifactory", artifactoryContainer.getHost(), artifactoryContainer.getMappedPort(8081));
-
     }
 
-    public String getInternalContextUrl() {
+    public String getBaseApiInternalUrl() {
         return format("http://%s:%s/artifactory", artifactoryContainer.getNetworkAliases().get(0), 8081);
     }
 
     private String getBaseUiUrl() {
         return format("http://%s:%s/artifactory", artifactoryContainer.getHost(), artifactoryContainer.getMappedPort(8082));
+    }
+
+    public String getBaseUiInternalUrl() {
+        return format("http://%s:%s/artifactory", artifactoryContainer.getNetworkAliases().get(0), 8082);
     }
 
     private void waitUntilArtifactoryIsInitialized() {
