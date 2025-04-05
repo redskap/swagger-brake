@@ -149,7 +149,7 @@ public class MavenPluginArtifactoryIntTest {
         parameter.setArtifactId(artifactId);
         parameter.setPackagingType(PackagingType.JAR);
         if (artifactoryServer != null) {
-            parameter.setArtifactoryContextUrl(artifactoryServer.getInternalContextUrl());
+            parameter.setArtifactoryContextUrl(artifactoryServer.getBaseApiInternalUrl());
             parameter.setReleaseRepoUrl(artifactoryServer.getInternalReleaseRepoUrl());
             parameter.setSnapshotRepoUrl(artifactoryServer.getInternalSnapshotRepoUrl());
         }

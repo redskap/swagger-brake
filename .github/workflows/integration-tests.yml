@@ -1,4 +1,4 @@
-name: Integration tests - Corretto JDK 8
+name: Integration tests - Corretto JDK 17
 on:
   push:
     branches: [ master ]
@@ -25,17 +25,6 @@ jobs:
         uses: gradle/wrapper-validation-action@f9c9c575b8b21b6485636a91ffecd10e558c62f6
       - name: Build & Test
         run: |
-          chromeBrowserVersionRegex='Google Chrome ([0-9]{1,4}.[0-9]{1,4}.[0-9]{1,4}).[0-9]*'
-          rawChromeBrowserVersion=$(google-chrome --version)
-          [[ $rawChromeBrowserVersion =~ $chromeBrowserVersionRegex ]]
-          export CHROME_BROWSER_VERSION=${BASH_REMATCH[1]}
-          
-          chromeDriverVersionRegex='ChromeDriver ([0-9]{1,4}.[0-9]{1,4}.[0-9]{1,4}).[0-9]*'
-          rawChromeDriverVersion=$(chromedriver --version)
-          [[ $rawChromeDriverVersion =~ $chromeDriverVersionRegex ]]
-          export CHROME_DRIVER_VERSION=${BASH_REMATCH[1]}
-          
-          echo "Using $CHROME_BROWSER_VERSION browser version with $CHROME_DRIVER_VERSION driver"
           ./gradlew --no-daemon --console=plain build test
 
       - name: Archive test results

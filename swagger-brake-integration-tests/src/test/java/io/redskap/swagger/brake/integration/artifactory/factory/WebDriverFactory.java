@@ -3,21 +3,15 @@ package io.redskap.swagger.brake.integration.artifactory.factory;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 public class WebDriverFactory {
     private static final String CHROME_DRIVER_VERSION_ENV_VAR = "CHROME_DRIVER_VERSION";
     private static final String CHROME_BROWSER_VERSION_ENV_VAR = "CHROME_BROWSER_VERSION";
-    public static final String DEFAULT_DRIVER_VERSION = "124.0.6367.207";
-    public static final String DEFAULT_BROWSER_VERSION = "124.0.6367.208";
+    public static final String DEFAULT_DRIVER_VERSION = "124.0";
+    public static final String DEFAULT_BROWSER_VERSION = "124.0";
 
-    public static WebDriver create() {
-        WebDriverManager
-                .chromedriver()
-                .browserVersion(getBrowserVersion())
-                .driverVersion(getDriverVersion())
-                .setup();
+    public static WebDriver create(String dockerNetwork) {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("start-maximized");
         options.addArguments("enable-automation");
@@ -30,7 +24,15 @@ public class WebDriverFactory {
         // https://stackoverflow.com/questions/75718422/org-openqa-selenium-remote-http-connectionfailedexception-unable-to-establish-w
         options.addArguments("--remote-allow-origins=*");
         options.addArguments("--headless");
-        return new ChromeDriver(options);
+
+        return WebDriverManager
+                .chromedriver()
+                .browserInDocker()
+                .dockerNetwork(dockerNetwork)
+                .browserVersion(getBrowserVersion())
+                .driverVersion(getDriverVersion())
+                .capabilities(options)
+                .create();
     }
 
     private static String getDriverVersion() {
