@@ -1,5 +1,5 @@
 group 'io.redskap'
-version '2.5.0-SNAPSHOT'
+version '2.5.0'
 
 buildscript {
     repositories {
@@ -130,7 +130,7 @@ subprojects {
             }
             repositories {
                 maven {
-                    url = isReleaseBuild() ? 'https://oss.sonatype.org/service/local/staging/deploy/maven2/' : 'https://oss.sonatype.org/content/repositories/snapshots/'
+                    url = isReleaseBuild() ? 'https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/' : 'https://central.sonatype.com/repository/maven-snapshots/'
 
                     credentials {
                         username = ossrhUsername
