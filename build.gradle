@@ -9,7 +9,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath "com.github.spotbugs.snom:spotbugs-gradle-plugin:5.2.5"
+        classpath "com.github.spotbugs.snom:spotbugs-gradle-plugin:6.1.7"
     }
 }
 
@@ -20,6 +20,7 @@ repositories {
 def isReleaseBuild() {
     return version.contains("SNAPSHOT") == false
 }
+
 
 subprojects {
     group = rootProject.group
@@ -64,7 +65,7 @@ subprojects {
     }
 
     spotbugs {
-        reportLevel = 'high'
+        reportLevel = com.github.spotbugs.snom.Confidence.valueOf("HIGH")
         showProgress = false
     }
 
