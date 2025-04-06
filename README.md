@@ -23,6 +23,17 @@ by executing the following command:
 $ ./gradlew clean build shadowJar
 ```
 
+## Sponsoring the project
+If you want to help the project to develop faster and bring in new features and bugfixes you can buy me a coffee. Donations are never a necessity but very much appreciated.
+
+Either use my Buy me a coffee link:
+
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/arnoldgalovics)
+
+Or you can do it directly with PayPal:
+
+[![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X6XHVCPMRQEL4)
+
 ## License
 ```text
 Licensed under the Apache License, Version 2.0 (the "License");
