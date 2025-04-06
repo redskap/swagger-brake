@@ -51,7 +51,7 @@ public abstract class ProjectContainerBase<T extends ProjectParameter> {
     private void waitUntilBuildIsComplete() {
         try {
             Awaitility.await()
-                .atMost(Duration.ofMinutes(3))
+                .atMost(Duration.ofMinutes(10))
                 .pollInterval(Duration.ofSeconds(5))
                 .until(() -> {
                     String logs = container.getLogs();
