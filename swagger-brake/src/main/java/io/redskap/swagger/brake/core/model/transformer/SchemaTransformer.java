@@ -85,6 +85,10 @@ public class SchemaTransformer implements Transformer<io.swagger.v3.oas.models.m
         if (isNotBlank(ref) && SeenRefHolder.isSeen(ref) && isBlank(schemaType)) {
             return null;
         }
+        if (isBlank(schemaType)) {
+            // you can create a schema in JSON format without any definition, so let's fall back to object type here
+            schemaType = "object";
+        }
         SchemaBuilder schemaBuilder = new SchemaBuilder(schemaType);
         schemaBuilder.maxLength(swSchema.getMaxLength());
         schemaBuilder.minLength(swSchema.getMinLength());
@@ -96,8 +100,9 @@ public class SchemaTransformer implements Transformer<io.swagger.v3.oas.models.m
         schemaBuilder.exclusiveMaximum(swSchema.getExclusiveMaximum());
         schemaBuilder.exclusiveMinimum(swSchema.getExclusiveMinimum());
         schemaBuilder.schemaAttributes(getSchemaAttributes(swSchema));
-        List<String> enumValues = swSchema.getEnum();
-        if (CollectionUtils.isNotEmpty(enumValues)) {
+        List rawEnums = swSchema.getEnum();
+        if (CollectionUtils.isNotEmpty(rawEnums)) {
+            List<String> enumValues = rawEnums.stream().map(Object::toString).toList();
             schemaBuilder.enumValues(enumValues);
         }
         return schemaBuilder.build();
