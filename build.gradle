@@ -1,5 +1,5 @@
 group 'io.redskap'
-version '2.5.0'
+version '-SNAPSHOT'
 
 buildscript {
     repositories {
