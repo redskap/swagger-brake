@@ -40,7 +40,7 @@ subprojects {
         compileOnly "org.projectlombok:lombok:1.18.38"
         annotationProcessor "org.projectlombok:lombok:1.18.38"
 
-        implementation 'com.google.guava:guava:33.4.6-jre'
+        implementation 'com.google.guava:guava:33.4.7-jre'
         implementation "org.apache.commons:commons-collections4:4.4"
         implementation "org.apache.commons:commons-lang3:3.17.0"
         implementation "org.springframework:spring-context:6.2.5"
