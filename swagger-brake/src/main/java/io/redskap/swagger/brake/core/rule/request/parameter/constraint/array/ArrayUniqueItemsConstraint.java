@@ -20,9 +20,9 @@ public class ArrayUniqueItemsConstraint implements Constraint<ArrayConstrainedVa
             Boolean newUniqueItems = newRequestParameter.getUniqueItems();
             if (BooleanUtils.isTrue(newUniqueItems) && BooleanUtils.isNotTrue(oldUniqueItems)) {
                 result = new ConstraintChange(
-                  UNIQUE_ITEMS_ATTRIBUTE_NAME,
-                  oldUniqueItems,
-                  newUniqueItems
+                        UNIQUE_ITEMS_ATTRIBUTE_NAME,
+                        oldUniqueItems,
+                        newUniqueItems
                 );
             }
         }

@@ -39,6 +39,12 @@
         "com.fasterxml.jackson.dataformat:jackson-dataformat-xml"
       ],
       "allowedVersions": "<=2.13.4"
+    },
+    {
+      "matchPackageNames": [
+        "amazoncorretto"
+      ],
+      "allowedVersions": "<18"
     }
   ]
 }
