@@ -19,13 +19,13 @@ public class StringMaxLengthConstraint implements Constraint<StringConstrainedVa
             Integer newMaxLength = newConstrainedValue.getMaxLength();
             if (oldMaxLength == null && newMaxLength != null) {
                 result = new ConstraintChange(
-                    MAX_LENGTH_ATTRIBUTE_NAME, null, newMaxLength
+                        MAX_LENGTH_ATTRIBUTE_NAME, null, newMaxLength
                 );
             }
             if (oldMaxLength != null && newMaxLength != null) {
                 if (newMaxLength < oldMaxLength) {
                     result = new ConstraintChange(
-                      MAX_LENGTH_ATTRIBUTE_NAME, oldMaxLength, newMaxLength
+                            MAX_LENGTH_ATTRIBUTE_NAME, oldMaxLength, newMaxLength
                     );
                 }
             }

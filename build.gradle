@@ -31,30 +31,43 @@ subprojects {
     apply plugin: 'checkstyle'
     apply plugin: 'com.github.spotbugs'
 
-    sourceCompatibility = '17'
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(17)
+        }
+    }
 
     dependencies {
         compileOnly "com.github.spotbugs:spotbugs-annotations:${spotbugs.toolVersion.get()}"
         testCompileOnly "com.github.spotbugs:spotbugs-annotations:${spotbugs.toolVersion.get()}"
 
-        compileOnly "org.projectlombok:lombok:1.18.38"
-        annotationProcessor "org.projectlombok:lombok:1.18.38"
+        compileOnly "org.projectlombok:lombok:1.18.42"
+        annotationProcessor "org.projectlombok:lombok:1.18.42"
 
-        implementation 'com.google.guava:guava:33.4.8-jre'
+        implementation 'com.google.guava:guava:33.5.0-jre'
         implementation "org.apache.commons:commons-collections4:4.5.0"
-        implementation "org.apache.commons:commons-lang3:3.17.0"
-        implementation "org.springframework:spring-context:6.2.7"
-        implementation "org.springframework:spring-context:6.2.7"
+        implementation "org.apache.commons:commons-lang3:3.19.0"
+        implementation "org.springframework:spring-context:6.2.11"
+        implementation "org.springframework:spring-context:6.2.11"
         implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.4"
 
-        testImplementation "org.assertj:assertj-core:3.27.3"
-        testImplementation "org.springframework:spring-test:6.2.7"
-        testImplementation "org.mockito:mockito-core:5.18.0"
-        testImplementation "org.mockito:mockito-junit-jupiter:5.18.0"
+        testImplementation "org.assertj:assertj-core:3.27.6"
+        testImplementation "org.springframework:spring-test:6.2.11"
+        testImplementation "org.mockito:mockito-core:5.20.0"
+        testImplementation "org.mockito:mockito-junit-jupiter:5.20.0"
+    }
+
+    tasks.named('test') {
+        useJUnitPlatform()
+
+        testLogging {
+            events("failed", "passed")
+            exceptionFormat = "full"
+        }
     }
 
     checkstyle {
-        toolVersion = '10.24.0'
+        toolVersion = '11.1.0'
     }
 
     tasks.withType(Checkstyle) {
