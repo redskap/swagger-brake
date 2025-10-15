@@ -102,7 +102,7 @@ public class SchemaTransformer implements Transformer<io.swagger.v3.oas.models.m
         schemaBuilder.schemaAttributes(getSchemaAttributes(swSchema));
         List rawEnums = swSchema.getEnum();
         if (CollectionUtils.isNotEmpty(rawEnums)) {
-            List<String> enumValues = rawEnums.stream().map(Object::toString).toList();
+            List<String> enumValues = rawEnums.stream().filter(Objects::nonNull).map(Object::toString).toList();
             schemaBuilder.enumValues(enumValues);
         }
         return schemaBuilder.build();
