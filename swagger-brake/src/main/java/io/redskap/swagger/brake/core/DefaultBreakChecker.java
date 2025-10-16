@@ -6,6 +6,7 @@ import java.util.Collection;
 
 import io.redskap.swagger.brake.core.model.Specification;
 import io.redskap.swagger.brake.core.rule.BreakingChangeRule;
+import java.util.Comparator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -28,6 +29,10 @@ class DefaultBreakChecker implements BreakChecker {
         if (newApi == null) {
             throw new IllegalArgumentException("newApi must be provided");
         }
-        return rules.stream().map(rule -> rule.checkRule(oldApi, newApi)).flatMap(Collection::stream).collect(toList());
+        return rules.parallelStream()
+                .map(rule -> rule.checkRule(oldApi, newApi))
+                .flatMap(Collection::stream)
+                .sorted(Comparator.comparing(bc -> bc.getClass().getSimpleName()))
+                .collect(toList());
     }
 }
