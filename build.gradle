@@ -49,12 +49,12 @@ subprojects {
         implementation 'com.google.guava:guava:33.5.0-jre'
         implementation "org.apache.commons:commons-collections4:4.5.0"
         implementation "org.apache.commons:commons-lang3:3.19.0"
-        implementation "org.springframework:spring-context:6.2.11"
-        implementation "org.springframework:spring-context:6.2.11"
+        implementation "org.springframework:spring-context:6.2.12"
+        implementation "org.springframework:spring-context:6.2.12"
         implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.4"
 
         testImplementation "org.assertj:assertj-core:3.27.6"
-        testImplementation "org.springframework:spring-test:6.2.11"
+        testImplementation "org.springframework:spring-test:6.2.12"
         testImplementation "org.mockito:mockito-core:5.20.0"
         testImplementation "org.mockito:mockito-junit-jupiter:5.20.0"
     }
